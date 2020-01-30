@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,17 +14,20 @@ import javax.persistence.Id;
  * @author Andrew Wright
  */
 @Entity
-public class Coordinates 
+public class Coordinates implements Serializable 
 {
     @Id
-    private Integer id;
     private Double xCoord;
     private Double yCoord;
 
-    public Coordinates(Integer id, Double xCoord, Double yCoord) {
-        this.id = id;
+    public Coordinates( Double xCoord, Double yCoord) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
+    }
+    
+    protected Coordinates()
+    {
+        
     }
 
     public Double getxCoord() {
@@ -42,13 +46,15 @@ public class Coordinates
         this.yCoord = yCoord;
     }
 
-    public Integer getId() {
-        return id;
+    @Override
+    public String toString() {
+        return "Coordinates{" + "xCoord=" + xCoord + ", yCoord=" + yCoord + '}';
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+
+    
+    
+    
     
     
     

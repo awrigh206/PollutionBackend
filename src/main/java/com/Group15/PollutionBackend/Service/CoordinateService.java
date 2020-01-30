@@ -5,11 +5,9 @@
  */
 package com.Group15.PollutionBackend.Service;
 
-import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Repository.CityRepository;
-import java.util.ArrayList;
+import com.Group15.PollutionBackend.Repository.CoordinatesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,23 +16,24 @@ import org.springframework.stereotype.Service;
  * @author Andrew Wright
  */
 @Service
-public class CityService 
+public class CoordinateService 
 {
-    private CityRepository cityRepository;
+    private CoordinatesRepository coordRepo;
     
     @Autowired
-    public CityService(CityRepository cityRepository) 
+    public CoordinateService (CoordinatesRepository coordRepo) 
     {
-        this.cityRepository = cityRepository;
+        this.coordRepo = coordRepo;
     }
     
-    public City createCity(String name, String country, String location, Integer count, ArrayList<AirQuality> airQuality,Coordinates coords)
+    public Coordinates createCoord(Double x, Double y)
     {
-        City city = cityRepository.findByName(name);
+        Coordinates coords = null;
+        //Coordinates coords = coordRepo.findById(Double(x+y)).get();
         //TourPackage tourPackage = tourPackageOpt.get();
-        if(city == null)
+        if(coords == null)
         {
-            return cityRepository.save(new City(name,country,location,count,airQuality,coords));
+            return coordRepo.save(new Coordinates(x,y));
         }
         else
         {
@@ -45,7 +44,6 @@ public class CityService
             
     public long total()
     {
-        return cityRepository.count();
+        return coordRepo.count();
     }
-    
 }

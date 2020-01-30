@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,18 +24,17 @@ public class City implements Serializable
     private String location;
     private Integer count;
     private ArrayList<AirQuality> airQuality;
+    @OneToOne
+    private Coordinates coords;
     
-    private Integer xCoord;
-    private Integer yCoord;
 
-    public City(String name, String country, String location, Integer count, ArrayList<AirQuality> airQuality, Integer x, Integer y) {
+    public City(String name, String country, String location, Integer count, ArrayList<AirQuality> airQuality, Coordinates coords) {
         this.name = name;
         this.country = country;
         this.location = location;
         this.count = count;
         this.airQuality = airQuality;
-        this.xCoord = x;
-        this.yCoord = y;
+        this.coords = coords;
     }
     
     protected City()
@@ -84,25 +84,16 @@ public class City implements Serializable
         this.airQuality = airQuality;
     }
 
-    public Integer getxCoord() {
-        return xCoord;
+    public Coordinates getCoords() {
+        return coords;
     }
 
-    public void setxCoord(Integer xCoord) {
-        this.xCoord = xCoord;
+    public void setCoords(Coordinates coords) {
+        this.coords = coords;
     }
-
-    public Integer getyCoord() {
-        return yCoord;
-    }
-
-    public void setyCoord(Integer yCoord) {
-        this.yCoord = yCoord;
-    }
-
     @Override
     public String toString() {
-        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", count=" + count + ", airQuality=" + airQuality + ", xCoord=" + xCoord + ", yCoord=" + yCoord + '}';
+        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", count=" + count + ", airQuality=" + airQuality + ", coordinates="+coords.toString()+ '}';
     }
     
     
