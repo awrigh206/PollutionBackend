@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  *
@@ -100,6 +99,13 @@ public class City implements Serializable
     public void setyCoord(Integer yCoord) {
         this.yCoord = yCoord;
     }
+
+    @Override
+    public String toString() {
+        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", count=" + count + ", airQuality=" + airQuality + ", xCoord=" + xCoord + ", yCoord=" + yCoord + '}';
+    }
+    
+    
 
     
 }

@@ -1,5 +1,6 @@
 package com.Group15.PollutionBackend;
 
+import com.Group15.PollutionBackend.DataProcessing.RetrieveData;
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Service.CityService;
@@ -29,6 +30,9 @@ public class PollutionBackendApplication implements CommandLineRunner
         cityService.createCity("edinburgh", "GB", "GB", 3, quality, 5,6);
         cityService.createCity("Aberdeen", "GB", "GB", 201, quality, 2,3);
         cityService.createCity("Dundee", "GB", "GB", 150, quality, 90,100);
+        
+        RetrieveData retData = new RetrieveData();
+        retData.sendRequest("https://api.openaq.org/v1/latest?country=GB&limit=200");
         
         
     }
