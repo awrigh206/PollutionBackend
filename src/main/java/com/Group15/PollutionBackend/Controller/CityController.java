@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Andrew Wright
  */
 @RestController
-@RequestMapping(path ="/City")
+@RequestMapping()
 public class CityController 
 {
     CityRepository cityRepo;
@@ -40,12 +40,18 @@ public class CityController
      * @param cityName
      * @return 
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public City getUser(@RequestParam(value ="cityName")String cityName)
+    @RequestMapping(method = RequestMethod.GET, path = "/City")
+    public City getCity(@RequestParam(value ="cityName")String cityName)
     {
         City city = cityRepo.findByName(cityName);
         return city;
         //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path="/country")
+    public City[] getCities(@RequestParam(value="country")String country)
+    {
+        return cityRepo.findByCountry(country);
     }
     
     @ResponseStatus(HttpStatus.NOT_FOUND)

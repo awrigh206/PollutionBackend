@@ -12,9 +12,8 @@ package com.Group15.PollutionBackend.Model;
 public class AirQuality 
 {
     private String parameter;
-    private String value;
+    private Integer value;
     private String unit;
-    private Coordinates coords;
     private String dateTaken;
 
     public String getParameter() {
@@ -25,11 +24,11 @@ public class AirQuality
         this.parameter = parameter;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
@@ -41,14 +40,6 @@ public class AirQuality
         this.unit = unit;
     }
 
-    public Coordinates getCoords() {
-        return coords;
-    }
-
-    public void setCoords(Coordinates coords) {
-        this.coords = coords;
-    }
-
     public String getDateTaken() {
         return dateTaken;
     }
@@ -56,6 +47,13 @@ public class AirQuality
     public void setDateTaken(String dateTaken) {
         this.dateTaken = dateTaken;
     }
+
+    @Override
+    public String toString() {
+        return "AirQuality{" + "parameter=" + parameter + ", value=" + value + ", unit=" + unit + ", dateTaken=" + dateTaken + '}';
+    }
+    
+    
     
     
 }

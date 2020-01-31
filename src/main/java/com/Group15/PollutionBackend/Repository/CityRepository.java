@@ -35,6 +35,7 @@ public interface CityRepository extends PagingAndSortingRepository<City,Integer>
     public <S extends City> S save(S s);
     
     City findByName(@Param("name") String name);
+    City[] findByCountry(@Param("country") String country);
     
     
     

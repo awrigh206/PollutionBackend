@@ -17,12 +17,12 @@ import javax.persistence.Id;
 public class Coordinates implements Serializable 
 {
     @Id
-    private Double xCoord;
-    private Double yCoord;
+    private Double latitude;
+    private Double longitude;
 
-    public Coordinates( Double xCoord, Double yCoord) {
-        this.xCoord = xCoord;
-        this.yCoord = yCoord;
+    public Coordinates( Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
     
     protected Coordinates()
@@ -30,25 +30,25 @@ public class Coordinates implements Serializable
         
     }
 
-    public Double getxCoord() {
-        return xCoord;
+    public Double getxLatitude() {
+        return latitude;
     }
 
-    public void setxCoord(Double xCoord) {
-        this.xCoord = xCoord;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
-    public Double getyCoord() {
-        return yCoord;
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setyCoord(Double yCoord) {
-        this.yCoord = yCoord;
+    public void setlongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     @Override
     public String toString() {
-        return "Coordinates{" + "xCoord=" + xCoord + ", yCoord=" + yCoord + '}';
+        return "Coordinates{" + "latitude=" + latitude + ", yCoord=" + longitude + '}';
     }
 
 

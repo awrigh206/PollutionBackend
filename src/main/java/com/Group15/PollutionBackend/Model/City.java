@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import javax.persistence.Entity;
@@ -23,9 +24,10 @@ public class City implements Serializable
     private String country;
     private String location;
     private Integer count;
+    @SerializedName("measurements")
     private ArrayList<AirQuality> airQuality;
     @OneToOne
-    private Coordinates coords;
+    private Coordinates coordinates;
     
 
     public City(String name, String country, String location, Integer count, ArrayList<AirQuality> airQuality, Coordinates coords) {
@@ -34,7 +36,7 @@ public class City implements Serializable
         this.location = location;
         this.count = count;
         this.airQuality = airQuality;
-        this.coords = coords;
+        this.coordinates = coords;
     }
     
     protected City()
@@ -84,16 +86,16 @@ public class City implements Serializable
         this.airQuality = airQuality;
     }
 
-    public Coordinates getCoords() {
-        return coords;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 
     public void setCoords(Coordinates coords) {
-        this.coords = coords;
+        this.coordinates = coords;
     }
     @Override
     public String toString() {
-        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", count=" + count + ", airQuality=" + airQuality + ", coordinates="+coords.toString()+ '}';
+        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", count=" + count + ", airQuality=" + airQuality + ", coordinates="+coordinates.toString()+ '}';
     }
     
     
