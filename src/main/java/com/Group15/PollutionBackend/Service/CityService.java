@@ -42,6 +42,13 @@ public class CityService
         }
         
     }
+    
+    public City createCity(City toAdd)
+    {
+
+        return cityRepository.save(toAdd);
+        
+    }
             
     public long total()
     {

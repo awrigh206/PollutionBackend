@@ -19,7 +19,7 @@ public class AirQuality implements Serializable
     @SerializedName("parameter")
     private String parameterUsed;
     @SerializedName("value")
-    private Integer valueOf;
+    private Double valueOf;
     private String lastUpdated;
     @SerializedName("unit")
     private String units;
@@ -27,7 +27,7 @@ public class AirQuality implements Serializable
     @Embedded
     private AveragingPeriod averagingPeriod;
 
-    public AirQuality(String parameterUsed, Integer valueOf, String lastUpdated, String units, String sourceName, AveragingPeriod averagingPeriod) {
+    public AirQuality(String parameterUsed, Double valueOf, String lastUpdated, String units, String sourceName, AveragingPeriod averagingPeriod) {
         this.parameterUsed = parameterUsed;
         this.valueOf = valueOf;
         this.lastUpdated = lastUpdated;
@@ -48,11 +48,11 @@ public class AirQuality implements Serializable
         this.parameterUsed = parameterUsed;
     }
 
-    public Integer getValueOf() {
+    public Double getValueOf() {
         return valueOf;
     }
 
-    public void setValueOf(Integer valueOf) {
+    public void setValueOf(Double valueOf) {
         this.valueOf = valueOf;
     }
 

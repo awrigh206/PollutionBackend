@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.DataProcessing;
 
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.MetaData;
+import com.Group15.PollutionBackend.Service.CityService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.net.HttpURLConnection;
@@ -19,7 +20,8 @@ import java.util.Scanner;
  */
 public class RetrieveData 
 {
-    public void sendRequest(String param)
+    
+    public Result sendRequest(String param)
     {
         try
         {
@@ -47,13 +49,15 @@ public class RetrieveData
                 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 Result result = gson.fromJson(json, Result.class);
-                System.out.println(result.toString());
+                return result;
+                
             }
         }
         
         catch(Exception e)
         {
             e.printStackTrace();
+            return null;
         }
     }
     
