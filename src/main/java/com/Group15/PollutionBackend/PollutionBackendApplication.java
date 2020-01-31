@@ -8,6 +8,7 @@ import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Service.CityService;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -44,12 +45,16 @@ public class PollutionBackendApplication implements CommandLineRunner
         cityService.createCity("Dundee", "GB", "GB", 150.0, quality, coords);
         */
         RetrieveData retData = new RetrieveData();
-        Result result = retData.sendRequest("https://api.openaq.org/v1/latest?limit=500");
+        List<Result> results = retData.sendRequest(1);
         
-        for(City toAdd : result.getResults())
+        for(Result result: results)
         {
-            cityService.createCity(toAdd);
+            for(City toAdd : result.getResults())
+            {
+                cityService.createCity(toAdd);
+            }
         }
+        
         
         
     }
