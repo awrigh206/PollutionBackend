@@ -17,22 +17,22 @@ import javax.persistence.Embeddable;
 public class AveragingPeriod implements Serializable
 {
     @SerializedName("value")
-    private Integer valueOf;
+    private Double valueOf;
     private String unit;
 
     protected AveragingPeriod() {
     }
 
-    public AveragingPeriod(int valueOf, String unit) {
+    public AveragingPeriod(Double valueOf, String unit) {
         this.valueOf = valueOf;
         this.unit = unit;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return valueOf;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.valueOf = value;
     }
 

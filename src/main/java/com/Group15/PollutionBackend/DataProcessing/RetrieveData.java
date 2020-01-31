@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.DataProcessing;
 
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.MetaData;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.net.HttpURLConnection;
@@ -45,7 +46,8 @@ public class RetrieveData
                 sc.close();
                 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                City city = gson.fromJson(json, City.class);
+                Result result = gson.fromJson(json, Result.class);
+                System.out.println(result.toString());
             }
         }
         

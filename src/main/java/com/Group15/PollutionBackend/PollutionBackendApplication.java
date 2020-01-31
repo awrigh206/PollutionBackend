@@ -28,7 +28,7 @@ public class PollutionBackendApplication implements CommandLineRunner
     public void run(String... args) throws Exception 
     {
         ArrayList<AirQuality> quality = new ArrayList<>();
-        AveragingPeriod period = new AveragingPeriod(1,"s");
+        AveragingPeriod period = new AveragingPeriod(1.0,"s");
         quality.add(new AirQuality("Carbon", 200, "yesterday", "G", "me", period));
         quality.add(new AirQuality("Not Carbon", 500, "tomorrow", "G", "me", period));
         quality.add(new AirQuality("Really Not Carbon", 1000, "yesterday", "KG", "me", period));
