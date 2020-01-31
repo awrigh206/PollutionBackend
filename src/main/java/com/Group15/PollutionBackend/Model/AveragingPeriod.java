@@ -23,6 +23,14 @@ public class AveragingPeriod implements Serializable
     private int valueOf;
     private String unit;
 
+    protected AveragingPeriod() {
+    }
+
+    public AveragingPeriod(int valueOf, String unit) {
+        this.valueOf = valueOf;
+        this.unit = unit;
+    }
+
     public int getValue() {
         return valueOf;
     }
