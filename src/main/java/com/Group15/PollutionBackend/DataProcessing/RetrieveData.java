@@ -5,9 +5,7 @@
  */
 package com.Group15.PollutionBackend.DataProcessing;
 
-import com.Group15.PollutionBackend.Model.City;
-import com.Group15.PollutionBackend.Model.MetaData;
-import com.Group15.PollutionBackend.Service.CityService;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.net.HttpURLConnection;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.Group15.PollutionBackend.Model;
+package com.Group15.PollutionBackend.DataProcessing;
 
 import com.google.gson.annotations.SerializedName;
 
