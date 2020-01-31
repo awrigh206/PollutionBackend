@@ -2,6 +2,7 @@ package com.Group15.PollutionBackend;
 
 import com.Group15.PollutionBackend.DataProcessing.RetrieveData;
 import com.Group15.PollutionBackend.Model.AirQuality;
+import com.Group15.PollutionBackend.Model.AveragingPeriod;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Service.CityService;
 import java.util.ArrayList;
@@ -27,6 +28,10 @@ public class PollutionBackendApplication implements CommandLineRunner
     public void run(String... args) throws Exception 
     {
         ArrayList<AirQuality> quality = new ArrayList<>();
+        AveragingPeriod period = new AveragingPeriod();
+        quality.add(new AirQuality("Carbon", 200, "yesterday", "G", "me", period));
+        quality.add(new AirQuality("Not Carbon", 500, "tomorrow", "G", "me", period));
+        quality.add(new AirQuality("Really Not Carbon", 1000, "yesterday", "KG", "me", period));
         Coordinates coords = new Coordinates(2.0,3.0);
         //coordService.createCoord(2.0, 3.0);
         

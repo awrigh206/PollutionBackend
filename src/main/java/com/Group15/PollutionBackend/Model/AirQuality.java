@@ -27,6 +27,19 @@ public class AirQuality implements Serializable
     @Embedded
     private AveragingPeriod averagingPeriod;
 
+    public AirQuality(String parameterUsed, Integer valueOf, String lastUpdated, String units, String sourceName, AveragingPeriod averagingPeriod) {
+        this.parameterUsed = parameterUsed;
+        this.valueOf = valueOf;
+        this.lastUpdated = lastUpdated;
+        this.units = units;
+        this.sourceName = sourceName;
+        this.averagingPeriod = averagingPeriod;
+    }
+
+    protected AirQuality() {
+    }
+    
+    
     public String getParameterUsed() {
         return parameterUsed;
     }
