@@ -31,11 +31,11 @@ public class PollutionBackendApplication implements CommandLineRunner
         Coordinates coords = new Coordinates(2.0,3.0);
         coordService.createCoord(2.0, 3.0);
         
-        cityService.createCity("myCity", "GB", "GB", 100, quality, coords);
-        cityService.createCity("glasgow", "GB", "GB", 65, quality, coords);
-        cityService.createCity("edinburgh", "GB", "GB", 3, quality,coords);
-        cityService.createCity("Aberdeen", "GB", "GB", 201, quality, coords);
-        cityService.createCity("Dundee", "GB", "GB", 150, quality, coords);
+        cityService.createCity("myCity", "GB", "GB", 100.0, quality, coords);
+        cityService.createCity("glasgow", "GB", "GB", 65.0, quality, coords);
+        cityService.createCity("edinburgh", "GB", "GB", 3.0, quality,coords);
+        cityService.createCity("Aberdeen", "GB", "GB", 201.0, quality, coords);
+        cityService.createCity("Dundee", "GB", "GB", 150.0, quality, coords);
         
         RetrieveData retData = new RetrieveData();
         retData.sendRequest("https://api.openaq.org/v1/latest?country=GB&limit=200");

@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.Model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
@@ -17,6 +18,8 @@ import javax.persistence.Id;
 public class Coordinates implements Serializable 
 {
     @Id
+    @GeneratedValue
+    private Integer id;
     private Double latitude;
     private Double longitude;
 
@@ -30,7 +33,7 @@ public class Coordinates implements Serializable
         
     }
 
-    public Double getxLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
@@ -46,6 +49,13 @@ public class Coordinates implements Serializable
         this.longitude = longitude;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
     @Override
     public String toString() {
         return "Coordinates{" + "latitude=" + latitude + ", yCoord=" + longitude + '}';

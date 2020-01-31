@@ -28,13 +28,13 @@ public class CityService
         this.cityRepository = cityRepository;
     }
     
-    public City createCity(String name, String country, String location, Integer count, ArrayList<AirQuality> airQuality,Coordinates coords)
+    public City createCity(String name, String country, String location, Double distance, ArrayList<AirQuality> airQuality,Coordinates coords)
     {
         City city = cityRepository.findByName(name);
         //TourPackage tourPackage = tourPackageOpt.get();
         if(city == null)
         {
-            return cityRepository.save(new City(name,country,location,count,airQuality,coords));
+            return cityRepository.save(new City(name,country,location,distance,airQuality,coords));
         }
         else
         {

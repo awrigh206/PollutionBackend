@@ -7,6 +7,8 @@ package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Repository.CityRepository;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,6 +47,20 @@ public class CityController
     {
         City city = cityRepo.findByName(cityName);
         return city;
+        //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/Cities")
+    public ArrayList<City> getCities()
+    {
+        ArrayList<City> cities = new ArrayList<>();
+        Iterator it = cityRepo.findAll().iterator();
+        while (it.hasNext())
+        {
+            cities.add((City)it.next());
+        }
+        
+        return cities;
         //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
     }
     

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -23,18 +25,20 @@ public class City implements Serializable
     private String name;
     private String country;
     private String location;
-    private Integer count;
+    private Double distance;
     @SerializedName("measurements")
+    @Cascade({CascadeType.ALL})
     private ArrayList<AirQuality> airQuality;
     @OneToOne
+    @Cascade({CascadeType.ALL})
     private Coordinates coordinates;
     
 
-    public City(String name, String country, String location, Integer count, ArrayList<AirQuality> airQuality, Coordinates coords) {
+    public City(String name, String country, String location, Double distance, ArrayList<AirQuality> airQuality, Coordinates coords) {
         this.name = name;
         this.country = country;
         this.location = location;
-        this.count = count;
+        this.distance = distance;
         this.airQuality = airQuality;
         this.coordinates = coords;
     }
@@ -70,12 +74,12 @@ public class City implements Serializable
         this.location = location;
     }
 
-    public Integer getCount() {
-        return count;
+    public Double getDistance() {
+        return distance;
     }
 
-    public void setCount(Integer count) {
-        this.count = count;
+    public void setCount(Double distance) {
+        this.distance = distance;
     }
 
     public ArrayList<AirQuality> getAirQuality() {
@@ -95,7 +99,7 @@ public class City implements Serializable
     }
     @Override
     public String toString() {
-        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", count=" + count + ", airQuality=" + airQuality + ", coordinates="+coordinates.toString()+ '}';
+        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality + ", coordinates="+coordinates.toString()+ '}';
     }
     
     

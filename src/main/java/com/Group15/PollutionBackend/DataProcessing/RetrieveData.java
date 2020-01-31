@@ -47,7 +47,6 @@ public class RetrieveData
                 
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 City city = gson.fromJson(json, City.class);
-                System.out.println("Object: " + city.toString());
             }
         }
         
