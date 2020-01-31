@@ -8,11 +8,17 @@ package com.Group15.PollutionBackend.Model;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.Generated;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 /**
  *
@@ -22,19 +28,21 @@ import org.hibernate.annotations.CascadeType;
 public class City implements Serializable 
 {
     @Id
+    @GeneratedValue
+    private Integer cityId;
     private String name;
     private String country;
     private String location;
     private Double distance;
     @SerializedName("measurements")
-    @Cascade({CascadeType.ALL})
-    private ArrayList<AirQuality> airQuality;
-    @OneToOne
-    @Cascade({CascadeType.ALL})
+    @ElementCollection
+    @Embedded
+    private List<AirQuality> airQuality;
+    @Embedded
     private Coordinates coordinates;
     
 
-    public City(String name, String country, String location, Double distance, ArrayList<AirQuality> airQuality, Coordinates coords) {
+    public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords) {
         this.name = name;
         this.country = country;
         this.location = location;
@@ -82,11 +90,11 @@ public class City implements Serializable
         this.distance = distance;
     }
 
-    public ArrayList<AirQuality> getAirQuality() {
+    public List<AirQuality> getAirQuality() {
         return airQuality;
     }
 
-    public void setAirQuality(ArrayList<AirQuality> airQuality) {
+    public void setAirQuality(List<AirQuality> airQuality) {
         this.airQuality = airQuality;
     }
 
@@ -97,6 +105,18 @@ public class City implements Serializable
     public void setCoords(Coordinates coords) {
         this.coordinates = coords;
     }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    
+    
+    
     @Override
     public String toString() {
         return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality + ", coordinates="+coordinates.toString()+ '}';

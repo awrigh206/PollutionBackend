@@ -4,7 +4,6 @@ import com.Group15.PollutionBackend.DataProcessing.RetrieveData;
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Service.CityService;
-import com.Group15.PollutionBackend.Service.CoordinateService;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -17,8 +16,8 @@ public class PollutionBackendApplication implements CommandLineRunner
     @Autowired
     private CityService cityService;
     
-    @Autowired 
-    private CoordinateService coordService;
+   // @Autowired 
+    //private CoordinateService coordService;
 
     public static void main(String[] args) {
             SpringApplication.run(PollutionBackendApplication.class, args);
@@ -29,7 +28,7 @@ public class PollutionBackendApplication implements CommandLineRunner
     {
         ArrayList<AirQuality> quality = new ArrayList<>();
         Coordinates coords = new Coordinates(2.0,3.0);
-        coordService.createCoord(2.0, 3.0);
+        //coordService.createCoord(2.0, 3.0);
         
         cityService.createCity("myCity", "GB", "GB", 100.0, quality, coords);
         cityService.createCity("glasgow", "GB", "GB", 65.0, quality, coords);

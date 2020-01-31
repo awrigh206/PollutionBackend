@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.Model;
 
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,13 +16,10 @@ import javax.persistence.Id;
  *
  * @author Andrew Wright
  */
-@Entity
+@Embeddable 
 public class AveragingPeriod implements Serializable
 {
-    @Id
-    @GeneratedValue
-    private Integer id;
-     @SerializedName("value")
+    @SerializedName("value")
     private int valueOf;
     private String unit;
 
@@ -41,13 +39,6 @@ public class AveragingPeriod implements Serializable
         this.unit = unit;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
     @Override
     public String toString() {
         return "AveragingPeriod{" + "value=" + valueOf + ", unit=" + unit + '}';

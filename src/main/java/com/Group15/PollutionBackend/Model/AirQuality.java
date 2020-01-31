@@ -5,55 +5,60 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 /**
  *
  * @author Andrew Wright
  */
-@Entity
+@Embeddable
 public class AirQuality implements Serializable
 {
-    @Id
-    @GeneratedValue
-    private Integer id;
-    private String parameter;
-    private Integer value;
+    @SerializedName("parameter")
+    private String parameterUsed;
+    @SerializedName("value")
+    private Integer valueOf;
     private String lastUpdated;
-    private String unit;
+    @SerializedName("unit")
+    private String units;
     private String sourceName;
-    @OneToOne
-    @Cascade({CascadeType.ALL})
+    @Embedded
     private AveragingPeriod averagingPeriod;
 
-    public String getParameter() {
-        return parameter;
+    public String getParameterUsed() {
+        return parameterUsed;
     }
 
-    public void setParameter(String parameter) {
-        this.parameter = parameter;
+    public void setParameterUsed(String parameterUsed) {
+        this.parameterUsed = parameterUsed;
     }
 
-    public Integer getValue() {
-        return value;
+    public Integer getValueOf() {
+        return valueOf;
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setValueOf(Integer valueOf) {
+        this.valueOf = valueOf;
     }
+
+    public String getUnits() {
+        return units;
+    }
+
+    public void setUnits(String units) {
+        this.units = units;
+    }
+
+    
 
     public String getUnit() {
-        return unit;
+        return units;
     }
 
     public void setUnit(String unit) {
-        this.unit = unit;
+        this.units = unit;
     }
 
     public String getLastUpdated() {
@@ -80,16 +85,10 @@ public class AirQuality implements Serializable
         this.sourceName = sourceName;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    
     @Override
     public String toString() {
-        return "AirQuality{" + "parameter=" + parameter + ", value=" + value + ", lastUpdated=" + lastUpdated + ", unit=" + unit + ", sourceName=" + sourceName + ", averagingPeriod=" + averagingPeriod + '}';
+        return "AirQuality{" + "parameter=" + parameterUsed + ", value=" + valueOf + ", lastUpdated=" + lastUpdated + ", unit=" + units + ", sourceName=" + sourceName + ", averagingPeriod=" + averagingPeriod + '}';
     }
     
 }
