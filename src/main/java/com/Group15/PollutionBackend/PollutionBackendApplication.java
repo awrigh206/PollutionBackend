@@ -9,6 +9,8 @@ import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Service.CityService;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -17,6 +19,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PollutionBackendApplication implements CommandLineRunner
 {
+    private final Log log = LogFactory.getLog(PollutionBackendApplication.class);
     @Autowired
     private CityService cityService;
     
@@ -44,11 +47,13 @@ public class PollutionBackendApplication implements CommandLineRunner
         cityService.createCity("Aberdeen", "GB", "GB", 201.0, quality, coords);
         cityService.createCity("Dundee", "GB", "GB", 150.0, quality, coords);
         */
-        RetrieveData retData = new RetrieveData();
-        List<Result> results = retData.sendRequest(1);
+        RetrieveData retData = new RetrieveData(2000);
+        List<Result> results = retData.sendRequest();
+        //log.info(results);
         
         for(Result result: results)
         {
+            
             for(City toAdd : result.getResults())
             {
                 cityService.createCity(toAdd);
