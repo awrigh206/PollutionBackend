@@ -47,7 +47,7 @@ public class PollutionBackendApplication implements CommandLineRunner
         cityService.createCity("Aberdeen", "GB", "GB", 201.0, quality, coords);
         cityService.createCity("Dundee", "GB", "GB", 150.0, quality, coords);
         */
-        RetrieveData retData = new RetrieveData(2000);
+        RetrieveData retData = new RetrieveData(500);
         List<Result> results = retData.sendRequest();
         //log.info(results);
         

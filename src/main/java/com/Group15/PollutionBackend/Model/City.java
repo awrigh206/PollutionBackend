@@ -24,6 +24,7 @@ public class City implements Serializable
     @Id
     @GeneratedValue
     private Integer cityId;
+    @SerializedName("city")
     private String name;
     private String country;
     private String location;
