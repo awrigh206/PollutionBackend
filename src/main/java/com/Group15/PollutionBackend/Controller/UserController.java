@@ -52,7 +52,7 @@ public class UserController
     
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(int tourId, @RequestBody @Validated UserDto userDto) 
+    public void createUser(@RequestBody @Validated UserDto userDto) 
     {
         userService.createUser(userDto);
     }

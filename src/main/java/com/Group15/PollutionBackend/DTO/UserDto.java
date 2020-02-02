@@ -15,11 +15,11 @@ import javax.validation.constraints.Size;
  */
 public class UserDto
 {
-    @Min(0)
-    @Max(100)
+    //@Min(0)
+    //@Max(100)
     private String userName;
     private String password;
-    @Size( max = 30)
+    //@Size( max = 30)
     private String email;
     private String number;
 
