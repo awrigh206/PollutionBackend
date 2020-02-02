@@ -118,4 +118,74 @@ public class RetrieveData
         
     }
     
+    public Result processPageSingle(int page) throws Exception
+    {
+        URL url = new URL("https://api.openaq.org/v1/latest?limit="+limit+"&page="+page);
+        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+        conn.setRequestMethod("GET");
+        conn.connect();
+        int responseCode = conn.getResponseCode();
+
+        if(responseCode!=200)
+        {
+            //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
+            throw new RuntimeException ("HTTPResponseCode: " + responseCode);
+        }
+
+        else
+        {
+            Scanner sc = new Scanner(url.openStream());
+            String json = "";
+            while(sc.hasNext())
+            {
+                json+=sc.nextLine();
+            }
+            sc.close();
+            
+            //Result result = gson.fromJson(json, Result.class);
+            return mapper.readValue(json, Result.class);
+            //Result result = JsonIterator.deserialize(json, Result.class);
+        }
+    }
+    
+    public int getTotalPages()
+    {
+        try
+        {
+            URL url = new URL("https://api.openaq.org/v1/latest?limit=1&page=1");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            
+            if(responseCode!=200)
+            {
+                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
+                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
+            }
+            
+            else
+            {
+                Scanner sc = new Scanner(url.openStream());
+                String json = "";
+                while(sc.hasNext())
+                {
+                    json+=sc.nextLine();
+                }
+                sc.close();
+                Result result = mapper.readValue(json, Result.class);
+                
+                
+                return (int) result.getMeta().getFound()/limit+1;
+                
+            }
+        }
+        
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
 }
