@@ -1,15 +1,8 @@
 package com.Group15.PollutionBackend;
 
 import com.Group15.PollutionBackend.DataProcessing.DataThread;
-import com.Group15.PollutionBackend.DataProcessing.Result;
 import com.Group15.PollutionBackend.DataProcessing.RetrieveData;
-import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.AveragingPeriod;
-import com.Group15.PollutionBackend.Model.City;
-import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Service.CityService;
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
