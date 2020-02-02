@@ -8,6 +8,7 @@ package com.Group15.PollutionBackend.Model;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -20,11 +21,19 @@ import javax.persistence.Table;
 public class User implements Serializable 
 {
     @Id
+    @GeneratedValue
     private Integer id;
     private String userName;
     private String password;
     private String email;
     private String phoneNumber;
+
+    public User(String userName, String password, String email, String phoneNumber) {
+        this.userName = userName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
 
     public Integer getId() {
         return id;
