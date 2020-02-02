@@ -33,6 +33,6 @@ public interface UserRepository extends PagingAndSortingRepository<User,Integer>
     @Override
     public <S extends User> S save(S s);
     
-    User findByName(@Param("name") String name);
+    User findByUserName(@Param("name") String name);
     User findByEmail(@Param("email") String email);
 }

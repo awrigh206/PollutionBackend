@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import com.Group15.PollutionBackend.DTO.UserDto;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
@@ -34,6 +35,11 @@ public class User implements Serializable
         this.phoneNumber = phoneNumber;
         this.password = password;
     }
+
+    protected User() {
+    }
+    
+    
 
     public Integer getId() {
         return id;

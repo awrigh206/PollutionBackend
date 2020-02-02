@@ -5,13 +5,9 @@
  */
 package com.Group15.PollutionBackend.Service;
 
-import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.City;
-import com.Group15.PollutionBackend.Model.Coordinates;
+import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.Model.User;
-import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Repository.UserRepository;
-import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +28,26 @@ public class UserService
     
     public User createUser(String name, String password, String email, String number)
     {
-        User city = userRepository.findByName(name);
+        User user = userRepository.findByUserName(name);
         //TourPackage tourPackage = tourPackageOpt.get();
-        if(city == null)
+        if(user == null)
         {
             return userRepository.save(new User(name,password,email,number));
+        }
+        else
+        {
+            return null;
+        }
+        
+    }
+    
+    public User createUser(UserDto dto)
+    {
+        User user = userRepository.findByUserName(dto.getUserName());
+        //TourPackage tourPackage = tourPackageOpt.get();
+        if(user == null)
+        {
+            return userRepository.save(new User(dto.getUserName(),dto.getPassword(),dto.getEmail(),dto.getNumber()));
         }
         else
         {
