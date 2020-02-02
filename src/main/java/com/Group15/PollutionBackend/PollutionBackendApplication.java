@@ -33,12 +33,12 @@ public class PollutionBackendApplication implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception 
     {
-        ArrayList<AirQuality> quality = new ArrayList<>();
-        AveragingPeriod period = new AveragingPeriod(1.0,"s");
+        //ArrayList<AirQuality> quality = new ArrayList<>();
+        //AveragingPeriod period = new AveragingPeriod(1.0,"s");
         //quality.add(new AirQuality("Carbon", 200, "yesterday", "G", "me", period));
         //quality.add(new AirQuality("Not Carbon", 500, "tomorrow", "G", "me", period));
         //quality.add(new AirQuality("Really Not Carbon", 1000, "yesterday", "KG", "me", period));
-        Coordinates coords = new Coordinates(2.0,3.0);
+        //Coordinates coords = new Coordinates(2.0,3.0);
         //coordService.createCoord(2.0, 3.0);
         /*
         cityService.createCity("myCity", "GB", "GB", 100.0, quality, coords);
@@ -47,9 +47,13 @@ public class PollutionBackendApplication implements CommandLineRunner
         cityService.createCity("Aberdeen", "GB", "GB", 201.0, quality, coords);
         cityService.createCity("Dundee", "GB", "GB", 150.0, quality, coords);
         */
+        long startTime = System.nanoTime();
         RetrieveData retData = new RetrieveData(500);
         List<Result> results = retData.sendRequest();
         //log.info(results);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+        log.info("That took about: " +duration);
         
         for(Result result: results)
         {

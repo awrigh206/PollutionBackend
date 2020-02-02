@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
@@ -25,11 +26,13 @@ public class City implements Serializable
     @GeneratedValue
     private Integer cityId;
     @SerializedName("city")
+    @JsonProperty("city")
     private String name;
     private String country;
     private String location;
     private Double distance;
     @SerializedName("measurements")
+    @JsonProperty("measurements")
     @ElementCollection
     @Embedded
     private List<AirQuality> airQuality;

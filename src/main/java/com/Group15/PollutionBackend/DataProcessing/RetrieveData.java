@@ -6,8 +6,10 @@
 package com.Group15.PollutionBackend.DataProcessing;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.jsoniter.JsonIterator;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -21,12 +23,14 @@ import java.util.Scanner;
 public class RetrieveData 
 {
     public List<Result> results = new ArrayList<>();
-    private final Gson gson;
+    //private final Gson gson;
+    private final ObjectMapper mapper;
     private final int limit;
 
     public RetrieveData(int limit) 
     {
-        gson = new GsonBuilder().create();
+        //gson = new GsonBuilder().create();
+        mapper = new ObjectMapper();
         this.limit = limit;
     }
     
@@ -56,11 +60,12 @@ public class RetrieveData
                     json+=sc.nextLine();
                 }
                 sc.close();
-                Result result = gson.fromJson(json, Result.class);
+                //Result result = gson.fromJson(json, Result.class);
+                Result result = mapper.readValue(json, Result.class);
+                //Result result = JsonIterator.deserialize(json, Result.class);
                 
                 
                 int totalPages = (int) result.getMeta().getFound()/limit+1;
-                System.out.println("total pages: " + totalPages);
                 
                 for (int i=1; i< totalPages; i++)
                 {
@@ -104,9 +109,10 @@ public class RetrieveData
             }
             sc.close();
             
-            Result result = gson.fromJson(json, Result.class);
+            //Result result = gson.fromJson(json, Result.class);
+            Result result = mapper.readValue(json, Result.class);
+            //Result result = JsonIterator.deserialize(json, Result.class);
             results.add(result);
-            System.out.println("page: " + page);
         }
         
         
