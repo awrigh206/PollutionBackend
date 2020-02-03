@@ -18,10 +18,12 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.io.IOUtils;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -29,7 +31,7 @@ import java.util.Scanner;
  */
 public class RetrieveData 
 {
-    public List<Result> results = new ArrayList<>();
+    public Set<Result> results = new HashSet<>();
     private final ObjectMapper mapper;
     private final int limit;
 
@@ -37,33 +39,6 @@ public class RetrieveData
     {
         mapper = new ObjectMapper();
         this.limit = limit;
-    }
-
-    
-    public void processPage(int page) throws Exception
-    {
-        URL url = new URL("https://api.openaq.org/v1/latest?limit="+limit+"&page="+page);
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.connect();
-        int responseCode = conn.getResponseCode();
-
-        if(responseCode!=200)
-        {
-            //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
-            throw new RuntimeException ("HTTPResponseCode: " + responseCode);
-        }
-
-        else
-        {
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            String json = IOUtils.toString(in, "UTF-8");
-            Result result = mapper.readValue(json, Result.class);
-            in.close();
-            results.add(result);
-        }
-        
-        
     }
     
     public Result processPageSingle(int page) throws Exception
@@ -88,15 +63,46 @@ public class RetrieveData
             conn.disconnect();
             
             return mapper.readValue(json, Result.class);
-            //Result result = new Result();
-            //result.setResults(read(json));
-            //result.setResults(JsonIterator.deserialize(json, City.class));
-            
-            //return JsonIterator.deserialize(json, Result.class);
         }
     }
     
-    //TODO: This currently has no purpose as there are issues with the code but it may be useful for optimisation in the future
+    public int getTotalPages()
+    {
+        try
+        {
+            URL url = new URL("https://api.openaq.org/v1/latest?limit=1&page=1");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+            
+            if(responseCode!=200)
+            {
+                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
+                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
+            }
+            
+            else
+            {
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                String json = IOUtils.toString(in, "UTF-8");
+                Result result = mapper.readValue(json, Result.class);
+                in.close();    
+                
+                return (int) result.getMeta().getFound()/limit+1;
+                
+            }
+        }
+        
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+    
+    
+        //TODO: This currently has no purpose as there are issues with the code but it may be useful for optimisation in the future
     private ArrayList<City> read(String json) throws Exception
     {
         JsonFactory jfactory = new JsonFactory();
@@ -148,41 +154,6 @@ public class RetrieveData
 
         jsonParser.close();
         return cities;
-    }
-    
-    public int getTotalPages()
-    {
-        try
-        {
-            URL url = new URL("https://api.openaq.org/v1/latest?limit=1&page=1");
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-            
-            if(responseCode!=200)
-            {
-                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
-                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
-            }
-            
-            else
-            {
-                InputStream in = new BufferedInputStream(conn.getInputStream());
-                String json = IOUtils.toString(in, "UTF-8");
-                Result result = mapper.readValue(json, Result.class);
-                in.close();    
-                
-                return (int) result.getMeta().getFound()/limit+1;
-                
-            }
-        }
-        
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return 0;
-        }
     }
 
 }

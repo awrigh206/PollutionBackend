@@ -7,7 +7,6 @@ package com.Group15.PollutionBackend.DataProcessing;
 
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Service.CityService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
