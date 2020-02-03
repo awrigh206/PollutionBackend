@@ -30,23 +30,10 @@ public class PollutionBackendApplication implements CommandLineRunner
 
         long startTime = System.nanoTime();
         RetrieveData retData = new RetrieveData(1000);
-        //List<Result> results = retData.sendRequest();
         getData(retData);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
         log.info("That took about: " +duration);
-        
-        //for(Result result: results)
-        //{
-            
-         //   for(City toAdd : result.getResults())
-           // {
-            //    cityService.createCity(toAdd);
-           // }
-        //}
-        
-        
-        
     }
     
     private void getData(RetrieveData data)
@@ -55,8 +42,8 @@ public class PollutionBackendApplication implements CommandLineRunner
         
         for(int i =0; i<totalPages;i++)
         {
-            Thread t = new Thread(new DataThread(1,2,data,cityService), "data"+i);
-            t.run();
+            Thread t = new Thread(new DataThread(i,i+1,data,cityService), "data"+i);
+            t.start();
         }
         
     }
