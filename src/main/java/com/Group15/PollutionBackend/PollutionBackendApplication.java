@@ -29,7 +29,7 @@ public class PollutionBackendApplication implements CommandLineRunner
     {
 
         long startTime = System.nanoTime();
-        RetrieveData retData = new RetrieveData(1000);
+        RetrieveData retData = new RetrieveData(1200);
         getData(retData);
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
@@ -40,7 +40,7 @@ public class PollutionBackendApplication implements CommandLineRunner
     {
         int totalPages = data.getTotalPages();
         
-        for(int i =0; i<totalPages;i++)
+        for(int i =0; i<totalPages+1;i++)
         {
             Thread t = new Thread(new DataThread(i,i+1,data,cityService), "data"+i);
             t.start();
