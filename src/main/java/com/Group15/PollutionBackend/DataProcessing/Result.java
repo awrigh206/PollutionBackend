@@ -23,8 +23,11 @@ public class Result
         this.results = results;
     }
 
-    protected Result() {
+    protected Result() 
+    {
     }
+    
+    
 
     public MetaData getMeta() {
         return meta;

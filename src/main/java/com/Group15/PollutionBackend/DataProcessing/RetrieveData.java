@@ -18,12 +18,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import org.apache.commons.io.IOUtils;
-import java.util.Scanner;
 import java.util.Set;
+import org.apache.commons.io.IOUtils;
 
 /**
  *
@@ -31,7 +27,6 @@ import java.util.Set;
  */
 public class RetrieveData 
 {
-    public Set<Result> results = new HashSet<>();
     private final ObjectMapper mapper;
     private final int limit;
 

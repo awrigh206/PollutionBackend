@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.DataProcessing;
 
-import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Service.CityService;
 
 /**
@@ -17,8 +16,8 @@ public class DataThread implements Runnable
     private final int start;
     private final int end;
     
-    private RetrieveData data;
-    private CityService cityService;
+    private final RetrieveData data;
+    private final CityService cityService;
 
     public DataThread(int start, int end, RetrieveData data, CityService cityService) {
         this.start = start;
@@ -49,11 +48,9 @@ public class DataThread implements Runnable
     
     private void addCities(Result result)
     {
-        for(City toAdd : result.getResults())
-        {
-            if(toAdd != null)
-                cityService.createCity(toAdd);
-        }
+        result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
+            cityService.createCity(toAdd);
+        });
     }
     
 }

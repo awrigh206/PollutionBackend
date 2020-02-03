@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CityService 
 {
-    private CityRepository cityRepository;
+    private final CityRepository cityRepository;
     
     @Autowired
     public CityService(CityRepository cityRepository) 
