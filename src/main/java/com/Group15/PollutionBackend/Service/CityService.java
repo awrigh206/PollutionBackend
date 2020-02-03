@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * @author Andrew Wright
  */
 @Service
-public class CityService 
+public class CityService implements IService 
 {
     private final CityRepository cityRepository;
     
@@ -43,10 +43,11 @@ public class CityService
         
     }
     
-    public City createCity(City toAdd)
+    @Override
+    public Object createNew(Object toAdd)
     {
 
-        return cityRepository.save(toAdd);
+        return cityRepository.save((City)toAdd);
         
     }
             

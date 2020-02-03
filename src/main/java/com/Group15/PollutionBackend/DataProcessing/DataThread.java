@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.DataProcessing;
 
 import com.Group15.PollutionBackend.Service.CityService;
+import com.Group15.PollutionBackend.Service.IService;
 
 /**
  *
@@ -17,13 +18,13 @@ public class DataThread implements Runnable
     private final int end;
     
     private final RetrieveData data;
-    private final CityService cityService;
+    private final IService service;
 
-    public DataThread(int start, int end, RetrieveData data, CityService cityService) {
+    public DataThread(int start, int end, RetrieveData data, IService service) {
         this.start = start;
         this.end = end;
         this.data = data;
-        this.cityService = cityService;
+        this.service = service;
     }
 
     @Override
@@ -33,7 +34,7 @@ public class DataThread implements Runnable
         {
             for(int i= start; i< end; i++)
             {
-                Result result = data.processPageSingle(i);
+                Result result = data.processPageSingle("https://api.openaq.org/v1/latest",i);
                 addCities(result);
             }
         }
@@ -42,14 +43,12 @@ public class DataThread implements Runnable
         {
             e.printStackTrace();
         }
-        
-        
     }
     
     private void addCities(Result result)
     {
         result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
-            cityService.createCity(toAdd);
+            service.createNew(toAdd);
         });
     }
     

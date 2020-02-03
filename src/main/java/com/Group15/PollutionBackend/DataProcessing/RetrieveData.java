@@ -9,8 +9,6 @@ package com.Group15.PollutionBackend.DataProcessing;
 import com.Group15.PollutionBackend.Model.City;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonToken;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsoniter.JsonIterator;
 import java.io.BufferedInputStream;
@@ -18,7 +16,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Set;
 import org.apache.commons.io.IOUtils;
 
 /**
@@ -36,9 +33,9 @@ public class RetrieveData
         this.limit = limit;
     }
     
-    public Result processPageSingle(int page) throws Exception
+    public Result processPageSingle(String baseUrl,int page) throws Exception
     {
-        URL url = new URL("https://api.openaq.org/v1/latest?limit="+limit+"&page="+page);
+        URL url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();
