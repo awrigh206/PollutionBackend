@@ -6,14 +6,21 @@
 package com.Group15.PollutionBackend.DataProcessing;
 
 
+import com.Group15.PollutionBackend.Model.City;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.jsoniter.JsonIterator;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import org.apache.commons.io.IOUtils;
 import java.util.Scanner;
 
 /**
@@ -23,13 +30,11 @@ import java.util.Scanner;
 public class RetrieveData 
 {
     public List<Result> results = new ArrayList<>();
-    //private final Gson gson;
     private final ObjectMapper mapper;
     private final int limit;
 
     public RetrieveData(int limit) 
     {
-        //gson = new GsonBuilder().create();
         mapper = new ObjectMapper();
         this.limit = limit;
     }
@@ -60,9 +65,7 @@ public class RetrieveData
                     json+=sc.nextLine();
                 }
                 sc.close();
-                //Result result = gson.fromJson(json, Result.class);
                 Result result = mapper.readValue(json, Result.class);
-                //Result result = JsonIterator.deserialize(json, Result.class);
                 
                 
                 int totalPages = (int) result.getMeta().getFound()/limit+1;
@@ -101,17 +104,10 @@ public class RetrieveData
 
         else
         {
-            Scanner sc = new Scanner(url.openStream());
-            String json = "";
-            while(sc.hasNext())
-            {
-                json+=sc.nextLine();
-            }
-            sc.close();
-            
-            //Result result = gson.fromJson(json, Result.class);
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = IOUtils.toString(in, "UTF-8");
             Result result = mapper.readValue(json, Result.class);
-            //Result result = JsonIterator.deserialize(json, Result.class);
+            in.close();
             results.add(result);
         }
         
@@ -134,18 +130,72 @@ public class RetrieveData
 
         else
         {
-            Scanner sc = new Scanner(url.openStream());
-            String json = "";
-            while(sc.hasNext())
-            {
-                json+=sc.nextLine();
-            }
-            sc.close();
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            String json = IOUtils.toString(in, "UTF-8");
+            in.close();
+            conn.disconnect();
             
-            //Result result = gson.fromJson(json, Result.class);
             return mapper.readValue(json, Result.class);
-            //Result result = JsonIterator.deserialize(json, Result.class);
+            //Result result = new Result();
+            //result.setResults(read(json));
+            //result.setResults(JsonIterator.deserialize(json, City.class));
+            
+            //return JsonIterator.deserialize(json, Result.class);
         }
+    }
+    
+    //TODO: This currently has no purpose as there are issues with the code but it may be useful for optimisation in the future
+    private ArrayList<City> read(String json) throws Exception
+    {
+        JsonFactory jfactory = new JsonFactory();
+        JsonParser jsonParser = jfactory.createParser(json);
+        
+        ArrayList<City> cities = new ArrayList<>();
+
+        String name ="";
+        String country="";
+        
+        City city = new City();
+        city = JsonIterator.deserialize(json, City.class);
+        
+        //parsing the Json as shown below should be faster, but for some reason it gets stuck on the "Distance" field. Probably to do with that field having a double value
+        /*
+            for (String field = iter.readObject(); field != null; field = iter.readObject()) 
+            {
+                //System.out.println("This is a: " + field);
+                switch (field) {
+                    case "results":
+                        while (iter.readArray()) 
+                        {
+                            for (String field2 = iter.readObject(); field2 != null; field2 = iter.readObject()) 
+                            {
+                                //System.out.println("This is a: " + field2);
+                                switch (field2) {
+                                    case "country":
+                                        //System.out.println("Found a  country tag, which says: " + iter.readObject());
+                                        // (iter.readArray()) 
+                                        //{
+                                            //iter.skip();
+                                        //}
+                                        break;
+                                    default:
+                                        iter.skip();
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        iter.skip();
+                }
+            }
+        
+        */
+        
+        
+
+
+        jsonParser.close();
+        return cities;
     }
     
     public int getTotalPages()

@@ -52,7 +52,8 @@ public class DataThread implements Runnable
     {
         for(City toAdd : result.getResults())
         {
-            cityService.createCity(toAdd);
+            if(toAdd != null)
+                cityService.createCity(toAdd);
         }
     }
     

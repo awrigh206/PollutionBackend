@@ -8,6 +8,7 @@ package com.Group15.PollutionBackend.Model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -49,9 +50,9 @@ public class City implements Serializable
         this.coordinates = coords;
     }
     
-    protected City()
+    public City()
     {
-        
+        this.airQuality = new ArrayList<>();
     }
 
     
@@ -79,6 +80,12 @@ public class City implements Serializable
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public void setDistance(Double distance) {
+        this.distance = distance;
+    }
+    
+    
 
     public Double getDistance() {
         return distance;
@@ -111,13 +118,18 @@ public class City implements Serializable
     public void setCityId(Integer cityId) {
         this.cityId = cityId;
     }
+    
+    public void addQuality(AirQuality quality)
+    {
+        airQuality.add(quality);
+    }
 
     
     
     
     @Override
     public String toString() {
-        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality + ", coordinates="+coordinates.toString()+ '}';
+        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality.toString() + ", coordinates="+coordinates.toString()+ '}';
     }
     
     

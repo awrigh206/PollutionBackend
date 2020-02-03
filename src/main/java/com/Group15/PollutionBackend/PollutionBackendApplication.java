@@ -29,7 +29,7 @@ public class PollutionBackendApplication implements CommandLineRunner
     {
 
         long startTime = System.nanoTime();
-        RetrieveData retData = new RetrieveData(500);
+        RetrieveData retData = new RetrieveData(1000);
         //List<Result> results = retData.sendRequest();
         getData(retData);
         long endTime = System.nanoTime();
