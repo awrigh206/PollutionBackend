@@ -38,54 +38,6 @@ public class RetrieveData
         mapper = new ObjectMapper();
         this.limit = limit;
     }
-    
-    
-    public List<Result> sendRequest()
-    {
-        try
-        {
-            URL url = new URL("https://api.openaq.org/v1/latest?limit=1&page="+1);
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-            
-            if(responseCode!=200)
-            {
-                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
-                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
-            }
-            
-            else
-            {
-                Scanner sc = new Scanner(url.openStream());
-                String json = "";
-                while(sc.hasNext())
-                {
-                    json+=sc.nextLine();
-                }
-                sc.close();
-                Result result = mapper.readValue(json, Result.class);
-                
-                
-                int totalPages = (int) result.getMeta().getFound()/limit+1;
-                
-                for (int i=1; i< totalPages; i++)
-                {
-                    processPage(i);
-                }
-                
-                return results;
-                
-            }
-        }
-        
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     
     public void processPage(int page) throws Exception
@@ -216,15 +168,10 @@ public class RetrieveData
             
             else
             {
-                Scanner sc = new Scanner(url.openStream());
-                String json = "";
-                while(sc.hasNext())
-                {
-                    json+=sc.nextLine();
-                }
-                sc.close();
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                String json = IOUtils.toString(in, "UTF-8");
                 Result result = mapper.readValue(json, Result.class);
-                
+                in.close();    
                 
                 return (int) result.getMeta().getFound()/limit+1;
                 

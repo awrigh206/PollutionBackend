@@ -6,7 +6,7 @@
 package com.Group15.PollutionBackend.DataProcessing;
 
 import com.Group15.PollutionBackend.Model.City;
-import java.util.List;
+import java.util.List;import java.util.Set;
 
 
 /**
@@ -16,9 +16,9 @@ import java.util.List;
 public class Result 
 {
     private MetaData meta;
-    private List<City> results;
+    private Set<City> results;
 
-    public Result(MetaData meta, List<City> results) {
+    public Result(MetaData meta, Set<City> results) {
         this.meta = meta;
         this.results = results;
     }
@@ -34,11 +34,11 @@ public class Result
         this.meta = meta;
     }
 
-    public List<City> getResults() {
+    public Set<City> getResults() {
         return results;
     }
 
-    public void setResults(List<City> results) {
+    public void setResults(Set<City> results) {
         this.results = results;
     }
 
