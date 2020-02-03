@@ -6,7 +6,6 @@
 package com.Group15.PollutionBackend.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
@@ -17,14 +16,11 @@ import javax.persistence.Embedded;
 @Embeddable
 public class AirQuality implements Serializable
 {
-    @SerializedName("parameter")
     @JsonProperty("parameter")
     private String parameterUsed;
-    @SerializedName("value")
     @JsonProperty("value")
     private Double valueOf;
     private String lastUpdated;
-    @SerializedName("unit")
     @JsonProperty("unit")
     private String units;
     private String sourceName;

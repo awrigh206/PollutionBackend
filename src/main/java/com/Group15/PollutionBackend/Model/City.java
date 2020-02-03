@@ -9,7 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -26,22 +28,22 @@ public class City implements Serializable
     @Id
     @GeneratedValue
     private Integer cityId;
-    @SerializedName("city")
+    //@SerializedName("city")
     @JsonProperty("city")
     private String name;
     private String country;
     private String location;
     private Double distance;
-    @SerializedName("measurements")
+    //@SerializedName("measurements")
     @JsonProperty("measurements")
     @ElementCollection
     @Embedded
-    private List<AirQuality> airQuality;
+    private Set<AirQuality> airQuality;
     @Embedded
     private Coordinates coordinates;
     
 
-    public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords) {
+    public City(String name, String country, String location, Double distance, Set<AirQuality> airQuality, Coordinates coords) {
         this.name = name;
         this.country = country;
         this.location = location;
@@ -52,7 +54,7 @@ public class City implements Serializable
     
     public City()
     {
-        this.airQuality = new ArrayList<>();
+        this.airQuality = new HashSet<>();
     }
 
     
@@ -95,11 +97,11 @@ public class City implements Serializable
         this.distance = distance;
     }
 
-    public List<AirQuality> getAirQuality() {
+    public Set<AirQuality> getAirQuality() {
         return airQuality;
     }
 
-    public void setAirQuality(List<AirQuality> airQuality) {
+    public void setAirQuality(Set<AirQuality> airQuality) {
         this.airQuality = airQuality;
     }
 
