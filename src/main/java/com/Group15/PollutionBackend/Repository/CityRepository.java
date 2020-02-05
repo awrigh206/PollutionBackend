@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.Repository;
 
 import com.Group15.PollutionBackend.Model.City;
+import java.util.ArrayList;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -35,6 +36,7 @@ public interface CityRepository extends PagingAndSortingRepository<City,Integer>
     public <S extends City> S save(S s);
     
     City findByName(@Param("name") String name);
+    ArrayList<City> findAllByName(@Param("name") String name);
     City[] findByCountry(@Param("country") String country);
     
     

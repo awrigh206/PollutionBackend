@@ -43,10 +43,10 @@ public class CityController
      * @return 
      */
     @RequestMapping(method = RequestMethod.GET, path = "/City")
-    public City getCity(@RequestParam(value ="cityName")String cityName)
+    public ArrayList<City> getCity(@RequestParam(value ="cityName")String cityName)
     {
-        City city = cityRepo.findByName(cityName);
-        return city;
+        ArrayList<City> cities = cityRepo.findAllByName(cityName);
+        return cities;
         //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
     }
     

@@ -61,7 +61,7 @@ public class Calculations
                         no2List.add(quality);
                         break;
                     default:
-                        System.out.println("Ther's a parameter that doesn't get caught in the avergaing and it is: " +quality.getParameterUsed());
+                        System.out.println("There's a parameter that doesn't get caught in the avergaing and it is: " +quality.getParameterUsed());
                         continue;
                 }
                 
