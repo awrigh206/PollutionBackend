@@ -5,7 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import javax.persistence.Embeddable;
 
@@ -16,7 +16,7 @@ import javax.persistence.Embeddable;
 @Embeddable 
 public class AveragingPeriod implements Serializable
 {
-    @SerializedName("value")
+    @JsonProperty("value")
     private Double valueOf;
     private String unit;
 

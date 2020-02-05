@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.DataProcessing;
 
-import com.google.gson.annotations.SerializedName;
 
 /**
  *

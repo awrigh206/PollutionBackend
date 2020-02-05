@@ -10,7 +10,6 @@ import com.Group15.PollutionBackend.Model.City;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jsoniter.JsonIterator;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -91,61 +90,6 @@ public class RetrieveData
             e.printStackTrace();
             return 0;
         }
-    }
-    
-    
-        //TODO: This currently has no purpose as there are issues with the code but it may be useful for optimisation in the future
-    private ArrayList<City> read(String json) throws Exception
-    {
-        JsonFactory jfactory = new JsonFactory();
-        JsonParser jsonParser = jfactory.createParser(json);
-        
-        ArrayList<City> cities = new ArrayList<>();
-
-        String name ="";
-        String country="";
-        
-        City city = new City();
-        city = JsonIterator.deserialize(json, City.class);
-        
-        //parsing the Json as shown below should be faster, but for some reason it gets stuck on the "Distance" field. Probably to do with that field having a double value
-        /*
-            for (String field = iter.readObject(); field != null; field = iter.readObject()) 
-            {
-                //System.out.println("This is a: " + field);
-                switch (field) {
-                    case "results":
-                        while (iter.readArray()) 
-                        {
-                            for (String field2 = iter.readObject(); field2 != null; field2 = iter.readObject()) 
-                            {
-                                //System.out.println("This is a: " + field2);
-                                switch (field2) {
-                                    case "country":
-                                        //System.out.println("Found a  country tag, which says: " + iter.readObject());
-                                        // (iter.readArray()) 
-                                        //{
-                                            //iter.skip();
-                                        //}
-                                        break;
-                                    default:
-                                        iter.skip();
-                                }
-                            }
-                        }
-                        break;
-                    default:
-                        iter.skip();
-                }
-            }
-        
-        */
-        
-        
-
-
-        jsonParser.close();
-        return cities;
     }
 
 }
