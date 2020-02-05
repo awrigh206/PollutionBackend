@@ -51,6 +51,7 @@ public class Calculations
                 averageQuality.setSourceName("Averaging of all available data for the city");
                 averageQuality.setUnits(quality.getUnits());
                 averageQuality.setValueOf(findAverage(qualityList,quality.getParameterUsed()));
+                averageCity.addQuality(averageQuality);
             }
             
         }
