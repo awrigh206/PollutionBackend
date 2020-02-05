@@ -1,7 +1,7 @@
 package com.Group15.PollutionBackend;
 
-import com.Group15.PollutionBackend.DataProcessing.DataThread;
-import com.Group15.PollutionBackend.DataProcessing.RetrieveData;
+import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
+import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Service.CityService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
