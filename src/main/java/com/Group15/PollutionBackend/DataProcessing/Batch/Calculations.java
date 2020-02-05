@@ -37,24 +37,53 @@ public class Calculations
     {
         City averageCity = new City();
         List<List<AirQuality>> listOfQualityLists = new ArrayList<>(); 
+        List<AirQuality> pm25List = new ArrayList<>();
+        List<AirQuality> pm10List = new ArrayList<>();
+        List<AirQuality> o3List = new ArrayList<>();
+        List<AirQuality> no2List = new ArrayList<>();
+        
         for (City city: citiesToAverage)
         {
-            listOfQualityLists.add(city.getAirQuality());
+            for(AirQuality quality : city.getAirQuality())
+            {
+                switch (quality.getParameterUsed())
+                {
+                    case "pm25":
+                        pm25List.add(quality);
+                        break;
+                    case "pm10":
+                        pm10List.add(quality);
+                        break;
+                    case "o3":
+                        o3List.add(quality);
+                        break;
+                    case"no2":
+                        no2List.add(quality);
+                        break;
+                    default:
+                        System.out.println("Ther's a parameter that doesn't get caught in the avergaing and it is: " +quality.getParameterUsed());
+                        continue;
+                }
+                
+            }
         }
         
-        for (List<AirQuality> qualityList:listOfQualityLists)
+        listOfQualityLists.add(pm25List);
+        listOfQualityLists.add(pm10List);
+        listOfQualityLists.add(o3List);
+        listOfQualityLists.add(no2List);
+        
+        AirQuality average = new AirQuality();
+        for(List<AirQuality> qualities : listOfQualityLists)
         {
-            for(AirQuality quality: qualityList)
-            {
-                AirQuality averageQuality = new AirQuality();
-                averageQuality.setDateTaken(new Date().toString());
-                averageQuality.setSourceName("Averaging of all available data for the city");
-                averageQuality.setUnits(quality.getUnits());
-                averageQuality.setValueOf(findAverage(qualityList,quality.getParameterUsed()));
-                averageCity.addQuality(averageQuality);
-            }
-            
+
+            average.setParameterUsed(qualities.get(0).getParameterUsed());
+            average.setDateTaken(new Date().toString());
+            average.setSourceName("Averaging of all available dat");
+            average.setValueOf(findAverage(qualities));
+            averageCity.addQuality(average);
         }
+        
         return averageCity;
     }
     /**
@@ -63,17 +92,14 @@ public class Calculations
      * @param param the parameter within the air qualities that you wish to average
      * @return 
      */
-    private double findAverage(List<AirQuality> qualities, String param)
+    private double findAverage(List<AirQuality> qualities)
     {
         long runningTotal =0;
         int numberOfThingsAdded=0;
         for(AirQuality quality: qualities )
         {
-            if(quality.getParameterUsed().equalsIgnoreCase(param))
-            {
                 runningTotal += quality.getValueOf();
                 numberOfThingsAdded++;
-            }
             
         }
         return runningTotal/numberOfThingsAdded;
