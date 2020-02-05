@@ -16,9 +16,6 @@ public class PollutionBackendApplication implements CommandLineRunner
     private final Log log = LogFactory.getLog(PollutionBackendApplication.class);
     @Autowired
     private CityService cityService;
-    
-   // @Autowired 
-    //private CoordinateService coordService;
 
     public static void main(String[] args) {
             SpringApplication.run(PollutionBackendApplication.class, args);
