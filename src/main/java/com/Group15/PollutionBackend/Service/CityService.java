@@ -9,6 +9,7 @@ import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Repository.CityRepository;
+import java.util.ArrayList;
 import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class CityService implements IService
         this.cityRepository = cityRepository;
     }
     
-    public City createCity(String name, String country, String location, Double distance, HashSet<AirQuality> airQuality,Coordinates coords)
+    public City createCity(String name, String country, String location, Double distance, ArrayList<AirQuality> airQuality,Coordinates coords)
     {
         City city = cityRepository.findByName(name);
         //TourPackage tourPackage = tourPackageOpt.get();

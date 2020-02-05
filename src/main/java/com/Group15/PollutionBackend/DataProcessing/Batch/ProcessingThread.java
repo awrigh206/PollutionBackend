@@ -9,7 +9,13 @@ package com.Group15.PollutionBackend.DataProcessing.Batch;
  *
  * @author Andrew Wright
  */
-public class CityProcessor 
+public class ProcessingThread implements Runnable
 {
+
+    @Override
+    public void run() 
+    {
+        
+    }
     
 }

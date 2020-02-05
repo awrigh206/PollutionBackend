@@ -36,10 +36,13 @@ public class AirQuality implements Serializable
         this.averagingPeriod = averagingPeriod;
     }
 
-    protected AirQuality() {
+    public AirQuality() {
     }
     
-    
+    /**
+     * 
+     * @return will return the parameter of the measurement (pm25,CO2, etc)
+     */
     public String getParameterUsed() {
         return parameterUsed;
     }

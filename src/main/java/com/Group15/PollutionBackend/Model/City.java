@@ -7,7 +7,9 @@ package com.Group15.PollutionBackend.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -35,12 +37,12 @@ public class City implements Serializable
     @JsonProperty("measurements")
     @ElementCollection
     @Embedded
-    private Set<AirQuality> airQuality;
+    private List<AirQuality> airQuality;
     @Embedded
     private Coordinates coordinates;
     
 
-    public City(String name, String country, String location, Double distance, Set<AirQuality> airQuality, Coordinates coords) {
+    public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords) {
         this.name = name;
         this.country = country;
         this.location = location;
@@ -51,7 +53,7 @@ public class City implements Serializable
     
     public City()
     {
-        this.airQuality = new HashSet<>();
+        this.airQuality = new ArrayList<>();
     }
 
     
@@ -94,11 +96,11 @@ public class City implements Serializable
         this.distance = distance;
     }
 
-    public Set<AirQuality> getAirQuality() {
+    public List<AirQuality> getAirQuality() {
         return airQuality;
     }
 
-    public void setAirQuality(Set<AirQuality> airQuality) {
+    public void setAirQuality(List<AirQuality> airQuality) {
         this.airQuality = airQuality;
     }
 
