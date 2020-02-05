@@ -49,7 +49,8 @@ public class Calculations
                 AirQuality averageQuality = new AirQuality();
                 averageQuality.setDateTaken(new Date().toString());
                 averageQuality.setSourceName("Averaging of all available data for the city");
-                averageQuality.setUnits("units");
+                averageQuality.setUnits(quality.getUnits());
+                averageQuality.setValueOf(findAverage(qualityList,quality.getParameterUsed()));
             }
             
         }
