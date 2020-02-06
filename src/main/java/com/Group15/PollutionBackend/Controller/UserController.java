@@ -47,7 +47,16 @@ public class UserController
     {
         User user = userRepo.findByUserName(userName);
         return user;
-        //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/auth")
+    public Boolean authenticateUser(@RequestParam(value ="userName")String userName, @RequestParam(value="password") String password)
+    {
+        User user = userRepo.findByUserNameAndPassword(userName, password);
+        if(user != null)
+            return true;
+        else
+            return false;
     }
     
     @RequestMapping(method = RequestMethod.POST)

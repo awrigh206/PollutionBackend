@@ -34,5 +34,6 @@ public interface UserRepository extends PagingAndSortingRepository<User,Integer>
     public <S extends User> S save(S s);
     
     User findByUserName(@Param("name") String name);
+    User findByUserNameAndPassword(@Param("name") String name, @Param("password") String password);
     User findByEmail(@Param("email") String email);
 }
