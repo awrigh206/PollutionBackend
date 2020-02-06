@@ -92,17 +92,7 @@ public class CityController
     
     private City averagingTest()
     {
-        System.out.println("it does a thing");
-        List<City> glasgows = cityRepo.findAllByName("Glasgow");
-        
         City avg = CalculationsHelper.averageCitywide(cityRepo.findAllByName("Glasgow"),"Glasgow");
-
-        log.info("average name: " + avg.getName());
-        log.info("Average Air quality metrics shown below ");
-        for(AirQuality quality:avg.getAirQuality())
-        {
-            log.info(quality.getParameterUsed()+":"+quality.getValueOf()+quality.getUnits());
-        }
         return avg;
     }
     
