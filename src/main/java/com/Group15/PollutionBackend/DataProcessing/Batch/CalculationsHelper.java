@@ -7,10 +7,13 @@ package com.Group15.PollutionBackend.DataProcessing.Batch;
 
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.PollutionBackendApplication;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -18,6 +21,7 @@ import java.util.Set;
  */
 public class CalculationsHelper 
 {
+    private static final Log log = LogFactory.getLog(CalculationsHelper.class);
     
     /**
      * Calculates the average air qualities within a country, based off the values of the cities within that country
@@ -74,15 +78,29 @@ public class CalculationsHelper
         listOfQualityLists.add(o3List);
         listOfQualityLists.add(no2List);
         
-        AirQuality average = new AirQuality();
-        for(List<AirQuality> qualities : listOfQualityLists)
+        log.info("pm25 list: " +pm25List);
+        log.info("pm10 list: " +pm10List);
+        log.info("o3 list: " +o3List);
+        
+        for(int i=0; i<listOfQualityLists.size();i++)
         {
-            average.setParameterUsed(qualities.get(0).getParameterUsed());
+            AirQuality average = new AirQuality();
+            average.setParameterUsed(listOfQualityLists.get(i).get(0).getUnits());
             average.setDateTaken(new Date().toString());
             average.setSourceName("Averaging of all available data");
-            average.setValueOf(findAverage(qualities));
+            average.setValueOf(findAverage(listOfQualityLists.get(i)));
             averageCity.addQuality(average);
         }
+        /*
+        for(List<AirQuality> qualityList : listOfQualityLists)
+        {
+            AirQuality average = new AirQuality();
+            average.setParameterUsed(qualityList.get(0).getParameterUsed());
+            average.setDateTaken(new Date().toString());
+            average.setSourceName("Averaging of all available data");
+            average.setValueOf(findAverage(qualityList));
+            averageCity.addQuality(average);
+        }*/
         
         return averageCity;
     }
