@@ -85,9 +85,9 @@ public class CityController
     }
     
     @RequestMapping(method = RequestMethod.GET, path="/test")
-    public void getTest()
+    public City getTest()
     {
-        averagingTest();
+         return averagingTest();
     }
     
     private City averagingTest()
