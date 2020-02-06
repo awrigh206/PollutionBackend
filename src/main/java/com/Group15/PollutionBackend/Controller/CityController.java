@@ -90,7 +90,7 @@ public class CityController
         averagingTest();
     }
     
-    private void averagingTest()
+    private City averagingTest()
     {
         System.out.println("it does a thing");
         List<City> glasgows = cityRepo.findAllByName("Glasgow");
@@ -103,6 +103,7 @@ public class CityController
         {
             log.info(quality.getParameterUsed()+":"+quality.getValueOf()+quality.getUnits());
         }
+        return avg;
     }
     
 }
