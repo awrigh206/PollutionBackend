@@ -101,7 +101,7 @@ public class CityController
         log.info("Average Air quality metrics shown below ");
         for(AirQuality quality:avg.getAirQuality())
         {
-            log.info(quality.getValueOf() + quality.getUnits());
+            log.info(quality.getParameterUsed()+":"+quality.getValueOf()+quality.getUnits());
         }
     }
     

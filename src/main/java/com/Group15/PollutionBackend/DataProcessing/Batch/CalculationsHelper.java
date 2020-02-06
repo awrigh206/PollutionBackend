@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import javassist.bytecode.Descriptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -41,11 +42,11 @@ public class CalculationsHelper
     {
         City averageCity = new City();
         averageCity.setName(name + " average");
-        List<List<AirQuality>> listOfQualityLists = new ArrayList<List<AirQuality>>(); 
-        List<AirQuality> pm25List = new ArrayList<>();
-        List<AirQuality> pm10List = new ArrayList<>();
-        List<AirQuality> o3List = new ArrayList<>();
-        List<AirQuality> no2List = new ArrayList<>();
+        List<ArrayList<AirQuality>> listOfQualityLists = new ArrayList<ArrayList<AirQuality>>(); 
+        ArrayList<AirQuality> pm25List = new ArrayList<>();
+        ArrayList<AirQuality> pm10List = new ArrayList<>();
+        ArrayList<AirQuality> o3List = new ArrayList<>();
+        ArrayList<AirQuality> no2List = new ArrayList<>();
         
         for (City city: citiesToAverage)
         {
@@ -78,31 +79,30 @@ public class CalculationsHelper
         listOfQualityLists.add(o3List);
         listOfQualityLists.add(no2List);
         
-        log.info("pm25 list: " +pm25List);
-        log.info("pm10 list: " +pm10List);
-        log.info("o3 list: " +o3List);
-        
         for(int i=0; i<listOfQualityLists.size();i++)
         {
+            ArrayList<AirQuality> currentList = listOfQualityLists.get(i);
+            
             AirQuality average = new AirQuality();
-            average.setParameterUsed(listOfQualityLists.get(i).get(0).getUnits());
+            average.setParameterUsed(getParam(currentList));
+            average.setUnits(currentList.get(0).getUnits());
             average.setDateTaken(new Date().toString());
             average.setSourceName("Averaging of all available data");
-            average.setValueOf(findAverage(listOfQualityLists.get(i)));
+            average.setValueOf(findAverage(currentList));
             averageCity.addQuality(average);
         }
-        /*
-        for(List<AirQuality> qualityList : listOfQualityLists)
-        {
-            AirQuality average = new AirQuality();
-            average.setParameterUsed(qualityList.get(0).getParameterUsed());
-            average.setDateTaken(new Date().toString());
-            average.setSourceName("Averaging of all available data");
-            average.setValueOf(findAverage(qualityList));
-            averageCity.addQuality(average);
-        }*/
         
         return averageCity;
+    }
+    
+    private static String getParam(List<AirQuality> qualities)
+    {
+        for(AirQuality quality: qualities)
+        {
+            if(quality.getParameterUsed()!=(null) && !quality.getParameterUsed().equals("null"))
+                return quality.getParameterUsed();
+        }
+        return "Could not find it";
     }
     /**
      * 
