@@ -84,15 +84,16 @@ public class CityController
         return ex.getMessage();
     }
     
-    @RequestMapping(method = RequestMethod.GET, path="/test")
-    public City getTest()
+    @RequestMapping(method = RequestMethod.GET, path="/average")
+    public City getAverage(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
     {
-         return averagingTest();
+        City avg = CalculationsHelper.averageCitywide(cityRepo.findAllByNameAndCountry(city,country),city);
+        return avg;
     }
     
     private City averagingTest()
     {
-        City avg = CalculationsHelper.averageCitywide(cityRepo.findAllByName("Glasgow"),"Glasgow");
+        City avg = CalculationsHelper.averageCitywide(cityRepo.findAllByNameAndCountry("Glasgow","GB"),"Glasgow");
         return avg;
     }
     
