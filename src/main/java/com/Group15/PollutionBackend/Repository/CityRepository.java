@@ -37,6 +37,7 @@ public interface CityRepository extends PagingAndSortingRepository<City,Integer>
     
     City findByName(@Param("name") String name);
     ArrayList<City> findAllByName(@Param("name") String name);
+    ArrayList<City> findAllByCountry(@Param("country") String country);
     ArrayList<City> findAllByNameAndCountry(@Param("name") String name, @Param("country") String country);
     City[] findByCountry(@Param("country") String country);
     

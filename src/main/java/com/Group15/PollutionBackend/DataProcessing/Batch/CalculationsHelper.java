@@ -26,19 +26,21 @@ public class CalculationsHelper
     
     /**
      * Calculates the average air qualities within a country, based off the values of the cities within that country
-     * @param citiesInCountry
+     * @param citiesInCountry - the cities within the country that you want to average
+     * @param country - The country in which the cities are best
      * @return 
      */
-    public Set<City> averageCountryWide(Set<City> citiesInCountry)
+    public City averageCountryWide(List<City> citiesInCountry, String country)
     {
-        return null;
+        return averageCityWide(citiesInCountry, country);
     }
     /**
      * Calculates the averages of all the air qualities values within a city
      * @param citiesToAverage A list of all the cities which are the same city (more than one reading within a city is possible)
+     * @param name
      * @return 
      */
-    public static City averageCitywide(List<City> citiesToAverage, String name)
+    public static City averageCityWide(List<City> citiesToAverage, String name)
     {
         City averageCity = new City();
         averageCity.setName(name + " average");
