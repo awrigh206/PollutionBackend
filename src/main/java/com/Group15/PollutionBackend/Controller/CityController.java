@@ -54,7 +54,6 @@ public class CityController
     {
         ArrayList<City> cities = cityRepo.findAllByName(cityName);
         return cities;
-        //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
     }
     
     @RequestMapping(method = RequestMethod.GET, path = "/Cities")
@@ -68,7 +67,6 @@ public class CityController
         }
         
         return cities;
-        //return tourRatingRepository.findByPkTourId(tourId).stream().map(tourRating -> toDto(tourRating)).collect(Collectors.toList());
     }
     
     @RequestMapping(method = RequestMethod.GET, path="/country")
