@@ -11,6 +11,7 @@ import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,12 @@ public class CityService implements IService
             return null;
         }
         
+    }
+    
+    public List<City> findAllByName(String name)
+    {
+        //TODO: Add code here to check that it is the same city, check it is in the same country. In extreme cases, may need to check coordinates are in proximity
+        return cityRepository.findAllByName(name);
     }
     
     @Override

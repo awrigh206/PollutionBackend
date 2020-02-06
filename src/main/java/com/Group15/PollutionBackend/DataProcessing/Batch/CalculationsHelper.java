@@ -16,7 +16,7 @@ import java.util.Set;
  *
  * @author Andrew Wright
  */
-public class Calculations 
+public class CalculationsHelper 
 {
     
     /**
@@ -24,7 +24,7 @@ public class Calculations
      * @param citiesInCountry
      * @return 
      */
-    public Set<City> averageCountryWid(Set<City> citiesInCountry)
+    public Set<City> averageCountryWide(Set<City> citiesInCountry)
     {
         return null;
     }
@@ -33,10 +33,11 @@ public class Calculations
      * @param citiesToAverage A list of all the cities which are the same city (more than one reading within a city is possible)
      * @return 
      */
-    public City averageCitywide(List<City> citiesToAverage)
+    public static City averageCitywide(List<City> citiesToAverage)
     {
         City averageCity = new City();
-        List<List<AirQuality>> listOfQualityLists = new ArrayList<>(); 
+        averageCity.setName( "average");
+        List<List<AirQuality>> listOfQualityLists = new ArrayList<List<AirQuality>>(); 
         List<AirQuality> pm25List = new ArrayList<>();
         List<AirQuality> pm10List = new ArrayList<>();
         List<AirQuality> o3List = new ArrayList<>();
@@ -76,7 +77,6 @@ public class Calculations
         AirQuality average = new AirQuality();
         for(List<AirQuality> qualities : listOfQualityLists)
         {
-
             average.setParameterUsed(qualities.get(0).getParameterUsed());
             average.setDateTaken(new Date().toString());
             average.setSourceName("Averaging of all available dat");
@@ -92,7 +92,7 @@ public class Calculations
      * @param param the parameter within the air qualities that you wish to average
      * @return 
      */
-    private double findAverage(List<AirQuality> qualities)
+    private static double findAverage(List<AirQuality> qualities)
     {
         long runningTotal =0;
         int numberOfThingsAdded=0;
