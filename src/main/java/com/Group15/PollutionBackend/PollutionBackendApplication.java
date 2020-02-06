@@ -41,29 +41,9 @@ public class PollutionBackendApplication implements CommandLineRunner
         //long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
         //log.info("That took about: " +duration);
         
-        log.info("Running Test:");
-        averagingTest();
     }
     
-    private void averagingTest()
-    {
-        System.out.println("it does a thing");
-        List<City> glasgows = cityRepository.findAllByName("Aberdeen");
-        
-        for (City current: glasgows)
-        {
-            log.info(current.getName());
-        }
-        //City avg = CalculationsHelper.averageCitywide(cityRepository.findAllByName("Glasgow"));
-        /*
-        log.info("average name: " + avg.getName());
-        log.info("Average Air quality metrics shown below ");
-        for(AirQuality quality:avg.getAirQuality())
-        {
-            log.info(quality.getValueOf() + quality.getUnits());
-        }
-*/
-    }
+ 
 
 
 }

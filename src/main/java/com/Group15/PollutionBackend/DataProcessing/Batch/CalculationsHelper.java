@@ -33,10 +33,10 @@ public class CalculationsHelper
      * @param citiesToAverage A list of all the cities which are the same city (more than one reading within a city is possible)
      * @return 
      */
-    public static City averageCitywide(List<City> citiesToAverage)
+    public static City averageCitywide(List<City> citiesToAverage, String name)
     {
         City averageCity = new City();
-        averageCity.setName( "average");
+        averageCity.setName(name + " average");
         List<List<AirQuality>> listOfQualityLists = new ArrayList<List<AirQuality>>(); 
         List<AirQuality> pm25List = new ArrayList<>();
         List<AirQuality> pm10List = new ArrayList<>();
@@ -79,7 +79,7 @@ public class CalculationsHelper
         {
             average.setParameterUsed(qualities.get(0).getParameterUsed());
             average.setDateTaken(new Date().toString());
-            average.setSourceName("Averaging of all available dat");
+            average.setSourceName("Averaging of all available data");
             average.setValueOf(findAverage(qualities));
             averageCity.addQuality(average);
         }
