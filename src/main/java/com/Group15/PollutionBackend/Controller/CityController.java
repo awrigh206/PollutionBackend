@@ -6,16 +6,11 @@
 package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
-import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Repository.CityRepository;
-import com.Group15.PollutionBackend.Service.StartupRunner;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class CityController 
 {
-    private final Log log = LogFactory.getLog(CityController.class);
     CityRepository cityRepo;
     @Autowired
     public CityController (CityRepository cityRepo)
