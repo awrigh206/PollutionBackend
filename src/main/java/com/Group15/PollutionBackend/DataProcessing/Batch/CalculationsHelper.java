@@ -50,6 +50,7 @@ public class CalculationsHelper
         ArrayList<AirQuality> o3List = new ArrayList<>();
         ArrayList<AirQuality> no2List = new ArrayList<>();
         ArrayList<AirQuality> so2List = new ArrayList<>();
+        ArrayList<AirQuality> coList = new ArrayList<>();
         
         for (City city: citiesToAverage)
         {
@@ -72,6 +73,8 @@ public class CalculationsHelper
                     case"so2":
                         so2List.add(quality);
                         break;
+                    case"co":
+                        coList.add(quality);
                     default:
                         System.out.println("There's a parameter that doesn't get caught in the avergaing and it is: " +quality.getParameterUsed());
                         continue;
@@ -85,6 +88,7 @@ public class CalculationsHelper
         listOfQualityLists.add(o3List);
         listOfQualityLists.add(no2List);
         listOfQualityLists.add(so2List);
+        listOfQualityLists.add(coList);
         
         for(int i=0; i<listOfQualityLists.size();i++)
         {
