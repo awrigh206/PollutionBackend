@@ -7,11 +7,13 @@ package com.Group15.PollutionBackend.DataProcessing.Batch;
 
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.Statistics;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
  *
@@ -31,16 +33,56 @@ public class CalculationsHelper
     {
         return averageCityWide(citiesInCountry, country);
     }
+    
     /**
-     * Calculates the averages of all the air qualities values within a city
-     * @param citiesToAverage A list of all the cities which are the same city (more than one reading within a city is possible)
-     * @param name
+     * Use the apache commons maths package to calculate relevant statistics for the data and return those stats in a list
+     * @param cityForStats
      * @return 
      */
-    public static City averageCityWide(List<City> citiesToAverage, String name)
+    public List<Statistics> stats(List<City> cityForStats)
     {
-        City averageCity = new City();
-        averageCity.setName(name + " average");
+        
+        List<ArrayList<AirQuality>> listOfQualityLists = splitIntoTypesOfPollution(cityForStats);
+        List<Statistics> calculatedStats = new ArrayList<>();
+        
+        for (List<AirQuality> qualityList : listOfQualityLists)
+        {
+            List<Double> rawData = getRawData(qualityList);
+            DescriptiveStatistics stats = addToStats(rawData);
+            Statistics statsModelObject = new Statistics();
+            
+            statsModelObject.setMax(stats.getMax());
+            statsModelObject.setMin(stats.getMin());
+            statsModelObject.setStandardDeviation(stats.getStandardDeviation());
+            statsModelObject.setVariance(stats.getVariance());
+            statsModelObject.setMean(stats.getMean());
+        }
+        return calculatedStats;
+        
+    }
+    
+    private DescriptiveStatistics addToStats(List<Double> doublesToAdd)
+    {
+        DescriptiveStatistics stats = new DescriptiveStatistics();
+        for (Double toAdd: doublesToAdd)
+        {
+            stats.addValue(toAdd);
+        }
+        return stats;
+    }
+    
+    private List<Double> getRawData(List<AirQuality> qualityList)
+    {
+        List<Double> doublesData = new ArrayList<>();
+        for (AirQuality quality: qualityList)
+        {
+            doublesData.add(quality.getValueOf());
+        }
+        return doublesData;
+    }
+    
+    private static List<ArrayList<AirQuality>> splitIntoTypesOfPollution(List<City> cities)
+    {
         List<ArrayList<AirQuality>> listOfQualityLists = new ArrayList<ArrayList<AirQuality>>(); 
         ArrayList<AirQuality> pm25List = new ArrayList<>();
         ArrayList<AirQuality> pm10List = new ArrayList<>();
@@ -49,7 +91,7 @@ public class CalculationsHelper
         ArrayList<AirQuality> so2List = new ArrayList<>();
         ArrayList<AirQuality> coList = new ArrayList<>();
         
-        for (City city: citiesToAverage)
+        for (City city: cities)
         {
             for(AirQuality quality : city.getAirQuality())
             {
@@ -86,6 +128,20 @@ public class CalculationsHelper
         listOfQualityLists.add(no2List);
         listOfQualityLists.add(so2List);
         listOfQualityLists.add(coList);
+        
+        return listOfQualityLists;
+    }
+    /**
+     * Calculates the averages of all the air qualities values within a city
+     * @param citiesToAverage A list of all the cities which are the same city (more than one reading within a city is possible)
+     * @param name
+     * @return 
+     */
+    public static City averageCityWide(List<City> citiesToAverage, String name)
+    {
+        City averageCity = new City();
+        averageCity.setName(name + " average");
+        List<ArrayList<AirQuality>> listOfQualityLists = splitIntoTypesOfPollution(citiesToAverage);
         
         for(int i=0; i<listOfQualityLists.size();i++)
         {
