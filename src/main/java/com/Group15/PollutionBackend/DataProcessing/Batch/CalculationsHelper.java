@@ -7,12 +7,9 @@ package com.Group15.PollutionBackend.DataProcessing.Batch;
 
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
-import com.Group15.PollutionBackend.PollutionBackendApplication;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import javassist.bytecode.Descriptor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
