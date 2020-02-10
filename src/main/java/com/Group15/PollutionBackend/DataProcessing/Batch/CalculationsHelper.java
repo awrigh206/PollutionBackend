@@ -39,7 +39,7 @@ public class CalculationsHelper
      * @param cityForStats
      * @return 
      */
-    public List<Statistics> stats(List<City> cityForStats)
+    public static List<Statistics> stats(List<City> cityForStats)
     {
         
         List<ArrayList<AirQuality>> listOfQualityLists = splitIntoTypesOfPollution(cityForStats);
@@ -56,12 +56,15 @@ public class CalculationsHelper
             statsModelObject.setStandardDeviation(stats.getStandardDeviation());
             statsModelObject.setVariance(stats.getVariance());
             statsModelObject.setMean(stats.getMean());
+            statsModelObject.setGeometricMean(stats.getGeometricMean());
+            statsModelObject.setKurtoise(stats.getKurtosis());
+            calculatedStats.add(statsModelObject);
         }
         return calculatedStats;
         
     }
     
-    private DescriptiveStatistics addToStats(List<Double> doublesToAdd)
+    private static DescriptiveStatistics addToStats(List<Double> doublesToAdd)
     {
         DescriptiveStatistics stats = new DescriptiveStatistics();
         for (Double toAdd: doublesToAdd)
@@ -71,7 +74,7 @@ public class CalculationsHelper
         return stats;
     }
     
-    private List<Double> getRawData(List<AirQuality> qualityList)
+    private static List<Double> getRawData(List<AirQuality> qualityList)
     {
         List<Double> doublesData = new ArrayList<>();
         for (AirQuality quality: qualityList)

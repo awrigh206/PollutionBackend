@@ -7,9 +7,11 @@ package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.Statistics;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,6 +90,13 @@ public class CityController
     {
         City avg = CalculationsHelper.averageCityWide(cityRepo.findAllByCountry(country),country);
         return avg;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path="/statsCity")
+    public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
+    {
+        List<Statistics> stats = CalculationsHelper.stats(cityRepo.findAllByNameAndCountry(city,country));
+        return stats;
     }
     
     private City averagingTest()

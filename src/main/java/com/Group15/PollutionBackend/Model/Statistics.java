@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.Model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
@@ -17,12 +18,39 @@ import javax.persistence.Id;
 public class Statistics implements Serializable 
 {
     @Id
+    @GeneratedValue
     private Integer id;
     private Double mean;
     private Double standardDeviation;
     private Double min;
     private Double max;
     private Double variance;
+    private Double geometricMean;
+    private Double Kurtoise;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Double getGeometricMean() {
+        return geometricMean;
+    }
+
+    public void setGeometricMean(Double geometricMean) {
+        this.geometricMean = geometricMean;
+    }
+
+    public Double getKurtoise() {
+        return Kurtoise;
+    }
+
+    public void setKurtoise(Double Kurtoise) {
+        this.Kurtoise = Kurtoise;
+    }
 
     public Double getMean() {
         return mean;
@@ -63,6 +91,13 @@ public class Statistics implements Serializable
     public void setVariance(Double variance) {
         this.variance = variance;
     }
+
+    @Override
+    public String toString() {
+        return "Statistics{" + "id=" + id + ", mean=" + mean + ", standardDeviation=" + standardDeviation + ", min=" + min + ", max=" + max + ", variance=" + variance + '}';
+    }
+    
+    
     
     
 }

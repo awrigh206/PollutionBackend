@@ -20,6 +20,8 @@ public class DataThread implements Runnable
     private final RetrieveData data;
     private final IService service;
 
+    //Using Iservice as interface facade
+    //Faster to use direct implementation rather than casting, change this if the performance is needed
     public DataThread(int start, int end, RetrieveData data, IService service) {
         this.start = start;
         this.end = end;
