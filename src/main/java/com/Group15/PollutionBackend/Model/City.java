@@ -25,13 +25,11 @@ public class City implements Serializable
     @Id
     @GeneratedValue
     private Integer cityId;
-    //@SerializedName("city")
     @JsonProperty("city")
     private String name;
     private String country;
     private String location;
     private Double distance;
-    //@SerializedName("measurements")
     @JsonProperty("measurements")
     @ElementCollection
     @Embedded
