@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.math3.geometry.euclidean.twod.Line;
+import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
@@ -58,10 +60,23 @@ public class CalculationsHelper
             statsModelObject.setMean(stats.getMean());
             statsModelObject.setGeometricMean(stats.getGeometricMean());
             statsModelObject.setKurtoise(stats.getKurtosis());
+            statsModelObject.setnTerms(stats.getN());
+            statsModelObject.setTrend(calculateTrend(statsModelObject));
             calculatedStats.add(statsModelObject);
         }
         return calculatedStats;
         
+    }
+    
+    private static Double calculateTrend(Statistics statsModelObject)
+    {
+        double x1 =0;
+        double x2 =1;
+        double y1 = statsModelObject.getMin();
+        double y2 = statsModelObject.getMax();
+        
+        Double gradient = (y2-y1)/(x2-x1);
+        return gradient;
     }
     
     private static DescriptiveStatistics addToStats(List<Double> doublesToAdd)

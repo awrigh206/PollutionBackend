@@ -27,6 +27,8 @@ public class Statistics implements Serializable
     private Double variance;
     private Double geometricMean;
     private Double Kurtoise;
+    private Double trend;
+    private long nTerms;
 
     public Integer getId() {
         return id;
@@ -34,6 +36,22 @@ public class Statistics implements Serializable
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public long getnTerms() {
+        return nTerms;
+    }
+
+    public void setnTerms(long nTerms) {
+        this.nTerms = nTerms;
+    }
+
+    public Double getTrend() {
+        return trend;
+    }
+
+    public void setTrend(Double trend) {
+        this.trend = trend;
     }
 
     public Double getGeometricMean() {
