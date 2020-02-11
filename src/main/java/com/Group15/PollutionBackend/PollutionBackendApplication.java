@@ -1,22 +1,14 @@
 package com.Group15.PollutionBackend;
 
-import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
-import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
-import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
-import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.City;
+
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CityService;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 
 @SpringBootApplication
 public class PollutionBackendApplication implements CommandLineRunner
