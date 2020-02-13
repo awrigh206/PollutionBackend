@@ -5,16 +5,16 @@
  */
 package com.Group15.PollutionBackend.DataProcessing.Batch;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.Statistics;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.math3.geometry.euclidean.twod.Line;
-import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 
 /**
@@ -24,6 +24,19 @@ import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 public class CalculationsHelper 
 {
     private static final Log log = LogFactory.getLog(CalculationsHelper.class);
+    
+    public List<Country> convertLocationsToCountries(Location location, List<Country> countries)
+    {
+        for (Country current : countries)
+        {
+            if (location.getCountryCode().equalsIgnoreCase(current.getCountryCode()))
+            {
+                current.addCity(new City(location.getLocationName(),location.getCountryCode(),location.getLocationName(),0.0,null,location.getCoordinates()));
+            }
+        }
+        return countries;
+        
+    }
     
     /**
      * Calculates the average air qualities within a country, based off the values of the cities within that country
