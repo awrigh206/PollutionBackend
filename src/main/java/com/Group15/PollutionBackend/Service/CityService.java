@@ -6,6 +6,8 @@
 package com.Group15.PollutionBackend.Service;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
@@ -63,6 +65,16 @@ public class CityService implements IService
     public long total()
     {
         return cityRepository.count();
+    }
+
+    @Override
+    public void createNew(ResultAbs toAdd) 
+    {
+        LatestResult latest = (LatestResult)toAdd;
+        for(City current: latest.getResults())
+        {
+            createNew(current);
+        }
     }
     
 }

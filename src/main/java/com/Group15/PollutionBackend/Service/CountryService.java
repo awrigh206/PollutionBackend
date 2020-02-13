@@ -6,6 +6,8 @@
 package com.Group15.PollutionBackend.Service;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,17 @@ public class CountryService implements IService
     public long total() 
     {
         return countryRepository.count();
+    }
+
+    @Override
+    public void createNew(ResultAbs toAdd) 
+    {
+        CountryResult countryResult = (CountryResult)toAdd;
+        for(Country current: countryResult.getCountries())
+        {
+            createNew(current);
+        }
+        
     }
     
 }

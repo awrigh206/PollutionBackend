@@ -42,7 +42,7 @@ public class DataThread implements Runnable
             for(int i= start; i< end; i++)
             {
                 ResultAbs result = (ResultAbs)data.processPageSingle(baseUrl,i,resultType);
-                //addLatest(result);
+                addResult(result);
             }
         }
         
@@ -52,11 +52,12 @@ public class DataThread implements Runnable
         }
     }
     
-    private void addLatest(LatestResult result)
+    private void addResult(ResultAbs result)
     {
-        result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
-            service.createNew(toAdd);
-        });
+        service.createNew(result);
+        //result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
+            //service.createNew(toAdd);
+        //});
     }
     
 }

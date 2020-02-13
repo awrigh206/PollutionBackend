@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.Service;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 
 /**
  *
@@ -14,5 +15,6 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
 public interface IService 
 {
     public RepoObject createNew(RepoObject toAdd);
+    public void createNew(ResultAbs toAdd);
     public long total();
 }
