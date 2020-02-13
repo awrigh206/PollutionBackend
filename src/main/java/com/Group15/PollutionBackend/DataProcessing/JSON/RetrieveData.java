@@ -32,7 +32,7 @@ public class RetrieveData
         this.limit = limit;
     }
     
-    public LatestResult processPageSingle(String baseUrl,int page) throws Exception
+    public ResultAbs processPageSingle(String baseUrl,int page, Class resultType) throws Exception
     {
         URL url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -53,7 +53,7 @@ public class RetrieveData
             in.close();
             conn.disconnect();
             
-            return mapper.readValue(json, LatestResult.class);
+            return (ResultAbs) mapper.readValue(json, resultType);
         }
     }
     

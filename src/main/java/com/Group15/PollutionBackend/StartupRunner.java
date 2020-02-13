@@ -6,6 +6,8 @@
 package com.Group15.PollutionBackend;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
+import com.Group15.PollutionBackend.DataProcessing.JSON.LatestResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CityService;
@@ -42,7 +44,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         log.info("Retrieving data");
         cityRepository.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
-        getDataLatest(retData);
+        getData(retData);
 
     }
     
@@ -55,7 +57,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         {
             for(int i =0; i<totalPages+1;i++)
             {
-                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url), "data"+i);
+                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url,Location.class), "data"+i);
                 t.start();
             }
         }
@@ -75,7 +77,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         {
             for(int i =0; i<totalPages+1;i++)
             {
-                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url), "data"+i);
+                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url, LatestResult.class), "data"+i);
                 t.start();
             }
         }

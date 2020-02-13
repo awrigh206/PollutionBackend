@@ -6,19 +6,22 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 import com.Group15.PollutionBackend.Model.Coordinates;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 
 /**
  *
  * @author Andrew Wright
  */
-public class Location extends RepoObject
+public class Location extends RepoObject implements Serializable 
 {
     private String locationName;
     private String parameter;
     private String value;
     private String unit;
     private Coordinates coordinates;
-    private String country;
+    @JsonProperty("city")
+    private String countryCode;
     private String city;
 
     public String getLocationName() {
@@ -61,12 +64,12 @@ public class Location extends RepoObject
         this.coordinates = coordinates;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getCity() {
