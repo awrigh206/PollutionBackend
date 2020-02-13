@@ -36,6 +36,9 @@ public interface CountryRepository extends PagingAndSortingRepository<Country,In
     public <S extends Country> S save(S s);
     
     Country findByName(@Param("name") String name);
+    Country findByCountryCode(@Param("code") String code);
     ArrayList<Country> findAllByName(@Param("name") String name);
     ArrayList<Country> findAllByCountryCode(@Param("code") String code);
+    @Override
+    ArrayList<Country> findAll();
 }

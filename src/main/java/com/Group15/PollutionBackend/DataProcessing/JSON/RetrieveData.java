@@ -38,8 +38,6 @@ public class RetrieveData
     public ResultAbs processPageSingle(String baseUrl,int page, Class resultType) throws Exception
     {
         URL url = new URL(baseUrl+"?limit="+limit+"&page="+page);
-        String urlString = baseUrl+"?limit="+limit+"&page="+page;
-        System.out.println(urlString);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();

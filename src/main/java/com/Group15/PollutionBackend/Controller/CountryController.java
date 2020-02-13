@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Andrew Wright
  */
 @RestController
-@RequestMapping(path="/country")
 public class CountryController 
 {
     private CountryRepository countryRepo;
@@ -38,10 +37,16 @@ public class CountryController
         this.countryRepo = countryRepo;
     }
     
-    @RequestMapping(method = RequestMethod.GET)
-    public Country getCity(@RequestParam(value ="countryCode")String countryCode)
+    @RequestMapping(method = RequestMethod.GET, path = "/country")
+    public Country getCountry(@RequestParam(value ="countryCode")String countryCode)
     {
-        return countryRepo.findByName(countryCode);
+        return countryRepo.findByCountryCode(countryCode);
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path = "/countries")
+    public ArrayList<Country> getCountries()
+    {
+        return countryRepo.findAll();
     }
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
