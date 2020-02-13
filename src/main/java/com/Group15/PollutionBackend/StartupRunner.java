@@ -60,7 +60,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         
         try
         {
-            for(int i =0; i<totalPages+1;i++)
+            for(int i =1; i<totalPages+1;i++)
             {
                 Thread t = new Thread(new DataThread(i,i+1,data,countryService,url,CountryResult.class), "data"+i);
                 t.start();
@@ -80,7 +80,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         
         try
         {
-            for(int i =0; i<totalPages+1;i++)
+            for(int i =1; i<totalPages+1;i++)
             {
                 Thread t = new Thread(new DataThread(i,i+1,data,cityService,url, LatestResult.class), "data"+i);
                 t.start();
