@@ -3,29 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.Group15.PollutionBackend.DataProcessing.JSON;
+package com.Group15.PollutionBackend.DataProcessing.JSON.Results;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.MetaData;
 import com.Group15.PollutionBackend.Model.City;
 import java.util.Set;
-
 
 /**
  *
  * @author Andrew Wright
  */
-public class LatestResult extends ResultAbs
+public abstract class ResultAbs 
 {
     private MetaData meta;
 
-    public LatestResult(MetaData meta, Set<City> results) {
-        this.meta = meta;
+    protected ResultAbs() {
     }
-
-    protected LatestResult() 
-    {
-    }
-    
-    
 
     public MetaData getMeta() {
         return meta;
@@ -34,12 +27,6 @@ public class LatestResult extends ResultAbs
     public void setMeta(MetaData meta) {
         this.meta = meta;
     }
-
-    @Override
-    public String toString() {
-        return "Result{" + "meta=" + meta + '}';
-    }
-    
     
     
 }

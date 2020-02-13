@@ -5,6 +5,8 @@
  */
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Service.IService;
 
 /**
@@ -40,7 +42,7 @@ public class DataThread implements Runnable
             for(int i= start; i< end; i++)
             {
                 ResultAbs result = data.processPageSingle(baseUrl,i,resultType);
-                addResults(result);
+                addLatest((LatestResult)result);
             }
         }
         
@@ -50,7 +52,7 @@ public class DataThread implements Runnable
         }
     }
     
-    private void addResults(ResultAbs result)
+    private void addLatest(LatestResult result)
     {
         result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
             service.createNew(toAdd);
