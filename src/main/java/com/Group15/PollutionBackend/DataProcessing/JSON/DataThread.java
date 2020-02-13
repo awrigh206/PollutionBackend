@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
-import com.Group15.PollutionBackend.Service.CityService;
 import com.Group15.PollutionBackend.Service.IService;
 
 /**
@@ -19,14 +18,16 @@ public class DataThread implements Runnable
     
     private final RetrieveData data;
     private final IService service;
+    private final String baseUrl;
 
     //Using Iservice as interface facade
     //Faster to use direct implementation rather than casting, change this if the performance is needed
-    public DataThread(int start, int end, RetrieveData data, IService service) {
+    public DataThread(int start, int end, RetrieveData data, IService service, String baseUrl) {
         this.start = start;
         this.end = end;
         this.data = data;
         this.service = service;
+        this.baseUrl = baseUrl;
     }
 
     @Override
@@ -36,7 +37,7 @@ public class DataThread implements Runnable
         {
             for(int i= start; i< end; i++)
             {
-                Result result = data.processPageSingle("https://api.openaq.org/v1/latest",i);
+                ResultAbs result = data.processPageSingle(baseUrl,i);
                 addCities(result);
             }
         }
@@ -47,7 +48,7 @@ public class DataThread implements Runnable
         }
     }
     
-    private void addCities(Result result)
+    private void addCities(ResultAbs result)
     {
         result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
             service.createNew(toAdd);

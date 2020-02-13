@@ -61,7 +61,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         {
             for(int i =0; i<totalPages+1;i++)
             {
-                Thread t = new Thread(new DataThread(i,i+1,data,cityService), "data"+i);
+                Thread t = new Thread(new DataThread(i,i+1,data,cityService,"https://api.openaq.org/v1/latest"), "data"+i);
                 t.start();
             }
         }

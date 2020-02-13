@@ -5,9 +5,8 @@
  */
 package com.Group15.PollutionBackend.Service;
 
-import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
 import com.Group15.PollutionBackend.Model.Country;
-import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +28,7 @@ public class CountryService implements IService
     }
 
     @Override
-    public Object createNew(Object toAdd) 
+    public RepoObject createNew(RepoObject toAdd) 
     {
         return countryRepository.save((Country)toAdd);
     }

@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Service;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
@@ -52,7 +53,7 @@ public class CityService implements IService
     }
     
     @Override
-    public Object createNew(Object toAdd)
+    public RepoObject createNew(RepoObject toAdd)
     {
 
         return cityRepository.save((City)toAdd);

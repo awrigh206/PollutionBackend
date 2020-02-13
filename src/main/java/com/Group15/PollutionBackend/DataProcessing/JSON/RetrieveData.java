@@ -32,7 +32,7 @@ public class RetrieveData
         this.limit = limit;
     }
     
-    public Result processPageSingle(String baseUrl,int page) throws Exception
+    public LatestResult processPageSingle(String baseUrl,int page) throws Exception
     {
         URL url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -53,7 +53,7 @@ public class RetrieveData
             in.close();
             conn.disconnect();
             
-            return mapper.readValue(json, Result.class);
+            return mapper.readValue(json, LatestResult.class);
         }
     }
     
@@ -77,7 +77,7 @@ public class RetrieveData
             {
                 InputStream in = new BufferedInputStream(conn.getInputStream());
                 String json = IOUtils.toString(in, "UTF-8");
-                Result result = mapper.readValue(json, Result.class);
+                LatestResult result = mapper.readValue(json, LatestResult.class);
                 in.close();    
                 
                 return (int) result.getMeta().getFound()/limit+1;

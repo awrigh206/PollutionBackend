@@ -5,12 +5,14 @@
  */
 package com.Group15.PollutionBackend.Service;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
+
 /**
  *
  * @author Andrew Wright
  */
 public interface IService 
 {
-    public Object createNew(Object toAdd);
+    public RepoObject createNew(RepoObject toAdd);
     public long total();
 }

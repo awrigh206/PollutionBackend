@@ -13,17 +13,15 @@ import java.util.Set;
  *
  * @author Andrew Wright
  */
-public class Result 
+public class LatestResult extends ResultAbs
 {
     private MetaData meta;
-    private Set<City> results;
 
-    public Result(MetaData meta, Set<City> results) {
+    public LatestResult(MetaData meta, Set<City> results) {
         this.meta = meta;
-        this.results = results;
     }
 
-    protected Result() 
+    protected LatestResult() 
     {
     }
     
@@ -37,17 +35,9 @@ public class Result
         this.meta = meta;
     }
 
-    public Set<City> getResults() {
-        return results;
-    }
-
-    public void setResults(Set<City> results) {
-        this.results = results;
-    }
-
     @Override
     public String toString() {
-        return "Result{" + "meta=" + meta + ", results=" + results + '}';
+        return "Result{" + "meta=" + meta + '}';
     }
     
     
