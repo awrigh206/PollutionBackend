@@ -57,11 +57,11 @@ public class RetrieveData
         }
     }
     
-    public int getTotalPages()
+    public int getTotalPages(String baseUrl)
     {
         try
         {
-            URL url = new URL("https://api.openaq.org/v1/latest?limit=1&page=1");
+            URL url = new URL(baseUrl+"?limit=1&page=1");
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestMethod("GET");
             conn.connect();
