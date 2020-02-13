@@ -8,9 +8,12 @@ package com.Group15.PollutionBackend;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CityService;
+import com.Group15.PollutionBackend.Service.CountryService;
 import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +34,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private CityService cityService;
     @Autowired
     private CityRepository cityRepository;
+    @Autowired
+    private CountryService countryService;
     
     @PostConstruct
     public void init()
@@ -50,14 +55,14 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     
     private void getData(RetrieveData data)
     {
-        String url = "https://api.openaq.org/v1/measurements";
-        int totalPages = data.getTotalPages(url);
+        String url = "https://api.openaq.org/v1/countries";
+        int totalPages = data.getTotalPages(url,CountryResult.class);
         
         try
         {
             for(int i =0; i<totalPages+1;i++)
             {
-                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url,Location.class), "data"+i);
+                Thread t = new Thread(new DataThread(i,i+1,data,countryService,url,CountryResult.class), "data"+i);
                 t.start();
             }
         }
@@ -71,7 +76,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private void getDataLatest(RetrieveData data)
     {
         String url = "https://api.openaq.org/v1/latest";
-        int totalPages = data.getTotalPages(url);
+        int totalPages = data.getTotalPages(url,LatestResult.class);
         
         try
         {

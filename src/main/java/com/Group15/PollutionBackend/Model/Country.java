@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.Model;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -24,8 +25,13 @@ public class Country extends RepoObject implements Serializable
     @GeneratedValue
     @Id
     private Integer id;
+    private Integer locations;
+    @JsonProperty("cities")
+    private Integer numberOfCities;
     private String name;
+    @JsonProperty("code")
     private String countryCode;
+    private Integer count;
     @OneToMany
     private List<City> citiesWithinCountry;
 
@@ -36,6 +42,22 @@ public class Country extends RepoObject implements Serializable
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Integer getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Integer locations) {
+        this.locations = locations;
+    }
+
+    public Integer getNumberOfCities() {
+        return numberOfCities;
+    }
+
+    public void setNumberOfCities(Integer numberOfCities) {
+        this.numberOfCities = numberOfCities;
+    }
     
     public String getName() {
         return name;
@@ -43,6 +65,14 @@ public class Country extends RepoObject implements Serializable
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public String getCountryCode() {

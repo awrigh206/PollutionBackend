@@ -41,8 +41,8 @@ public class DataThread implements Runnable
         {
             for(int i= start; i< end; i++)
             {
-                ResultAbs result = data.processPageSingle(baseUrl,i,resultType);
-                addLatest((LatestResult)result);
+                ResultAbs result = (ResultAbs)data.processPageSingle(baseUrl,i,resultType);
+                //addLatest(result);
             }
         }
         

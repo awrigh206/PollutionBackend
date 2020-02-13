@@ -11,6 +11,7 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.City;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
@@ -37,6 +38,8 @@ public class RetrieveData
     public ResultAbs processPageSingle(String baseUrl,int page, Class resultType) throws Exception
     {
         URL url = new URL(baseUrl+"?limit="+limit+"&page="+page);
+        String urlString = baseUrl+"?limit="+limit+"&page="+page;
+        System.out.println(urlString);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();
@@ -55,11 +58,11 @@ public class RetrieveData
             in.close();
             conn.disconnect();
             
-            return (ResultAbs) mapper.readValue(json, resultType);
+            return (ResultAbs)(mapper.readValue(json, resultType)) ;
         }
     }
     
-    public int getTotalPages(String baseUrl)
+    public int getTotalPages(String baseUrl,Class resultType)
     {
         try
         {
@@ -79,7 +82,9 @@ public class RetrieveData
             {
                 InputStream in = new BufferedInputStream(conn.getInputStream());
                 String json = IOUtils.toString(in, "UTF-8");
-                LatestResult result = mapper.readValue(json, LatestResult.class);
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                ResultAbs result = (ResultAbs) mapper.readValue(json, ResultAbs.class);
+                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
                 in.close();    
                 
                 return (int) result.getMeta().getFound()/limit+1;

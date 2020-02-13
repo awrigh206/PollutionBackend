@@ -13,9 +13,10 @@ import java.util.Set;
  *
  * @author Andrew Wright
  */
-public abstract class ResultAbs 
+public class ResultAbs 
 {
-    private MetaData meta;
+    //Abstract but not really, more like a super class 
+    protected MetaData meta;
 
     protected ResultAbs() {
     }

@@ -64,12 +64,14 @@ public class CityController
         
         return cities;
     }
-    
+    /*
+    This works but interfers with the new country controller
     @RequestMapping(method = RequestMethod.GET, path="/country")
     public City[] getCities(@RequestParam(value="country")String country)
     {
         return cityRepo.findByCountry(country);
     }
+*/
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)
