@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,7 @@ import javax.persistence.OneToMany;
  * @author Andrew Wright
  */
 @Entity
-public class Country implements Serializable 
+public class Country extends RepoObject implements Serializable 
 {
     @GeneratedValue
     @Id
