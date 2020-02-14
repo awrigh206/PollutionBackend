@@ -9,7 +9,7 @@ package com.Group15.PollutionBackend.DataProcessing.JSON;
  *
  * @author Andrew Wright
  */
-public abstract class RepoObject 
+public interface IRepo 
 {
     
 }

@@ -5,7 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 
-import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
+import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
  * @author Andrew Wright
  */
 @Entity
-public class Country extends RepoObject implements Serializable 
+public class Country implements Serializable, IRepo
 {
     @GeneratedValue
     @Id

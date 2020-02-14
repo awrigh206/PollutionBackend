@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.Model;
 
-import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,13 +14,14 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 
 /**
  *
  * @author Andrew Wright
  */
 @Entity
-public class City extends RepoObject implements Serializable 
+public class City implements Serializable,IRepo
 {
     @Id
     @GeneratedValue

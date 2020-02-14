@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.Service;
 
-import com.Group15.PollutionBackend.DataProcessing.JSON.RepoObject;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.AirQuality;
@@ -17,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 
 /**
  *
@@ -55,7 +55,7 @@ public class CityService implements IService
     }
     
     @Override
-    public RepoObject createNew(RepoObject toAdd)
+    public IRepo createNew(IRepo toAdd)
     {
 
         return cityRepository.save((City)toAdd);

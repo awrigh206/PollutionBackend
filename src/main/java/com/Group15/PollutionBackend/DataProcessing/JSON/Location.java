@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author Andrew Wright
  */
-public class Location extends RepoObject implements Serializable 
+public class Location implements Serializable, IRepo
 {
     private String locationName;
     private String parameter;
