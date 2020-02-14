@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
-import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
 import java.util.ArrayList;

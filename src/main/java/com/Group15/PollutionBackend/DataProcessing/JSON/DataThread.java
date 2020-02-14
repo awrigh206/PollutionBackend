@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Service.IService;
 
@@ -55,9 +54,6 @@ public class DataThread implements Runnable
     private void addResult(ResultAbs result)
     {
         service.createNew(result);
-        //result.getResults().stream().filter((toAdd) -> (toAdd != null)).forEachOrdered((toAdd) -> {
-            //service.createNew(toAdd);
-        //});
     }
     
 }

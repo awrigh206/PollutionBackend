@@ -12,7 +12,6 @@ import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
