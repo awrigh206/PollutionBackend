@@ -7,10 +7,8 @@ package com.Group15.PollutionBackend;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
-import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CityService;
 import com.Group15.PollutionBackend.Service.CountryService;

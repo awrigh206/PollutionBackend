@@ -6,30 +6,51 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 import com.Group15.PollutionBackend.Model.Coordinates;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.io.Serializable;
 
 /**
  *
  * @author Andrew Wright
  */
-public class Location implements Serializable, IRepo
+public class Location implements IRepo
 {
-    private String locationName;
+    private String location;
     private String parameter;
     private String value;
-    private String unit;
+    private String country;
+    private String City;
     private Coordinates coordinates;
-    @JsonProperty("city")
-    private String countryCode;
-    private String city;
+    private Date date;
+    private String unit;
 
-    public String getLocationName() {
-        return locationName;
+    protected Location()
+    {
+        
+    }
+    
+    public Date getDate() {
+        return date;
     }
 
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+    
+    
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getParameter() {
@@ -48,12 +69,20 @@ public class Location implements Serializable, IRepo
         this.value = value;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getCountry() {
+        return country;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return City;
+    }
+
+    public void setCity(String City) {
+        this.City = City;
     }
 
     public Coordinates getCoordinates() {
@@ -63,22 +92,4 @@ public class Location implements Serializable, IRepo
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
-
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-    
-    
 }

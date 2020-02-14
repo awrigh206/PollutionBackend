@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package com.Group15.PollutionBackend.DataProcessing.JSON.Results;
-import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.City.City;
 import java.util.Set;
 
 

@@ -6,7 +6,7 @@
 package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
-import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.City.City;
 import com.Group15.PollutionBackend.Model.Statistics;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import java.util.ArrayList;

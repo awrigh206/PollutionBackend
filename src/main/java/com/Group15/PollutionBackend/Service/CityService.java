@@ -8,7 +8,7 @@ package com.Group15.PollutionBackend.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.City.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import java.util.ArrayList;

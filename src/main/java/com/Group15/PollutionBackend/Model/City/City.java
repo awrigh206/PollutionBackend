@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.Group15.PollutionBackend.Model;
+package com.Group15.PollutionBackend.Model.City;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import com.Group15.PollutionBackend.Model.AirQuality;
+import com.Group15.PollutionBackend.Model.Coordinates;
 
 /**
  *

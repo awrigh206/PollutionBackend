@@ -5,7 +5,7 @@
  */
 package com.Group15.PollutionBackend.Repository;
 
-import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.City.City;
 import com.Group15.PollutionBackend.Model.Country;
 import java.util.ArrayList;
 import org.springframework.data.repository.PagingAndSortingRepository;

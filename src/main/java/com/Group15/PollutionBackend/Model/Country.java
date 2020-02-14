@@ -5,7 +5,15 @@
  */
 package com.Group15.PollutionBackend.Model;
 
+import com.Group15.PollutionBackend.Model.City.City;
+import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Service.CityService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +22,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -34,6 +44,39 @@ public class Country implements Serializable, IRepo
     private Integer count;
     @OneToMany
     private List<City> citiesWithinCountry;
+    @Autowired
+    @Transient
+    private CityService cityService;
+
+    public Country() 
+    {
+        fillInCityData();
+    }
+    
+    public void fillInCityData()
+    {
+        int hardLimit = 1;
+        RetrieveData data = new RetrieveData(1200);
+        String url = "https://api.openaq.org/v1/measurements?country=" + countryCode;
+        int totalPages = data.getTotalPages(url,LocationResult.class);
+        
+        try
+        {
+            for(int i =1; i<totalPages+1;i++)
+            {
+                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url,LocationResult.class), "data"+i);
+                t.start();
+                
+                if(i>hardLimit)
+                    break;
+            }
+        }
+        
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     public Integer getId() {
         return id;
