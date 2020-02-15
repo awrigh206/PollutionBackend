@@ -30,6 +30,13 @@ public class CountryResult extends ResultAbs
     public void setCountries(ArrayList<Country> countries) {
         this.countries = countries;
     }
+
+    @Override
+    public String toString() {
+        return "CountryResult{" + "countries=" + countries + '}';
+    }
+    
+    
     
     
     

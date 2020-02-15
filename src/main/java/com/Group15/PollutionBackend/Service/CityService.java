@@ -16,6 +16,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
+import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 
 /**
  *
@@ -69,11 +72,26 @@ public class CityService implements IService
     @Override
     public void createNew(ResultAbs toAdd) 
     {
-        LatestResult latest = (LatestResult)toAdd;
-        for(City current: latest.getResults())
+        LocationResult latest = (LocationResult)toAdd;
+        for(Location current: latest.getLocations())
         {
-            createNew(current);
+            City relevantCity = cityRepository.findByNameAndCountry(current.getCity(), current.getCountry());
+            if(relevantCity == null)
+            {
+                cityRepository.save(current.toNewCity());
+            }
+            else 
+            {
+                relevantCity.addQuality(current.getAirQuality());
+                cityRepository.deleteById(relevantCity.getCityId());
+                cityRepository.save(relevantCity);
+            }
         }
+    }
+
+    @Override
+    public void createNew(ResultAbs toAdd, RetrieveData data) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

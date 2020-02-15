@@ -53,7 +53,7 @@ public class DataThread implements Runnable
     
     private void addResult(ResultAbs result)
     {
-        service.createNew(result);
+        service.createNew(result,data);
     }
     
 }

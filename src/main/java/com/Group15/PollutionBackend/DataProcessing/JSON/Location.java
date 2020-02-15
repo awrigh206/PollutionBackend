@@ -5,7 +5,11 @@
  */
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
+import com.Group15.PollutionBackend.Model.AirQuality;
+import com.Group15.PollutionBackend.Model.AveragingPeriod;
+import com.Group15.PollutionBackend.Model.City.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,7 +21,7 @@ public class Location implements IRepo
     private String parameter;
     private String value;
     private String country;
-    private String City;
+    private String city;
     private Coordinates coordinates;
     private Date date;
     private String unit;
@@ -25,6 +29,19 @@ public class Location implements IRepo
     protected Location()
     {
         
+    }
+    
+    public City toNewCity()
+    {
+        AirQuality quality = getAirQuality();
+        City toReturn = new City(city,country,location,0.0,new ArrayList<>(),coordinates);
+        toReturn.addQuality(quality);
+        return toReturn;
+    }
+    
+    public AirQuality getAirQuality()
+    {
+        return new AirQuality(parameter,Double.parseDouble(value),date.getLocal(),unit,location,new AveragingPeriod(1.0,"Hours"));
     }
     
     public Date getDate() {
@@ -78,11 +95,11 @@ public class Location implements IRepo
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
-    public void setCity(String City) {
-        this.City = City;
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public Coordinates getCoordinates() {

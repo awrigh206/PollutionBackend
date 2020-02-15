@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.Service;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 
 /**
  *
@@ -17,4 +18,5 @@ public interface IService
     public IRepo createNew(IRepo toAdd);
     public void createNew(ResultAbs toAdd);
     public long total();
+    public void createNew(ResultAbs toAdd, RetrieveData data);
 }

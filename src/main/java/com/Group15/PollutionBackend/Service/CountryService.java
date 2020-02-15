@@ -12,6 +12,7 @@ import com.Group15.PollutionBackend.Repository.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 
 /**
  *
@@ -22,6 +23,9 @@ public class CountryService implements IService
 {
     
     private final CountryRepository countryRepository;
+    
+    @Autowired
+    private CityService cityService;
     
     @Autowired
     public CountryService(CountryRepository countryRepository) 
@@ -41,15 +45,21 @@ public class CountryService implements IService
         return countryRepository.count();
     }
 
-    @Override
-    public void createNew(ResultAbs toAdd) 
+    public void createNew(ResultAbs toAdd, RetrieveData data) 
     {
         CountryResult countryResult = (CountryResult)toAdd;
         for(Country current: countryResult.getCountries())
         {
+            //current.fillInCityData(cityService);
             createNew(current);
         }
         
     }
+
+    @Override
+    public void createNew(ResultAbs toAdd) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

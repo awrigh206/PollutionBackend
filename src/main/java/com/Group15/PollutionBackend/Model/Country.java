@@ -13,11 +13,14 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Service.CityService;
+import com.Group15.PollutionBackend.Service.IService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -42,21 +45,18 @@ public class Country implements Serializable, IRepo
     @JsonProperty("code")
     private String countryCode;
     private Integer count;
-    @OneToMany
+    @ElementCollection
+    @Embedded
     private List<City> citiesWithinCountry;
-    @Autowired
-    @Transient
-    private CityService cityService;
 
     public Country() 
     {
-        fillInCityData();
     }
     
-    public void fillInCityData()
+    public void fillInCityData(IService service, RetrieveData data)
     {
         int hardLimit = 1;
-        RetrieveData data = new RetrieveData(1200);
+        //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements?country=" + countryCode;
         int totalPages = data.getTotalPages(url,LocationResult.class);
         
@@ -64,7 +64,7 @@ public class Country implements Serializable, IRepo
         {
             for(int i =1; i<totalPages+1;i++)
             {
-                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url,LocationResult.class), "data"+i);
+                Thread t = new Thread(new DataThread(i,i+1,data,service,url,LocationResult.class), "data"+i);
                 t.start();
                 
                 if(i>hardLimit)
@@ -167,6 +167,13 @@ public class Country implements Serializable, IRepo
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Country{" + "id=" + id + ", locations=" + locations + ", numberOfCities=" + numberOfCities + ", name=" + name + ", countryCode=" + countryCode + ", count=" + count + ", citiesWithinCountry=" + citiesWithinCountry + '}';
+    }
+    
+    
     
     
     
