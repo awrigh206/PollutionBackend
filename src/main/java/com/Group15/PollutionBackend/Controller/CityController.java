@@ -7,8 +7,10 @@ package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.Statistics;
 import com.Group15.PollutionBackend.Repository.CityRepository;
+import com.Group15.PollutionBackend.Repository.CountryRepository;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -30,11 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping()
 public class CityController 
 {
+    CountryRepository countryRepo;
     CityRepository cityRepo;
+    
     @Autowired
-    public CityController (CityRepository cityRepo)
+    public CityController (CityRepository cityRepo, CountryRepository countryRepo)
     {
         this.cityRepo = cityRepo;
+        this.countryRepo = countryRepo;
     }
 
     protected CityController() {
@@ -98,6 +103,15 @@ public class CityController
     public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
     {
         List<Statistics> stats = CalculationsHelper.stats(cityRepo.findAllByNameAndCountry(city,country));
+        return stats;
+    }
+    
+    @RequestMapping(method = RequestMethod.GET, path="/statsCountry")
+    public List<Statistics> getStats(@RequestParam(value="country") String country)
+    {
+        Country countryModel = countryRepo.findByCountryCode(country);
+        System.out.println(countryModel);
+        List<Statistics> stats = CalculationsHelper.stats(countryModel);
         return stats;
     }
     

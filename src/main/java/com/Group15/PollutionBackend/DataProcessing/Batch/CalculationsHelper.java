@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.DataProcessing.Batch;
 
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.Statistics;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +35,12 @@ public class CalculationsHelper
     {
         return averageCityWide(citiesInCountry, country);
     }
+    
+    public static List<Statistics> stats(Country countryForStats)
+    {
+        return stats(countryForStats.getCitiesWithinCountry());
+    }
+    
     
     /**
      * Use the apache commons maths package to calculate relevant statistics for the data and return those stats in a list

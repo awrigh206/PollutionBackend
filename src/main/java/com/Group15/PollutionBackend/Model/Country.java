@@ -69,7 +69,11 @@ public class Country implements Serializable, IRepo
                 LocationResult result = (LocationResult)data.processPageSingle(url, i, LocationResult.class, countryCode);
                 for(Location current : result.getLocations())
                 {
-                    citiesWithinCountry.add(current.toNewCity());
+                    City relevantCity = findCity (current);
+                    if(relevantCity != null)
+                        relevantCity.addQuality(current.getAirQuality());
+                    else
+                        citiesWithinCountry.add(current.toNewCity());
                 }
                 /*
                 DataThread thread = new DataThread(i,i+1,data,service,url,LocationResult.class);
@@ -186,7 +190,17 @@ public class Country implements Serializable, IRepo
         return "Country{" + "id=" + id + ", locations=" + locations + ", numberOfCities=" + numberOfCities + ", name=" + name + ", countryCode=" + countryCode + ", count=" + count + ", citiesWithinCountry=" + citiesWithinCountry + '}';
     }
     
-    
+    public City findCity(Location location)
+    {
+        for(City current : citiesWithinCountry)
+        {
+            if(current.getName().equalsIgnoreCase(location.getCity()))
+            {
+                return current;
+            }
+        }
+        return null;
+    }
     
     
     
