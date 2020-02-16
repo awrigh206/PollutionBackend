@@ -20,7 +20,8 @@ public class CountryResult extends ResultAbs
     
     protected CountryResult()
     {
-        
+        super();
+        this.hasMany = true;
     }
 
     public ArrayList<Country> getCountries() {

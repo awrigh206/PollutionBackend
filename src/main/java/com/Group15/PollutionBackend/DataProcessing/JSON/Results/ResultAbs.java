@@ -17,8 +17,11 @@ public class ResultAbs
 {
     //Abstract but not really, more like a super class 
     protected MetaData meta;
+    protected boolean hasMany;
 
-    protected ResultAbs() {
+    protected ResultAbs() 
+    {
+        hasMany = false;
     }
 
     public MetaData getMeta() {
@@ -28,6 +31,16 @@ public class ResultAbs
     public void setMeta(MetaData meta) {
         this.meta = meta;
     }
+
+    public boolean hasMany() {
+        return hasMany;
+    }
+
+    public void setHasMany(boolean hasMany) {
+        this.hasMany = hasMany;
+    }
+    
+    
     
     
 }

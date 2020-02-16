@@ -19,6 +19,7 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.Country;
 
 /**
  *
@@ -69,6 +70,7 @@ public class CityService implements IService
         return cityRepository.count();
     }
 
+    
     @Override
     public void createNew(ResultAbs toAdd) 
     {
@@ -88,10 +90,18 @@ public class CityService implements IService
             }
         }
     }
+    
+    /*
+    public void createCitiesInCountry(Country country, RetrieveData data)
+    {
+        country.fillInCityData(this, data);
+    }*/
 
     @Override
     public void createNew(ResultAbs toAdd, RetrieveData data) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
     
 }

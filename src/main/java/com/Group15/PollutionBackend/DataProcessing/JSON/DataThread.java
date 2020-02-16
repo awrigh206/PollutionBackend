@@ -7,6 +7,9 @@ package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Service.IService;
+import com.Group15.PollutionBackend.StartupRunner;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -21,6 +24,8 @@ public class DataThread implements Runnable
     private final IService service;
     private final String baseUrl;
     private final Class resultType;
+    private final Log log = LogFactory.getLog(DataThread.class);
+    private String countryCode;
 
     //Using Iservice as interface facade
     //Faster to use direct implementation rather than casting, change this if the performance is needed
@@ -40,7 +45,7 @@ public class DataThread implements Runnable
         {
             for(int i= start; i< end; i++)
             {
-                ResultAbs result = (ResultAbs)data.processPageSingle(baseUrl,i,resultType);
+                ResultAbs result = (ResultAbs)data.processPageSingle(baseUrl,i,resultType,countryCode);
                 addResult(result);
             }
         }
@@ -53,7 +58,21 @@ public class DataThread implements Runnable
     
     private void addResult(ResultAbs result)
     {
-        service.createNew(result,data);
+        log.info(result.toString());
+        if(result.hasMany())
+            service.createNew(result,data);
+        else 
+            service.createNew(result);
     }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+    
+    
     
 }

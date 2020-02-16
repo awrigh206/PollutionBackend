@@ -15,6 +15,12 @@ import java.util.ArrayList;
  */
 public class LocationResult extends ResultAbs
 {
+
+    protected LocationResult() 
+    {
+        super();
+    }
+    
     @JsonProperty("results")
     private ArrayList<Location> locations;
 
@@ -25,6 +31,13 @@ public class LocationResult extends ResultAbs
     public void setLocations(ArrayList<Location> locations) {
         this.locations = locations;
     }
+
+    @Override
+    public String toString() {
+        return "LocationResult{" + "locations=" + locations + '}';
+    }
+    
+    
     
     
 }

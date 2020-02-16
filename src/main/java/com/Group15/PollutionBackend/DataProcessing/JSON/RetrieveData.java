@@ -9,6 +9,7 @@ package com.Group15.PollutionBackend.DataProcessing.JSON;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.City.City;
+import com.Group15.PollutionBackend.StartupRunner;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -19,6 +20,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -28,6 +31,7 @@ public class RetrieveData
 {
     private final ObjectMapper mapper;
     private final int limit;
+    private final Log log = LogFactory.getLog(StartupRunner.class);
 
     public RetrieveData(int limit) 
     {
@@ -35,9 +39,19 @@ public class RetrieveData
         this.limit = limit;
     }
     
-    public ResultAbs processPageSingle(String baseUrl,int page, Class resultType) throws Exception
+    public ResultAbs processPageSingle(String baseUrl,int page, Class resultType, String countryCode) throws Exception
     {
-        URL url = new URL(baseUrl+"?limit="+limit+"&page="+page);
+        URL url;
+        if(countryCode!=null)
+        {
+             url= new URL(baseUrl+"?limit="+limit+"&page="+page +"&country="+countryCode);
+        }
+        else
+        {
+            url = new URL(baseUrl+"?limit="+limit+"&page="+page);
+        }
+        
+        log.info(baseUrl+"?limit="+limit+"&page="+page +"&country="+countryCode);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();

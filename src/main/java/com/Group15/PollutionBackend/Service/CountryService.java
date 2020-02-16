@@ -45,12 +45,14 @@ public class CountryService implements IService
         return countryRepository.count();
     }
 
+    @Override
     public void createNew(ResultAbs toAdd, RetrieveData data) 
     {
         CountryResult countryResult = (CountryResult)toAdd;
         for(Country current: countryResult.getCountries())
         {
-            //current.fillInCityData(cityService);
+            current.fillInCityData(cityService,data);
+            //cityService.createCitiesInCountry(current, data);
             createNew(current);
         }
         

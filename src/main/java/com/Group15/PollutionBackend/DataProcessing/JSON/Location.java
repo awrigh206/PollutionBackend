@@ -109,4 +109,11 @@ public class Location implements IRepo
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" + "location=" + location + ", parameter=" + parameter + ", value=" + value + ", country=" + country + ", city=" + city + ", coordinates=" + coordinates + ", date=" + date + ", unit=" + unit + '}';
+    }
+    
+    
 }

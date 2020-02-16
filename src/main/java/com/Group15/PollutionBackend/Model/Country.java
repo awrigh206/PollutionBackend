@@ -57,14 +57,16 @@ public class Country implements Serializable, IRepo
     {
         int hardLimit = 1;
         //RetrieveData data = new RetrieveData(1200);
-        String url = "https://api.openaq.org/v1/measurements?country=" + countryCode;
+        String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);
         
         try
         {
             for(int i =1; i<totalPages+1;i++)
             {
-                Thread t = new Thread(new DataThread(i,i+1,data,service,url,LocationResult.class), "data"+i);
+                DataThread thread = new DataThread(i,i+1,data,service,url,LocationResult.class);
+                thread.setCountryCode(countryCode);
+                Thread t = new Thread(thread, "data"+i);
                 t.start();
                 
                 if(i>hardLimit)
@@ -172,6 +174,8 @@ public class Country implements Serializable, IRepo
     public String toString() {
         return "Country{" + "id=" + id + ", locations=" + locations + ", numberOfCities=" + numberOfCities + ", name=" + name + ", countryCode=" + countryCode + ", count=" + count + ", citiesWithinCountry=" + citiesWithinCountry + '}';
     }
+    
+    
     
     
     

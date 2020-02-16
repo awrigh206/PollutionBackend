@@ -17,16 +17,17 @@ import javax.persistence.Id;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.Coordinates;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Andrew Wright
  */
-@Entity
+@Embeddable
 public class City implements Serializable,IRepo
 {
-    @Id
-    @GeneratedValue
+    //@Id
+   // @GeneratedValue
     private Integer cityId;
     @JsonProperty("city")
     private String name;
@@ -34,7 +35,7 @@ public class City implements Serializable,IRepo
     private String location;
     private Double distance;
     @JsonProperty("measurements")
-    @ElementCollection
+    //@ElementCollection
     @Embedded
     private List<AirQuality> airQuality;
     @Embedded
@@ -123,6 +124,12 @@ public class City implements Serializable,IRepo
     {
         airQuality.add(quality);
     }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+    
+    
 
     
     

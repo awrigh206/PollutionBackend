@@ -18,6 +18,7 @@ public class LatestResult extends ResultAbs
 
     protected LatestResult() 
     {
+        super();
     }
 
     public Set<City> getResults() {
