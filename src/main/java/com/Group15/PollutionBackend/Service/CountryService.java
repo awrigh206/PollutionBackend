@@ -24,8 +24,6 @@ public class CountryService implements IService
     
     private final CountryRepository countryRepository;
     
-    @Autowired
-    private CityService cityService;
     
     @Autowired
     public CountryService(CountryRepository countryRepository) 
@@ -51,8 +49,7 @@ public class CountryService implements IService
         CountryResult countryResult = (CountryResult)toAdd;
         for(Country current: countryResult.getCountries())
         {
-            current.fillInCityData(cityService,data);
-            //cityService.createCitiesInCountry(current, data);
+            current.fillInCityData(data);
             createNew(current);
         }
         

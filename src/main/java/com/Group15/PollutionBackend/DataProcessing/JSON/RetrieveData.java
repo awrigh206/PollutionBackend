@@ -51,7 +51,6 @@ public class RetrieveData
             url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         }
         
-        log.info(baseUrl+"?limit="+limit+"&page="+page +"&country="+countryCode);
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();
         conn.setRequestMethod("GET");
         conn.connect();

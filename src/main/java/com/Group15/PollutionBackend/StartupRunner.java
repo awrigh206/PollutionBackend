@@ -10,7 +10,6 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Repository.CityRepository;
-import com.Group15.PollutionBackend.Service.CityService;
 import com.Group15.PollutionBackend.Service.CountryService;
 import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
@@ -28,8 +27,6 @@ import org.springframework.stereotype.Component;
 public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
 {
     private final Log log = LogFactory.getLog(StartupRunner.class);
-    @Autowired
-    private CityService cityService;
     @Autowired
     private CityRepository cityRepository;
     @Autowired
@@ -71,6 +68,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         }
     }
     
+    /*
     private void getDataLatest(RetrieveData data)
     {
         String url = "https://api.openaq.org/v1/latest";
@@ -92,6 +90,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         
         
     }
+*/
 
     
 }

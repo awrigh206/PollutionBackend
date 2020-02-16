@@ -58,7 +58,6 @@ public class DataThread implements Runnable
     
     private void addResult(ResultAbs result)
     {
-        log.info(result.toString());
         if(result.hasMany())
             service.createNew(result,data);
         else 

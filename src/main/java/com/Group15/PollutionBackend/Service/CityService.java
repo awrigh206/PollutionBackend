@@ -24,7 +24,7 @@ import com.Group15.PollutionBackend.Model.Country;
 /**
  *
  * @author Andrew Wright
- */
+ 
 @Service
 public class CityService implements IService 
 {
@@ -70,7 +70,7 @@ public class CityService implements IService
         return cityRepository.count();
     }
 
-    
+    /*
     @Override
     public void createNew(ResultAbs toAdd) 
     {
@@ -94,24 +94,31 @@ public class CityService implements IService
             }
             else 
             {
-                relevantCity.addQuality(current.getAirQuality());
-                cityRepository.deleteById(relevantCity.getCityId());
-                cityRepository.save(relevantCity);
+                //relevantCity.addQuality(current.getAirQuality());
+                //cityRepository.deleteById(relevantCity.getCityId());
+                //cityRepository.save(relevantCity);
             }
         }
-    }
+    }*/
     
     /*
     public void createCitiesInCountry(Country country, RetrieveData data)
     {
         country.fillInCityData(this, data);
     }*/
+/*
 
     @Override
     public void createNew(ResultAbs toAdd, RetrieveData data) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void createNew(ResultAbs toAdd) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
     
 }
+*/

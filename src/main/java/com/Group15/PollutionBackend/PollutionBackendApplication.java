@@ -2,7 +2,6 @@ package com.Group15.PollutionBackend;
 
 
 import com.Group15.PollutionBackend.Repository.CityRepository;
-import com.Group15.PollutionBackend.Service.CityService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PollutionBackendApplication implements CommandLineRunner
 {
     private final Log log = LogFactory.getLog(PollutionBackendApplication.class);
-    @Autowired
-    private CityService cityService;
     @Autowired
     private CityRepository cityRepository;
     

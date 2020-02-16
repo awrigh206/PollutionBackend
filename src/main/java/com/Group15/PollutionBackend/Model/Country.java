@@ -7,17 +7,19 @@ package com.Group15.PollutionBackend.Model;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
-import com.Group15.PollutionBackend.Service.CityService;
 import com.Group15.PollutionBackend.Service.IService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -44,32 +46,43 @@ public class Country implements Serializable, IRepo
     @JsonProperty("code")
     private String countryCode;
     private Integer count;
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
     private List<City> citiesWithinCountry;
 
     public Country() 
     {
+        citiesWithinCountry = new ArrayList<>();
     }
     
-    public void fillInCityData(IService service, RetrieveData data)
+    public void fillInCityData( RetrieveData data)
     {
-        int hardLimit = 1;
+        int hardLimit = 3;
         //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);
         
         try
         {
+            
             for(int i =1; i<totalPages+1;i++)
             {
+                LocationResult result = (LocationResult)data.processPageSingle(url, i, LocationResult.class, countryCode);
+                for(Location current : result.getLocations())
+                {
+                    citiesWithinCountry.add(current.toNewCity());
+                }
+                /*
                 DataThread thread = new DataThread(i,i+1,data,service,url,LocationResult.class);
                 thread.setCountryCode(countryCode);
                 Thread t = new Thread(thread, "data"+i);
-                t.start();
+                t.start();*/
                 
                 if(i>hardLimit)
                     break;
+                
+                
             }
+            
         }
         
         catch(Exception e)
