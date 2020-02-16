@@ -8,7 +8,7 @@ package com.Group15.PollutionBackend.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.City.City;
+import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import java.util.ArrayList;
@@ -77,7 +77,17 @@ public class CityService implements IService
         LocationResult latest = (LocationResult)toAdd;
         for(Location current: latest.getLocations())
         {
-            City relevantCity = cityRepository.findByNameAndCountry(current.getCity(), current.getCountry());
+            City relevantCity;
+            try
+            {
+                 relevantCity = cityRepository.findByNameAndCountry(current.getCity(), current.getCountry());
+            }
+            
+            catch(Exception e)
+            {
+                relevantCity = null;
+            }
+            
             if(relevantCity == null)
             {
                 cityRepository.save(current.toNewCity());

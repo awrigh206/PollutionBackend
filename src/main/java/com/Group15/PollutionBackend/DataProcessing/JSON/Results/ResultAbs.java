@@ -6,7 +6,7 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON.Results;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.MetaData;
-import com.Group15.PollutionBackend.Model.City.City;
+import com.Group15.PollutionBackend.Model.City;
 import java.util.Set;
 
 /**

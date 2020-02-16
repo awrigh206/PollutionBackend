@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.Group15.PollutionBackend.Model.City;
+package com.Group15.PollutionBackend.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
@@ -15,19 +15,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
-import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.Coordinates;
 import javax.persistence.Embeddable;
 
 /**
  *
  * @author Andrew Wright
  */
-@Embeddable
+@Entity
 public class City implements Serializable,IRepo
 {
-    //@Id
-   // @GeneratedValue
+    @Id
+    @GeneratedValue
     private Integer cityId;
     @JsonProperty("city")
     private String name;
@@ -35,7 +33,7 @@ public class City implements Serializable,IRepo
     private String location;
     private Double distance;
     @JsonProperty("measurements")
-    //@ElementCollection
+    @ElementCollection
     @Embedded
     private List<AirQuality> airQuality;
     @Embedded
@@ -128,11 +126,6 @@ public class City implements Serializable,IRepo
     public void setCoordinates(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
-    
-    
-
-    
-    
     
     @Override
     public String toString() {

@@ -5,7 +5,6 @@
  */
 package com.Group15.PollutionBackend.Model;
 
-import com.Group15.PollutionBackend.Model.City.City;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
@@ -45,8 +44,7 @@ public class Country implements Serializable, IRepo
     @JsonProperty("code")
     private String countryCode;
     private Integer count;
-    @ElementCollection
-    @Embedded
+    @OneToMany
     private List<City> citiesWithinCountry;
 
     public Country() 

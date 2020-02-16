@@ -8,7 +8,7 @@ package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
-import com.Group15.PollutionBackend.Model.City.City;
+import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.StartupRunner;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonParser;
