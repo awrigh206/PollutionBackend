@@ -75,11 +75,6 @@ public class Country implements Serializable, IRepo
                     else
                         citiesWithinCountry.add(current.toNewCity());
                 }
-                /*
-                DataThread thread = new DataThread(i,i+1,data,service,url,LocationResult.class);
-                thread.setCountryCode(countryCode);
-                Thread t = new Thread(thread, "data"+i);
-                t.start();*/
                 
                 if(i>hardLimit)
                     break;
