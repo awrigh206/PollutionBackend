@@ -39,6 +39,28 @@ public class RetrieveData
         this.limit = limit;
     }
     
+    /**
+     * Method which returns the MetaData of the request as a Java Object
+     * @param baseUrl
+     * @param resultType
+     * @return 
+     */
+    public MetaData getMeta(String baseUrl,Class resultType) 
+    {
+        URL url;
+        try
+        {
+            url = new URL(baseUrl+"?limit=1");
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            url = null;
+        }
+        
+        return sendRequest(url, resultType).getMeta();
+    }
+    
     public ResultAbs processPageSingle(String baseUrl,int page, Class resultType, String countryCode) throws Exception
     {
         URL url;
@@ -51,27 +73,42 @@ public class RetrieveData
             url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         }
         
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.connect();
-        int responseCode = conn.getResponseCode();
+        return sendRequest(url,resultType);
+    }
+    
+    private ResultAbs sendRequest(URL url, Class resultType)
+    {
+        try
+        {
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responseCode = conn.getResponseCode();
 
+
+            if(responseCode!=200)
+            {
+                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
+                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
+            }
+
+            else
+            {
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                String json = IOUtils.toString(in, "UTF-8");
+                in.close();
+                conn.disconnect();
+
+                return (ResultAbs)(mapper.readValue(json, resultType)) ;
+            }
+        }
         
-        if(responseCode!=200)
+        catch(Exception e)
         {
-            //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
-            throw new RuntimeException ("HTTPResponseCode: " + responseCode);
+            e.printStackTrace();
+            return null;
         }
-
-        else
-        {
-            InputStream in = new BufferedInputStream(conn.getInputStream());
-            String json = IOUtils.toString(in, "UTF-8");
-            in.close();
-            conn.disconnect();
-            
-            return (ResultAbs)(mapper.readValue(json, resultType)) ;
-        }
+        
     }
     
     public int getTotalPages(String baseUrl,Class resultType)

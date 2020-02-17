@@ -51,11 +51,13 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private void getData(RetrieveData data)
     {
         String url = "https://api.openaq.org/v1/countries";
-        int totalPages = data.getTotalPages(url,CountryResult.class);
+        int numberOfCountries = data.getMeta(url, CountryResult.class).getFound();
+        int countriesPerThread = 10;
+        int threadCount = numberOfCountries/countriesPerThread;
         
         try
         {
-            for(int i =1; i<totalPages+1;i++)
+            for(int i =1; i<threadCount+1;i++)
             {
                 Thread t = new Thread(new DataThread(i,i+1,data,countryService,url,CountryResult.class), "data"+i);
                 t.start();
