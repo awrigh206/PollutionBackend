@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 /**
  *
@@ -23,6 +25,7 @@ public class CountryService implements IService
 {
     
     private final CountryRepository countryRepository;
+    private final Log log = LogFactory.getLog(CountryService.class);
     
     
     @Autowired

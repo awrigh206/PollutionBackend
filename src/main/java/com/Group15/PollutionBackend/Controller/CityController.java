@@ -50,14 +50,14 @@ public class CityController
      * @param cityName
      * @return 
      */
-    @RequestMapping(method = RequestMethod.GET, path = "/City")
+    @RequestMapping(method = RequestMethod.GET, path = "/city")
     public ArrayList<City> getCity(@RequestParam(value ="cityName")String cityName)
     {
         ArrayList<City> cities = cityRepo.findAllByName(cityName);
         return cities;
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/Cities")
+    @RequestMapping(method = RequestMethod.GET, path = "/cities")
     public ArrayList<City> getCities()
     {
         ArrayList<City> cities = new ArrayList<>();
@@ -69,14 +69,6 @@ public class CityController
         
         return cities;
     }
-    /*
-    This works but interfers with the new country controller
-    @RequestMapping(method = RequestMethod.GET, path="/country")
-    public City[] getCities(@RequestParam(value="country")String country)
-    {
-        return cityRepo.findByCountry(country);
-    }
-*/
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)
@@ -110,7 +102,6 @@ public class CityController
     public List<Statistics> getStats(@RequestParam(value="country") String country)
     {
         Country countryModel = countryRepo.findByCountryCode(country);
-        System.out.println(countryModel);
         List<Statistics> stats = CalculationsHelper.stats(countryModel);
         return stats;
     }

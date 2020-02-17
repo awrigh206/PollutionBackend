@@ -67,30 +67,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
             e.printStackTrace();
         }
     }
-    
-    /*
-    private void getDataLatest(RetrieveData data)
-    {
-        String url = "https://api.openaq.org/v1/latest";
-        int totalPages = data.getTotalPages(url,LatestResult.class);
-        
-        try
-        {
-            for(int i =1; i<totalPages+1;i++)
-            {
-                Thread t = new Thread(new DataThread(i,i+1,data,cityService,url, LatestResult.class), "data"+i);
-                t.start();
-            }
-        }
-        
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        
-        
-    }
-*/
 
     
 }
