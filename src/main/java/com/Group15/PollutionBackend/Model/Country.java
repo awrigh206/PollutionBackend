@@ -56,7 +56,7 @@ public class Country implements Serializable, IRepo
     
     public void fillInCityData( RetrieveData data)
     {
-        int hardLimit = 6;
+        int hardLimit = 1;
         //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);

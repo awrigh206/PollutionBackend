@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
 public class RetrieveData 
 {
     private final ObjectMapper mapper;
-    private final int limit;
+    private int limit;
     private final Log log = LogFactory.getLog(StartupRunner.class);
 
     public RetrieveData(int limit) 
@@ -147,5 +147,15 @@ public class RetrieveData
             return 0;
         }
     }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+    
+    
 
 }
