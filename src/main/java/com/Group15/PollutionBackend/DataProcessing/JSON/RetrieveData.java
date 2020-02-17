@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Model.City;
@@ -111,6 +112,13 @@ public class RetrieveData
         
     }
     
+    public int getTotalPages(String baseUrl, Class resultType)
+    {
+        MetaData meta = getMeta(baseUrl, resultType);
+        return meta.getFound()/limit+1;
+    }
+    
+    /*
     public int getTotalPages(String baseUrl,Class resultType)
     {
         try
@@ -132,7 +140,7 @@ public class RetrieveData
                 InputStream in = new BufferedInputStream(conn.getInputStream());
                 String json = IOUtils.toString(in, "UTF-8");
                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                ResultAbs result = (ResultAbs) mapper.readValue(json, ResultAbs.class);
+                CountryResult result = (CountryResult) mapper.readValue(json, CountryResult.class);
                 mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
                 in.close();    
                 
@@ -146,7 +154,7 @@ public class RetrieveData
             e.printStackTrace();
             return 0;
         }
-    }
+    }*/
 
     public int getLimit() {
         return limit;
