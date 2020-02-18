@@ -59,6 +59,7 @@ public class CalculationsHelper
             DescriptiveStatistics stats = addToStats(rawData);
             Statistics statsModelObject = new Statistics();
             statsModelObject.setPollutionType(qualityList.get(0).getParameterUsed());
+            log.info(qualityList.get(0).getLastUpdated());
             
             statsModelObject.setMax(stats.getMax());
             statsModelObject.setMin(stats.getMin());
@@ -115,6 +116,7 @@ public class CalculationsHelper
         ArrayList<AirQuality> no2List = new ArrayList<>();
         ArrayList<AirQuality> so2List = new ArrayList<>();
         ArrayList<AirQuality> coList = new ArrayList<>();
+        ArrayList<AirQuality> bcList = new ArrayList<>();
         
         for (City city: cities)
         {
@@ -130,6 +132,9 @@ public class CalculationsHelper
                         break;
                     case "o3":
                         o3List.add(quality);
+                        break;
+                    case "bc":
+                        bcList.add(quality);
                         break;
                     case"no2":
                         no2List.add(quality);
