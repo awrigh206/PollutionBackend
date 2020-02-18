@@ -117,6 +117,7 @@ public class Statistics implements Serializable
 
     public void setPollutionType(String pollutionType) {
         this.pollutionType = pollutionType;
+    }
 
     @Override
     public String toString() {

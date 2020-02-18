@@ -58,6 +58,7 @@ public class CalculationsHelper
             List<Double> rawData = getRawData(qualityList);
             DescriptiveStatistics stats = addToStats(rawData);
             Statistics statsModelObject = new Statistics();
+            statsModelObject.setPollutionType(qualityList.get(0).getParameterUsed());
             
             statsModelObject.setMax(stats.getMax());
             statsModelObject.setMin(stats.getMin());
