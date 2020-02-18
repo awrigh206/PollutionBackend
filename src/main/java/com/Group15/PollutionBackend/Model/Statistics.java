@@ -20,6 +20,7 @@ public class Statistics implements Serializable
     @Id
     @GeneratedValue
     private Integer id;
+    private String pollutionType;
     private Double mean;
     private Double standardDeviation;
     private Double min;
@@ -109,6 +110,13 @@ public class Statistics implements Serializable
     public void setVariance(Double variance) {
         this.variance = variance;
     }
+
+    public String getPollutionType() {
+        return pollutionType;
+    }
+
+    public void setPollutionType(String pollutionType) {
+        this.pollutionType = pollutionType;
 
     @Override
     public String toString() {
