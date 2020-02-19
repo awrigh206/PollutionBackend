@@ -11,15 +11,18 @@ import Alerts.TextAlert;
 import com.Group15.PollutionBackend.DTO.AlertDto;
 import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.Model.City;
+import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.StartupRunner;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -38,10 +41,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class AlertController 
 {
     private final Log log = LogFactory.getLog(AlertController.class);
-    IAlert alert;
-    TextAlert textAlert;
-    public AlertController() 
+    private IAlert alert;
+    private final CityRepository cityRepo;
+    
+    @Autowired
+    public AlertController(CityRepository cityRepo) 
     {
+        this.cityRepo = cityRepo;
     }
     
     @RequestMapping(method = RequestMethod.POST, path = "/email")
@@ -61,7 +67,7 @@ public class AlertController
     }
     
     @RequestMapping(method = RequestMethod.GET, path = "/location")
-    public String getCity(@RequestParam(value ="ip")String ip)
+    public Object getCity(@RequestParam(value ="ip")String ip)
     {
         try
         {
@@ -69,7 +75,17 @@ public class AlertController
             DatabaseReader dbReader = new DatabaseReader.Builder(database).build();
             InetAddress ipAddress = InetAddress.getByName(ip);
             CityResponse response = dbReader.city(ipAddress);
-            return response.getCity().getName();
+            String cityName = response.getCity().getName();
+            String countryCode = response.getCountry().getIsoCode();
+            
+            City city = cityRepo.findByNameAndCountry(cityName,countryCode);
+            if(city!=null)
+                return city;
+            
+            else
+                return "This system has no data on the nearest city to you which is: " + response.getCity().getName();
+            
+            
         }
         catch (Exception e)
         {
