@@ -7,7 +7,8 @@ package com.Group15.PollutionBackend.Controller;
 
 import Alerts.EmailAlert;
 import Alerts.IAlert;
-import com.Group15.PollutionBackend.DTO.EmailDto;
+import Alerts.TextAlert;
+import com.Group15.PollutionBackend.DTO.AlertDto;
 import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.StartupRunner;
 import java.util.NoSuchElementException;
@@ -27,24 +28,30 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Andrew Wright
  */
 @RestController
-@RequestMapping(path = "/email")
-public class EmailController 
+public class AlertController 
 {
-    private final Log log = LogFactory.getLog(EmailController.class);
-    EmailAlert alert;
-    public EmailController() 
+    private final Log log = LogFactory.getLog(AlertController.class);
+    IAlert alert;
+    TextAlert textAlert;
+    public AlertController() 
+    {
+    }
+    
+    @RequestMapping(method = RequestMethod.POST, path = "/email")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void sendEmailAlert( @RequestBody AlertDto alertDto) 
     {
         alert = new EmailAlert();
+        alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
     }
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, path = "/text")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser( @RequestBody EmailDto emailDto) 
+    public void sendTextAlert( @RequestBody AlertDto alertDto) 
     {
-        //log.info(emailDto.toString());
-        alert.sendHtml(emailDto);
+        alert = new TextAlert();
+        alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
     }
-    
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)

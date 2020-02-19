@@ -5,7 +5,7 @@
  */
 package Alerts;
 
-import com.Group15.PollutionBackend.DTO.EmailDto;
+import com.Group15.PollutionBackend.DTO.AlertDto;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.HtmlEmail;
@@ -18,12 +18,13 @@ import org.apache.commons.mail.SimpleEmail;
 public class EmailAlert implements IAlert
 {
     
-    public void sendAlert(EmailDto emailDto)
+    public void sendAlert(AlertDto emailDto)
     {
         sendAlert(emailDto.getMessage(), emailDto.getAddress());
     }
     
-    public void sendHtml(EmailDto emailDto)
+    @Override
+    public void sendAlert(String message, String address)
     {
         // Create the email message
         HtmlEmail email = new HtmlEmail();
@@ -35,10 +36,10 @@ public class EmailAlert implements IAlert
         {
             email.setAuthenticator(new DefaultAuthenticator("PollutionBackend@outlook.com","projectAlert"));
             email.setAuthentication("PollutionBackend@outlook.com","projectAlert");
-            email.addTo(emailDto.getAddress(), "Someone");
+            email.addTo(address, "Someone");
             email.setFrom("PollutionBackend@outlook.com");
             email.setSubject("Pollution Alert");
-            email.setHtmlMsg("<html><h1> This is a heading</h1> <p>"+emailDto.getMessage()+"</p></html>");
+            email.setHtmlMsg("<html><h1>Pollution Alert</h1> <p>"+message+"</p></html>");
             email.setTextMsg("Your email client does not support HTML messages");
 
         // send the email
@@ -57,7 +58,7 @@ public class EmailAlert implements IAlert
      * Send an email alert
      * @param message - The message in the main body of the email
      * @param person - The email address of the person to receive the email alert
-     */
+     
     @Override
     public void sendAlert(String message, String person) 
     {
@@ -81,7 +82,7 @@ public class EmailAlert implements IAlert
         }
         
         
-    }
+    }*/
     
     
 }

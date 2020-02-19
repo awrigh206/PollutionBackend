@@ -9,7 +9,7 @@ package com.Group15.PollutionBackend.DTO;
  *
  * @author Andrew Wright
  */
-public class EmailDto 
+public class AlertDto 
 {
     private String address;
     private String message;
