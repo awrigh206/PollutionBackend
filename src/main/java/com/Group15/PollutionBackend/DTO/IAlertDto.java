@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Alerts;
+package com.Group15.PollutionBackend.DTO;
 
 /**
  *
  * @author Andrew Wright
  */
-public interface IAlert 
+public interface IAlertDto 
 {
-    public void sendAlert(String message, String person);
+    
 }
