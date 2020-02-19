@@ -67,7 +67,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t[i] = new Thread(new DataThread(i,i+1,data,countryService,baseUrl,CountryResult.class), "data"+i);
                 t[i].start();
             }
-            waitForFinish(t);
+            //add this back in for safety, can leave out for faster testing
+            //waitForFinish(t);
             long endTime = System.nanoTime();
             log.info("That took about: " + (endTime - beginTime));
             data.setLimit(1200);

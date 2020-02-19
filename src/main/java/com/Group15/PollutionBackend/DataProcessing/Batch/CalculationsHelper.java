@@ -58,9 +58,18 @@ public class CalculationsHelper
             List<Double> rawData = getRawData(qualityList);
             DescriptiveStatistics stats = addToStats(rawData);
             Statistics statsModelObject = new Statistics();
-            statsModelObject.setPollutionType(qualityList.get(0).getParameterUsed());
-            log.info(qualityList.get(0).getLastUpdated());
             
+            try
+            {
+                statsModelObject.setPollutionType(qualityList.get(0).getParameterUsed());
+            }
+            
+            catch (Exception e)
+            {
+                statsModelObject.setPollutionType(null);
+            }
+            
+
             statsModelObject.setMax(stats.getMax());
             statsModelObject.setMin(stats.getMin());
             statsModelObject.setStandardDeviation(stats.getStandardDeviation());
@@ -122,7 +131,7 @@ public class CalculationsHelper
         {
             for(AirQuality quality : city.getAirQuality())
             {
-                switch (quality.getParameterUsed())
+                switch (quality.getParameterUsed().toLowerCase())
                 {
                     case "pm25":
                         pm25List.add(quality);
@@ -144,6 +153,7 @@ public class CalculationsHelper
                         break;
                     case"co":
                         coList.add(quality);
+                        break;
                     default:
                         System.out.println("There's a parameter that doesn't get caught in the avergaing and it is: " +quality.getParameterUsed());
                         continue;
@@ -151,14 +161,21 @@ public class CalculationsHelper
                 
             }
         }
+        listOfQualityLists = addIfHasValues(pm25List,listOfQualityLists);
+        listOfQualityLists = addIfHasValues(pm10List,listOfQualityLists);
+        listOfQualityLists = addIfHasValues(o3List,listOfQualityLists);
+        listOfQualityLists = addIfHasValues(no2List,listOfQualityLists);
+        listOfQualityLists = addIfHasValues(so2List,listOfQualityLists);
+        listOfQualityLists = addIfHasValues(coList,listOfQualityLists);
+        listOfQualityLists = addIfHasValues(bcList,listOfQualityLists);
         
-        listOfQualityLists.add(pm25List);
-        listOfQualityLists.add(pm10List);
-        listOfQualityLists.add(o3List);
-        listOfQualityLists.add(no2List);
-        listOfQualityLists.add(so2List);
-        listOfQualityLists.add(coList);
-        
+        return listOfQualityLists;
+    }
+    
+    private static List<ArrayList<AirQuality>> addIfHasValues(ArrayList<AirQuality> qualityList,List<ArrayList<AirQuality>> listOfQualityLists )
+    {
+        if(!qualityList.isEmpty())
+            listOfQualityLists.add(qualityList);
         return listOfQualityLists;
     }
     /**

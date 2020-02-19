@@ -57,10 +57,10 @@ public class Country implements Serializable, IRepo
     public void fillInCityData( RetrieveData data)
     {
         //reset these defaults when you want to release the system. Set smaller values to decrease testing time
-        //data.setLimit(10000);
-        //int pageLimit = 5;
-        data.setLimit(1);
-        int pageLimit = 1;
+        data.setLimit(10000);
+        int pageLimit = 5;
+        //data.setLimit(20);
+        //int pageLimit = 1;
         //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);
