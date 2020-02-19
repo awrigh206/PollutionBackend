@@ -8,6 +8,7 @@ package Alerts;
 import com.Group15.PollutionBackend.DTO.EmailDto;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
+import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
 
 /**
@@ -21,7 +22,37 @@ public class EmailAlert implements IAlert
     {
         sendAlert(emailDto.getMessage(), emailDto.getAddress());
     }
+    
+    public void sendHtml(EmailDto emailDto)
+    {
+        // Create the email message
+        HtmlEmail email = new HtmlEmail();
+        email.setHostName("smtp.office365.com");
+        email.setStartTLSEnabled(true);
 
+
+        try
+        {
+            email.setAuthenticator(new DefaultAuthenticator("PollutionBackend@outlook.com","projectAlert"));
+            email.setAuthentication("PollutionBackend@outlook.com","projectAlert");
+            email.addTo(emailDto.getAddress(), "Someone");
+            email.setFrom("PollutionBackend@outlook.com");
+            email.setSubject("Pollution Alert");
+            email.setHtmlMsg("<html><h1> This is a heading</h1> <p>"+emailDto.getMessage()+"</p></html>");
+            email.setTextMsg("Your email client does not support HTML messages");
+
+        // send the email
+        email.send();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
+
+
+    }
+    
     /**
      * Send an email alert
      * @param message - The message in the main body of the email
@@ -51,5 +82,6 @@ public class EmailAlert implements IAlert
         
         
     }
+    
     
 }

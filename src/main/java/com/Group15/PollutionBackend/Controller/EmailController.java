@@ -42,7 +42,7 @@ public class EmailController
     public void createUser( @RequestBody EmailDto emailDto) 
     {
         //log.info(emailDto.toString());
-        alert.sendAlert(emailDto);
+        alert.sendHtml(emailDto);
     }
     
     
