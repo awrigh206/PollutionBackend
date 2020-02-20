@@ -17,7 +17,7 @@ import org.apache.commons.mail.SimpleEmail;
  */
 public class EmailAlert implements IAlert
 {
-    
+    private final String programAddress = "PollutionBackend@outlook.com";
     public void sendAlert(AlertDto emailDto)
     {
         sendAlert(emailDto.getMessage(), emailDto.getAddress());
@@ -34,10 +34,10 @@ public class EmailAlert implements IAlert
 
         try
         {
-            email.setAuthenticator(new DefaultAuthenticator("PollutionBackend@outlook.com","projectAlert"));
-            email.setAuthentication("PollutionBackend@outlook.com","projectAlert");
+            email.setAuthenticator(new DefaultAuthenticator(programAddress,"projectAlert"));
+            email.setAuthentication(programAddress,"projectAlert");
             email.addTo(address, "Someone");
-            email.setFrom("PollutionBackend@outlook.com");
+            email.setFrom(programAddress);
             email.setSubject("Pollution Alert");
             email.setHtmlMsg("<html><h1>Pollution Alert</h1> <p>"+message+"</p></html>");
             email.setTextMsg("Your email client does not support HTML messages");

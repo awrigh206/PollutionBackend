@@ -6,7 +6,6 @@
 package com.Group15.PollutionBackend;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Repository.CityRepository;

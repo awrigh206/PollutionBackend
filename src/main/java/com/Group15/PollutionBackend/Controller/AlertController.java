@@ -9,26 +9,21 @@ import Alerts.EmailAlert;
 import Alerts.IAlert;
 import Alerts.TextAlert;
 import com.Group15.PollutionBackend.DTO.AlertDto;
-import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Repository.CityRepository;
-import com.Group15.PollutionBackend.StartupRunner;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import java.io.File;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,15 +45,15 @@ public class AlertController
         this.cityRepo = cityRepo;
     }
     
-    @RequestMapping(method = RequestMethod.POST, path = "/email")
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping (path ="/email")
     public void sendEmailAlert( @RequestBody AlertDto alertDto) 
     {
         alert = new EmailAlert();
         alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
     }
     
-    @RequestMapping(method = RequestMethod.POST, path = "/text")
+    @PostMapping (path ="/text")
     @ResponseStatus(HttpStatus.CREATED)
     public void sendTextAlert( @RequestBody AlertDto alertDto) 
     {
@@ -66,7 +61,7 @@ public class AlertController
         alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/location")
+    @GetMapping (path ="/location")
     public Object getCity(@RequestParam(value ="ip")String ip)
     {
         try

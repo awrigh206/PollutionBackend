@@ -5,9 +5,6 @@
  */
 package com.Group15.PollutionBackend.DTO;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 
 /**
  *

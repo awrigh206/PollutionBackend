@@ -18,8 +18,7 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Andrew Wright
  */
 @RestController
-@RequestMapping()
 public class CityController 
 {
     CountryRepository countryRepo;
@@ -50,14 +48,14 @@ public class CityController
      * @param cityName
      * @return 
      */
-    @RequestMapping(method = RequestMethod.GET, path = "/city")
+    @GetMapping (path ="/city")
     public ArrayList<City> getCity(@RequestParam(value ="cityName")String cityName)
     {
         ArrayList<City> cities = cityRepo.findAllByName(cityName);
         return cities;
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/cities")
+    @GetMapping (path ="/cities")
     public ArrayList<City> getCities()
     {
         ArrayList<City> cities = new ArrayList<>();
@@ -77,14 +75,14 @@ public class CityController
         return ex.getMessage();
     }
     
-    @RequestMapping(method = RequestMethod.GET, path="/statsCity")
+    @GetMapping (path ="/statsCity")
     public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
     {
         List<Statistics> stats = CalculationsHelper.stats(cityRepo.findAllByNameAndCountry(city,country));
         return stats;
     }
     
-    @RequestMapping(method = RequestMethod.GET, path="/statsCountry")
+    @GetMapping (path ="/statsCountry")
     public List<Statistics> getStats(@RequestParam(value="country") String country)
     {
         Country countryModel = countryRepo.findByCountryCode(country);
