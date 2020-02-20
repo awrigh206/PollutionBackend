@@ -77,20 +77,6 @@ public class CityController
         return ex.getMessage();
     }
     
-    @RequestMapping(method = RequestMethod.GET, path="/averageCity")
-    public City getAverage(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
-    {
-        City avg = CalculationsHelper.averageCityWide(cityRepo.findAllByNameAndCountry(city,country),city);
-        return avg;
-    }
-    
-    @RequestMapping(method = RequestMethod.GET, path="/averageCountry")
-    public City getAverage(@RequestParam(value="country") String country)
-    {
-        City avg = CalculationsHelper.averageCityWide(cityRepo.findAllByCountry(country),country);
-        return avg;
-    }
-    
     @RequestMapping(method = RequestMethod.GET, path="/statsCity")
     public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
     {
@@ -106,10 +92,6 @@ public class CityController
         return stats;
     }
     
-    private City averagingTest()
-    {
-        City avg = CalculationsHelper.averageCityWide(cityRepo.findAllByNameAndCountry("Glasgow","GB"),"Glasgow");
-        return avg;
-    }
+
     
 }

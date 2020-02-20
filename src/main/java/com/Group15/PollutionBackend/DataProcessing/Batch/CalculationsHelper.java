@@ -25,17 +25,6 @@ public class CalculationsHelper
     private static final Log log = LogFactory.getLog(CalculationsHelper.class);
     
     
-    /**
-     * Calculates the average air qualities within a country, based off the values of the cities within that country
-     * @param citiesInCountry - the cities within the country that you want to average
-     * @param country - The country in which the cities are best
-     * @return 
-     */
-    public City averageCountryWide(List<City> citiesInCountry, String country)
-    {
-        return averageCityWide(citiesInCountry, country);
-    }
-    
     public static List<Statistics> stats(Country countryForStats)
     {
         return stats(countryForStats.getCitiesWithinCountry());
@@ -177,33 +166,6 @@ public class CalculationsHelper
         if(!qualityList.isEmpty())
             listOfQualityLists.add(qualityList);
         return listOfQualityLists;
-    }
-    /**
-     * Calculates the averages of all the air qualities values within a city
-     * @param citiesToAverage A list of all the cities which are the same city (more than one reading within a city is possible)
-     * @param name
-     * @return 
-     */
-    public static City averageCityWide(List<City> citiesToAverage, String name)
-    {
-        City averageCity = new City();
-        averageCity.setName(name + " average");
-        List<ArrayList<AirQuality>> listOfQualityLists = splitIntoTypesOfPollution(citiesToAverage);
-        
-        for(int i=0; i<listOfQualityLists.size();i++)
-        {
-            ArrayList<AirQuality> currentList = listOfQualityLists.get(i);
-            
-            AirQuality average = new AirQuality();
-            average.setParameterUsed(getParam(currentList));
-            average.setUnits(currentList.get(0).getUnits());
-            average.setDateTaken(new Date().toString());
-            average.setSourceName("Averaging of all available data");
-            average.setValueOf(findAverage(currentList));
-            averageCity.addQuality(average);
-        }
-        
-        return averageCity;
     }
     
     private static String getParam(List<AirQuality> qualities)
