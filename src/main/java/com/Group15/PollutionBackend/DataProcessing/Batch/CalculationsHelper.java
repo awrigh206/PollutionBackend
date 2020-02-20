@@ -10,7 +10,6 @@ import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.Statistics;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -177,22 +176,5 @@ public class CalculationsHelper
         }
         return "Could not find it";
     }
-    /**
-     * 
-     * @param qualities the set of air qualities that you wish to average
-     * @param param the parameter within the air qualities that you wish to average
-     * @return 
-     */
-    private static double findAverage(List<AirQuality> qualities)
-    {
-        long runningTotal =0;
-        int numberOfThingsAdded=0;
-        for(AirQuality quality: qualities )
-        {
-                runningTotal += quality.getValueOf();
-                numberOfThingsAdded++;
-            
-        }
-        return runningTotal/numberOfThingsAdded;
-    }
+
 }

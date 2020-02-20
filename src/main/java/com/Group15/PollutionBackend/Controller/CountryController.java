@@ -30,7 +30,7 @@ public class CountryController
         
     }
     @Autowired
-    public void CountryController(CountryRepository countryRepo)
+    public CountryController(CountryRepository countryRepo)
     {
         this.countryRepo = countryRepo;
     }

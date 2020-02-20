@@ -6,8 +6,6 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON.Results;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.MetaData;
-import com.Group15.PollutionBackend.Model.City;
-import java.util.Set;
 
 /**
  *
@@ -19,7 +17,7 @@ public class ResultAbs
     protected MetaData meta;
     protected boolean hasMany;
 
-    protected ResultAbs() 
+    public ResultAbs() 
     {
         hasMany = false;
     }

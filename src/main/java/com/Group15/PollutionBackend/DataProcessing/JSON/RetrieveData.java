@@ -6,20 +6,13 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
-import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.StartupRunner;
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -55,7 +48,7 @@ public class RetrieveData
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            log.info(e.getMessage());
             url = null;
         }
         
@@ -106,8 +99,8 @@ public class RetrieveData
         
         catch(Exception e)
         {
-            e.printStackTrace();
-            return null;
+            log.info(e.getMessage());
+            return new ResultAbs();
         }
         
     }
@@ -117,44 +110,6 @@ public class RetrieveData
         MetaData meta = getMeta(baseUrl, resultType);
         return meta.getFound()/limit+1;
     }
-    
-    /*
-    public int getTotalPages(String baseUrl,Class resultType)
-    {
-        try
-        {
-            URL url = new URL(baseUrl+"?limit=1&page=1");
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-            
-            if(responseCode!=200)
-            {
-                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
-                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
-            }
-            
-            else
-            {
-                InputStream in = new BufferedInputStream(conn.getInputStream());
-                String json = IOUtils.toString(in, "UTF-8");
-                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-                CountryResult result = (CountryResult) mapper.readValue(json, CountryResult.class);
-                mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
-                in.close();    
-                
-                return (int) result.getMeta().getFound()/limit+1;
-                
-            }
-        }
-        
-        catch(Exception e)
-        {
-            e.printStackTrace();
-            return 0;
-        }
-    }*/
 
     public int getLimit() {
         return limit;
