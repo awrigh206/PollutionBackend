@@ -64,7 +64,7 @@ public class CalculationsHelper
                 statsModelObject.setPollutionType(null);
             }
             
-
+            statsModelObject.setCityName(cityForStats.get(0).getName());
             statsModelObject.setMax(stats.getMax());
             statsModelObject.setMin(stats.getMin());
             statsModelObject.setStandardDeviation(stats.getStandardDeviation());

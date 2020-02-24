@@ -30,6 +30,7 @@ public class Statistics implements Serializable
     private Double Kurtoise;
     private Double trend;
     private long nTerms;
+    private String cityName;
 
     public Integer getId() {
         return id;
@@ -117,6 +118,14 @@ public class Statistics implements Serializable
 
     public void setPollutionType(String pollutionType) {
         this.pollutionType = pollutionType;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     @Override
