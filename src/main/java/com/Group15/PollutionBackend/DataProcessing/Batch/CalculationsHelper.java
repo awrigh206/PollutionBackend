@@ -29,6 +29,13 @@ public class CalculationsHelper
         return stats(countryForStats.getCitiesWithinCountry());
     }
     
+    public static List<Statistics> statsForSingleCity(City singleCity)
+    {
+        ArrayList<City> cities = new ArrayList();
+        cities.add(singleCity);
+        return stats(cities);
+    }
+    
     
     /**
      * Use the apache commons maths package to calculate relevant statistics for the data and return those stats in a list

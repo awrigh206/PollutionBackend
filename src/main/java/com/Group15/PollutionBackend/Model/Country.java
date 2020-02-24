@@ -4,30 +4,20 @@
  * and open the template in the editor.
  */
 package com.Group15.PollutionBackend.Model;
-
-import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LatestResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
-import com.Group15.PollutionBackend.Service.IService;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -58,7 +48,7 @@ public class Country implements Serializable, IRepo
     {
         //reset these defaults when you want to release the system. Set smaller values to decrease testing time
         data.setLimit(10000);
-        int pageLimit = 5;
+        int pageLimit = 1;
         //data.setLimit(20);
         //int pageLimit = 1;
         //RetrieveData data = new RetrieveData(1200);

@@ -49,7 +49,7 @@ public class RetrieveData
         catch(Exception e)
         {
             log.info(e.getMessage());
-            url = null;
+            return null;
         }
         
         return sendRequest(url, resultType).getMeta();
