@@ -54,8 +54,7 @@ public class CountryService implements IService
         {
             current.fillInCityData(data);
             createNew(current);
-        }
-        System.gc();
+        } 
         
     }
 
