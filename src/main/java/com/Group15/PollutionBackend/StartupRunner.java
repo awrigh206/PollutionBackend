@@ -88,6 +88,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t.join();
         }
         log.info("All threads have now joined!");
+        System.gc();
         
     }
 

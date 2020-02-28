@@ -17,6 +17,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -36,7 +37,8 @@ public class Country implements Serializable, IRepo
     @JsonProperty("code")
     private String countryCode;
     private Integer count;
-    @OneToMany (cascade = CascadeType.ALL)
+    @OneToMany (cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
+    @JoinColumn(name="id") 
     private List<City> citiesWithinCountry;
 
     public Country() 
@@ -47,10 +49,10 @@ public class Country implements Serializable, IRepo
     public void fillInCityData( RetrieveData data)
     {
         //reset these defaults when you want to release the system. Set smaller values to decrease testing time
-        data.setLimit(1000);
-        int pageLimit = 2;
-        //data.setLimit(20);
-        //int pageLimit = 1;
+        //data.setLimit(1000);
+        //int pageLimit = 2;
+        data.setLimit(10000);
+        int pageLimit = 3;
         //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);

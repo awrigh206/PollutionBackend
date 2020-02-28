@@ -15,13 +15,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
-import javax.persistence.Embeddable;
+import java.util.Objects;
 
 /**
  *
  * @author Andrew Wright
  */
-@Entity
+@Entity 
 public class City implements Serializable,IRepo
 {
     @Id
@@ -131,6 +131,56 @@ public class City implements Serializable,IRepo
     public String toString() {
         return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality.toString() + ", coordinates="+coordinates.toString()+ '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 67 * hash + Objects.hashCode(this.cityId);
+        hash = 67 * hash + Objects.hashCode(this.name);
+        hash = 67 * hash + Objects.hashCode(this.country);
+        hash = 67 * hash + Objects.hashCode(this.location);
+        hash = 67 * hash + Objects.hashCode(this.distance);
+        hash = 67 * hash + Objects.hashCode(this.airQuality);
+        hash = 67 * hash + Objects.hashCode(this.coordinates);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final City other = (City) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.country, other.country)) {
+            return false;
+        }
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        if (!Objects.equals(this.cityId, other.cityId)) {
+            return false;
+        }
+        if (!Objects.equals(this.distance, other.distance)) {
+            return false;
+        }
+        if (!Objects.equals(this.airQuality, other.airQuality)) {
+            return false;
+        }
+        if (!Objects.equals(this.coordinates, other.coordinates)) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
 
