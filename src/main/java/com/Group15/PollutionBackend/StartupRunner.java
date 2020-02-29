@@ -51,7 +51,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     {
         String baseUrl = "https://api.openaq.org/v1/countries";
         int numberOfCountries = data.getMeta(baseUrl, CountryResult.class).getFound();
-        int countriesPerThread = 100;
+        int countriesPerThread = 30;
         int threadCount = numberOfCountries/countriesPerThread;
         
         data.setLimit(countriesPerThread);

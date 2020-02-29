@@ -8,6 +8,7 @@ package com.Group15.PollutionBackend.Repository;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Country;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -37,6 +38,7 @@ public interface CountryRepository extends PagingAndSortingRepository<Country,In
     
     Country findByName(@Param("name") String name);
     Country findByCountryCode(@Param("code") String code);
+    long deleteByCountryCode(@Param("code") String code);
     ArrayList<Country> findAllByCountryCode(@Param("code") String code);
     ArrayList<Country> findAllByName(@Param("name") String name);
     //Country findByCountryCode(@Param("code") String code);

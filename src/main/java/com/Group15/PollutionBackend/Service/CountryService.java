@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -21,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Andrew Wright
  */
 @Service
+@Transactional
 public class CountryService implements IService
 {
     
@@ -38,11 +40,10 @@ public class CountryService implements IService
     public IRepo createNew(IRepo toAdd) 
     {
         Country country = (Country)toAdd;
-        log.info("dealing with country code: " + country.getCountryCode());
         if(countryRepository.findAllByCountryCode(country.getCountryCode()) != null);
         {
-            countryRepository.delete(country);
-            log.info("I just deleted something");
+            countryRepository.deleteByCountryCode(country.getCountryCode());
+            log.info("I just deleted: " + country.getCountryCode());
         }
         return countryRepository.save((Country)toAdd);
     }
@@ -56,7 +57,6 @@ public class CountryService implements IService
     @Override
     public void createNew(ResultAbs toAdd, RetrieveData data) 
     {
-        log.info("trying to create something");
         CountryResult countryResult = (CountryResult)toAdd;
         for(Country current: countryResult.getCountries())
         {
