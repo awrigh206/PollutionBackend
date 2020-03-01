@@ -13,6 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,15 +32,18 @@ public class CountryService implements IService
     
     private final CountryRepository countryRepository;
     private final Log log = LogFactory.getLog(CountryService.class);
+    EntityManager em;
+      
     
     
     @Autowired
     public CountryService(CountryRepository countryRepository) 
     {
-        this.countryRepository = countryRepository;
+        this.countryRepository = countryRepository;;
     }
 
     @Override
+    @Transactional
     public IRepo createNew(IRepo toAdd) 
     {
         Country country = (Country)toAdd;
@@ -44,8 +51,10 @@ public class CountryService implements IService
         {
             countryRepository.deleteByCountryCode(country.getCountryCode());
             log.info("I just deleted: " + country.getCountryCode());
+            
         }
-        return countryRepository.save((Country)toAdd);
+        System.gc();
+        return countryRepository.saveAndFlush((Country)toAdd);
     }
 
     @Override
@@ -55,6 +64,7 @@ public class CountryService implements IService
     }
 
     @Override
+    @Transactional
     public void createNew(ResultAbs toAdd, RetrieveData data) 
     {
         CountryResult countryResult = (CountryResult)toAdd;
@@ -64,7 +74,6 @@ public class CountryService implements IService
             createNew(current);
         } 
         countryResult = null;
-        System.gc();
         
     }
 

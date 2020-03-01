@@ -11,6 +11,7 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,14 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
 
     }
     
+    @Transactional
     private void getData(RetrieveData data)
     {
         String baseUrl = "https://api.openaq.org/v1/countries";
         int numberOfCountries = data.getMeta(baseUrl, CountryResult.class).getFound();
-        int countriesPerThread = 50;
-        int threadCount = 1;
-        //int threadCount = numberOfCountries/countriesPerThread;
+        int countriesPerThread = 30;
+        //int threadCount = 1;
+        int threadCount = numberOfCountries/countriesPerThread;
         
         data.setLimit(countriesPerThread);
 

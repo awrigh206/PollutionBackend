@@ -17,7 +17,8 @@ public class PollutionBackendApplication implements CommandLineRunner
     private CityRepository cityRepository;
     
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
             SpringApplication.run(PollutionBackendApplication.class, args);
     }
         
