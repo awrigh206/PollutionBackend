@@ -32,7 +32,6 @@ public class CountryService implements IService
     
     private final CountryRepository countryRepository;
     private final Log log = LogFactory.getLog(CountryService.class);
-    EntityManager em;
       
     
     
@@ -47,12 +46,13 @@ public class CountryService implements IService
     public IRepo createNew(IRepo toAdd) 
     {
         Country country = (Country)toAdd;
+        /*
         if(countryRepository.findAllByCountryCode(country.getCountryCode()) != null);
         {
             countryRepository.deleteByCountryCode(country.getCountryCode());
             log.info("I just deleted: " + country.getCountryCode());
             
-        }
+        }*/
         System.gc();
         return countryRepository.saveAndFlush((Country)toAdd);
     }
