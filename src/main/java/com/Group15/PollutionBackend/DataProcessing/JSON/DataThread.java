@@ -24,18 +24,20 @@ public class DataThread implements Runnable
     private final IService service;
     private final String baseUrl;
     private final Class resultType;
+    private final int numberOfCountries;
     private final Log log = LogFactory.getLog(DataThread.class);
     private String countryCode;
 
     //Using Iservice as interface facade
     //Faster to use direct implementation rather than casting, change this if the performance is needed
-    public DataThread(int start, int end, RetrieveData data, IService service, String baseUrl, Class resultType) {
+    public DataThread(int start, int end,int countriesPerThread, RetrieveData data, IService service, String baseUrl, Class resultType) {
         this.start = start;
         this.end = end;
         this.data = data;
         this.service = service;
         this.baseUrl = baseUrl;
         this.resultType = resultType;
+        this.numberOfCountries = countriesPerThread;
     }
 
     @Override
@@ -45,8 +47,10 @@ public class DataThread implements Runnable
         {
             for(int i= start; i< end; i++)
             {
+                data.setLimit(numberOfCountries);
                 ResultAbs result = (ResultAbs)data.processPageSingle(baseUrl,i,resultType,countryCode);
                 addResult(result);
+                System.gc();
             }
         }
         

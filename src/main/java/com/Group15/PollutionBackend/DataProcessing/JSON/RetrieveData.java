@@ -61,7 +61,7 @@ public class RetrieveData
         if(countryCode!=null)
         {
              url= new URL(baseUrl+"?limit="+limit+"&page="+page +"&country="+countryCode);
-             //log.info(url.toString());
+             
         }
         else
         {

@@ -56,6 +56,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         int countriesPerThread = 30;
         //int threadCount = 1;
         int threadCount = numberOfCountries/countriesPerThread;
+        if(threadCount<1)
+            threadCount=1;
         
         data.setLimit(countriesPerThread);
 
@@ -66,7 +68,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
             Thread[] t = new Thread[threadCount];
             for(int i =0; i<threadCount;i++)
             {
-                t[i] = new Thread(new DataThread(i+1,i+2,data,countryService,baseUrl,CountryResult.class), "data"+i);
+                t[i] = new Thread(new DataThread(i+1,i+2,countriesPerThread,data,countryService,baseUrl,CountryResult.class), "data"+i);
                 t[i].start();
             }
             //add this back in for safety, can leave out for faster testing
