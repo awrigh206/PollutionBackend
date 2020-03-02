@@ -46,13 +46,11 @@ public class CountryService implements IService
     public IRepo createNew(IRepo toAdd) 
     {
         Country country = (Country)toAdd;
-        /*
         if(countryRepository.findAllByCountryCode(country.getCountryCode()) != null);
         {
             countryRepository.deleteByCountryCode(country.getCountryCode());
-            log.info("I just deleted: " + country.getCountryCode());
+        }
             
-        }*/
         System.gc();
         return countryRepository.saveAndFlush((Country)toAdd);
     }

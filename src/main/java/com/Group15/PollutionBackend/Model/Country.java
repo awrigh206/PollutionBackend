@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -26,15 +27,14 @@ import javax.persistence.OneToMany;
 @Entity
 public class Country implements Serializable, IRepo
 {
-    //@GeneratedValue
-    //@Id
-    //private Integer id;
+    @GeneratedValue
+    @Id
+    private Integer id;
     private Integer locations;
     @JsonProperty("cities")
     private Integer numberOfCities;
     private String name;
     @JsonProperty("code")
-    @Id
     private String countryCode;
     private Integer count;
     @OneToMany (cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
@@ -83,14 +83,13 @@ public class Country implements Serializable, IRepo
         }
     }
 
-    /*
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }*/
+    }
 
     public Integer getLocations() {
         return locations;
