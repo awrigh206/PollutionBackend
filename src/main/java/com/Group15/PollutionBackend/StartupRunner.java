@@ -72,7 +72,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t[i].start();
             }
             //add this back in for safety, can leave out for faster testing
-            waitForFinish(t);
+            //waitForFinish(t);
             long endTime = System.nanoTime();
             log.info("That took about: " + (endTime - beginTime));
             data.setLimit(1200);
