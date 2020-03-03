@@ -47,22 +47,22 @@ public class AlertController
     {
         this.cityRepo = cityRepo;
     }
-    
+    /*
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping (path ="/email")
     public void sendEmailAlert( @RequestBody AlertDto alertDto) 
     {
         alert = new EmailAlert();
         alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
-    }
-    
+    }*/
+    /*
     @PostMapping (path ="/text")
     @ResponseStatus(HttpStatus.CREATED)
     public void sendTextAlert( @RequestBody AlertDto alertDto) 
     {
         alert = new TextAlert();
         alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
-    }
+    }*/
     
     @GetMapping (path ="/location")
     public Object getCity(@RequestParam(value ="ip")String ip)
