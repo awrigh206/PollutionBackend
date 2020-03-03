@@ -43,6 +43,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     {
         log.info("Retrieving data");
         cityRepository.deleteAll();
+        countryService.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
 
@@ -60,7 +61,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
             threadCount=1;
         
         data.setLimit(countriesPerThread);
-
         
         try
         {
@@ -72,7 +72,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t[i].start();
             }
             //add this back in for safety, can leave out for faster testing
-            //waitForFinish(t);
+            waitForFinish(t);
             long endTime = System.nanoTime();
             log.info("That took about: " + (endTime - beginTime));
             data.setLimit(1200);

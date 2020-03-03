@@ -51,8 +51,9 @@ public class Country implements Serializable, IRepo
         //reset these defaults when you want to release the system. Set smaller values to decrease testing time
         //data.setLimit(1000);
         //int pageLimit = 2;
-        data.setLimit(10000);
-        int pageLimit = 3;
+        data.setLimit(1000);
+        int pageLimit = 20;
+        int skipFactor =3;
         //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);
@@ -60,7 +61,7 @@ public class Country implements Serializable, IRepo
         try
         {
             
-            for(int i =1; i<totalPages+1;i++)
+            for(int i =1; i<totalPages+1;i=i+skipFactor)
             {
                 if(i>pageLimit)
                     break;

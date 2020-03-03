@@ -119,7 +119,5 @@ public class RetrieveData
     public void setLimit(int limit) {
         this.limit = limit;
     }
-    
-    
 
 }

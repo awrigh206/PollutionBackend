@@ -40,16 +40,21 @@ public class CountryService implements IService
     {
         this.countryRepository = countryRepository;;
     }
+    
+    public void deleteAll()
+    {
+        countryRepository.deleteAll();
+    }
 
     @Override
     @Transactional
     public IRepo createNew(IRepo toAdd) 
     {
-        Country country = (Country)toAdd;
-        if(countryRepository.findAllByCountryCode(country.getCountryCode()) != null);
-        {
-            countryRepository.deleteByCountryCode(country.getCountryCode());
-        }
+        //Country country = (Country)toAdd;
+        //if(countryRepository.findAllByCountryCode(country.getCountryCode()) != null);
+        //{
+            //countryRepository.deleteByCountryCode(country.getCountryCode());
+        //}
             
         System.gc();
         return countryRepository.saveAndFlush((Country)toAdd);
