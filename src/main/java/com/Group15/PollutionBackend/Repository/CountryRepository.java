@@ -10,11 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Andrew Wright
  */
+@Repository
 public interface CountryRepository extends JpaRepository<Country,Integer> 
 {
     @Override
@@ -34,8 +36,6 @@ public interface CountryRepository extends JpaRepository<Country,Integer>
 
     @Override
     public <S extends Country> List<S> saveAll(Iterable<S> itrbl);
-    
-    
 
     @Override
     public <S extends Country> S save(S s);

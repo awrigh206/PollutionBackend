@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend;
 
+import com.Group15.PollutionBackend.DataProcessing.Batch.FetcherThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
@@ -46,7 +47,14 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         countryService.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
-
+        startDataFetcherThread(retData);
+    }
+    
+    private void startDataFetcherThread(RetrieveData retData)
+    {
+        int truePageLimit = 100;
+        Thread t = new Thread(new FetcherThread(retData,countryService,truePageLimit));
+        t.start();
     }
     
     @Transactional
@@ -54,7 +62,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     {
         String baseUrl = "https://api.openaq.org/v1/countries";
         int numberOfCountries = data.getMeta(baseUrl, CountryResult.class).getFound();
-        int countriesPerThread = 30;
+        int countriesPerThread = 100;
         //int threadCount = 1;
         int threadCount = numberOfCountries/countriesPerThread;
         if(threadCount<1)

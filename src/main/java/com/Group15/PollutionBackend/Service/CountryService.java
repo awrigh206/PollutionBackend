@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.CountryCodes;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,13 +30,14 @@ public class CountryService implements IService
     
     private final CountryRepository countryRepository;
     private final Log log = LogFactory.getLog(CountryService.class);
+    
       
     
     
     @Autowired
     public CountryService(CountryRepository countryRepository) 
     {
-        this.countryRepository = countryRepository;;
+        this.countryRepository = countryRepository;
     }
     
     public void deleteAll()
@@ -50,11 +49,6 @@ public class CountryService implements IService
     @Transactional
     public IRepo createNew(IRepo toAdd) 
     {
-        //Country country = (Country)toAdd;
-        //if(countryRepository.findAllByCountryCode(country.getCountryCode()) != null);
-        //{
-            //countryRepository.deleteByCountryCode(country.getCountryCode());
-        //}
             
         System.gc();
         return countryRepository.saveAndFlush((Country)toAdd);
@@ -65,16 +59,26 @@ public class CountryService implements IService
     {
         return countryRepository.count();
     }
+    
+    @Transactional
+    public Country fetchAdditonalMesurementsForCountry(Country country, RetrieveData data) 
+    {
+        data.setLimit(500);
+        country.fillInCityData(data,3,6);
+        return countryRepository.saveAndFlush(country);
+    }
 
     @Override
     @Transactional
     public void createNew(ResultAbs toAdd, RetrieveData data) 
     {
+        data.setLimit(1000);
         CountryResult countryResult = (CountryResult)toAdd;
         for(Country current: countryResult.getCountries())
         {
-            current.fillInCityData(data);
+            current.fillInCityData(data,3,6);
             createNew(current);
+            CountryCodes.addCode(current.getCountryCode());
         } 
         countryResult = null;
         
@@ -84,6 +88,18 @@ public class CountryService implements IService
     public void createNew(ResultAbs toAdd) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public Country findByCountryCode(String code)
+    {
+        return countryRepository.findByCountryCode(code);
+        
+    }
+    
+    public Country save(Country country)
+    {
+        return countryRepository.saveAndFlush(country);
+    }
+    
     
     
 }

@@ -20,7 +20,7 @@ public class DataThread implements Runnable
     private final int start;
     private final int end;
     
-    private RetrieveData data;
+    private final RetrieveData data;
     private final IService service;
     private final String baseUrl;
     private final Class resultType;

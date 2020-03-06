@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -40,20 +41,28 @@ public class Country implements Serializable, IRepo
     @OneToMany (cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
     @JoinColumn(name="id") 
     private List<City> citiesWithinCountry;
+    private Integer pageReached =1;
 
     public Country() 
     {
         citiesWithinCountry = new ArrayList<>();
     }
     
-    public void fillInCityData( RetrieveData data)
+    /**
+     * Fills in a chunk of city and measurement data
+     * Set the data limit to something sensible on the RetrieveData object before invoking (between 1000  and 10 000)
+     * @param data
+     * @param skipFactor  The amount of pages to skip between each page of data that is processed 
+     * @param pageJump   The amount of pages to add to the limit
+     */
+    public void fillInCityData(RetrieveData data,int skipFactor, int pageJump)
     {
         //reset these defaults when you want to release the system. Set smaller values to decrease testing time
         //data.setLimit(1000);
         //int pageLimit = 2;
-        data.setLimit(1000);
-        int pageLimit = 20;
-        int skipFactor =3;
+        //data.setLimit(5000); set the data limit before invoking
+        int pageLimit = pageReached +pageJump;
+        pageReached = pageLimit;
         //RetrieveData data = new RetrieveData(1200);
         String url = "https://api.openaq.org/v1/measurements";
         int totalPages = data.getTotalPages(url,LocationResult.class);
@@ -61,7 +70,7 @@ public class Country implements Serializable, IRepo
         try
         {
             
-            for(int i =1; i<totalPages+1;i=i+skipFactor)
+            for(int i =pageReached; i<totalPages+1;i=i+skipFactor)
             {
                 if(i>pageLimit)
                     break;
