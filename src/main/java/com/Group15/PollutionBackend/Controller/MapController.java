@@ -5,7 +5,11 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,19 +38,16 @@ public class MapController
     
     private String getFileData(String path)
     {
-        int ch;
         String result ="";
         try
         {
-            FileReader mapData = new FileReader(path);
-            while ((ch=mapData.read())!=-1) 
+            try (BufferedReader br = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8)) 
             {
-                result+=(char)ch;
+                for (String line = null; (line = br.readLine()) != null;) 
+                {
+                    result+=line;
+                }
             }
-               
-
-            // close the file 
-            mapData.close();
         }
         
         catch(Exception e)
