@@ -26,4 +26,11 @@ public class MapController
         File mapData = new File("src/main/resources/geodata/countries/"+code+".json");
         return mapData;
     }
+    
+    @GetMapping
+    public File getCountryMap()
+    {
+        File mapData = new File("src/main/resources/geodata/worldMapCountries.json");
+        return mapData;
+    }
 }
