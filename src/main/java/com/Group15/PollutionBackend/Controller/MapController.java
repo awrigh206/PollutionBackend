@@ -6,10 +6,13 @@
 package com.Group15.PollutionBackend.Controller;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,21 +29,23 @@ public class MapController
     public String getCountryMap(@RequestParam(value ="countryCode")String code)
     {
         code = code.toUpperCase();
-        return getFileData("src/main/resources//geodata/geodata/countries/"+code+".json");
+        return getFileData("src"+File.separator+"main"+File.separator+"resources"+File.separator+"geodata"+File.separator+"geodata"+File.separator+"countries"+File.separator+code+".json");
     }
     
     @GetMapping
     (path ="/map")
     public String getCountryMap()
     {
-        return getFileData("src/main/resources/geodata/geodata/worldMapCountries.json");
+        return getFileData("geodata"+File.separator+"geodata"+File.separator+"worldMapCountries.json");
     }
     
     private String getFileData(String path)
     {
         String result ="";
+        System.out.println(path);
         try
         {
+            
             try (BufferedReader br = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8)) 
             {
                 for (String line = null; (line = br.readLine()) != null;) 
@@ -48,12 +53,15 @@ public class MapController
                     result+=line;
                 }
             }
+            
+
         }
-        
         catch(Exception e)
         {
             e.printStackTrace();
         }
+        
+        
         return result;
 
     }
