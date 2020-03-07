@@ -12,6 +12,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,36 +28,40 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MapController 
 {
+    @Autowired
+    ResourceLoader resourceLoader;
+                
     @GetMapping
     (path ="/countryMap")
     public String getCountryMap(@RequestParam(value ="countryCode")String code)
     {
         code = code.toUpperCase();
-        return getFileData("src"+File.separator+"main"+File.separator+"resources"+File.separator+"geodata"+File.separator+"geodata"+File.separator+"countries"+File.separator+code+".json");
+        return getFileData(code+".json");
     }
     
     @GetMapping
     (path ="/map")
-    public String getCountryMap()
+    public String getMap()
     {
-        return getFileData("geodata"+File.separator+"geodata"+File.separator+"worldMapCountries.json");
+        return getFileData("worldMapCountries.json");
     }
     
     private String getFileData(String path)
     {
         String result ="";
-        System.out.println(path);
+	
+	Resource resource = resourceLoader.getResource("classpath:"+path);
+        
         try
         {
+            InputStream input = resource.getInputStream();
             
-            try (BufferedReader br = Files.newBufferedReader(Paths.get(path), StandardCharsets.UTF_8)) 
+            BufferedReader br = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+            for (String line = null; (line = br.readLine()) != null;) 
             {
-                for (String line = null; (line = br.readLine()) != null;) 
-                {
-                    result+=line;
-                }
+                result+=line;
             }
-            
+
 
         }
         catch(Exception e)
