@@ -8,6 +8,7 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.CountryCodes;
 import com.Group15.PollutionBackend.Service.CountryService;
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,6 +48,7 @@ public class FetcherThread implements Runnable
                     Country currentCountry = countryService.findByCountryCode(countryCode);
                     currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
+                    
                     log.info("Added stuff to: " + currentCountry.getCountryCode());
                     System.gc();
                 }
@@ -56,6 +58,7 @@ public class FetcherThread implements Runnable
                     log.info("We got a null one");
                    continue;
                 }
+                
 
             }
         }

@@ -67,7 +67,6 @@ public class RetrieveData
         {
             url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         }
-        
         return sendRequest(url,resultType);
     }
     

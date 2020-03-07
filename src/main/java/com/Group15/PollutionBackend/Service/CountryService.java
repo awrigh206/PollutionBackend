@@ -83,6 +83,13 @@ public class CountryService implements IService
         countryResult = null;
         
     }
+    
+    @Transactional
+    public void delete(Country toDelete) 
+    {
+        countryRepository.delete(toDelete);
+    }
+
 
     @Override
     public void createNew(ResultAbs toAdd) {
@@ -97,7 +104,7 @@ public class CountryService implements IService
     
     public Country save(Country country)
     {
-        return countryRepository.saveAndFlush(country);
+        return countryRepository.save(country);
     }
     
     
