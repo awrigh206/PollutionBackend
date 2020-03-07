@@ -49,7 +49,7 @@ public class FetcherThread implements Runnable
                     currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
                     
-                    log.info("Added stuff to: " + currentCountry.getCountryCode());
+                    //log.info("Added stuff to: " + currentCountry.getCountryCode());
                     System.gc();
                 }
                 

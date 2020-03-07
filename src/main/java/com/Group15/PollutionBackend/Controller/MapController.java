@@ -5,7 +5,7 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
-import java.io.File;
+import java.io.FileReader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,17 +19,41 @@ public class MapController
 {
     @GetMapping
     (path ="/countryMap")
-    public File getCountryMap(@RequestParam(value ="countryCode")String code)
+    public String getCountryMap(@RequestParam(value ="countryCode")String code)
     {
-        File mapData = new File("src/main/resources/geodata/countries/"+code+".json");
-        return mapData;
+        code = code.toUpperCase();
+        return getFileData("src/main/resources//geodata/geodata/countries/"+code+".json");
     }
     
     @GetMapping
     (path ="/map")
-    public File getCountryMap()
+    public String getCountryMap()
     {
-        File mapData = new File("src/main/resources/geodata/worldMapCountries.json");
-        return mapData;
+        return getFileData("src/main/resources/geodata/geodata/worldMapCountries.json");
+    }
+    
+    private String getFileData(String path)
+    {
+        int ch;
+        String result ="";
+        try
+        {
+            FileReader mapData = new FileReader(path);
+            while ((ch=mapData.read())!=-1) 
+            {
+                result+=(char)ch;
+            }
+               
+
+            // close the file 
+            mapData.close();
+        }
+        
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return result;
+
     }
 }
