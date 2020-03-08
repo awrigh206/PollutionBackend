@@ -1,12 +1,6 @@
 pipeline {
   agent any
   stages {
-    stage('Pull') {
-      steps {
-        git(poll: true, url: 'https://github.com/awrigh206/PollutionBackend.git', branch: 'master', credentialsId: 'awrigh206')
-      }
-    }
-
     stage('Build') {
       steps {
         sh '''mvn clean
