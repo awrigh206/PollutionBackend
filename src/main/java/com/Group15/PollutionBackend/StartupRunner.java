@@ -47,7 +47,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         countryService.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
-        startDataFetcherThread(retData);
+        //Some kind of issue (does not persit to the database
+        //startDataFetcherThread(retData);
     }
     
     private void startDataFetcherThread(RetrieveData retData)

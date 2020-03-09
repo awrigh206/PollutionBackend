@@ -25,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,22 +47,22 @@ public class AlertController
     {
         this.cityRepo = cityRepo;
     }
-    /*
+    
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping (path ="/email")
     public void sendEmailAlert( @RequestBody AlertDto alertDto) 
     {
         alert = new EmailAlert();
         alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
-    }*/
-    /*
+    }
+    
     @PostMapping (path ="/text")
     @ResponseStatus(HttpStatus.CREATED)
     public void sendTextAlert( @RequestBody AlertDto alertDto) 
     {
         alert = new TextAlert();
         alert.sendAlert(alertDto.getMessage(), alertDto.getAddress());
-    }*/
+    }
     
     @GetMapping (path ="/location")
     public Object getCity(@RequestParam(value ="ip")String ip)
