@@ -11,13 +11,21 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
 /**
@@ -33,6 +41,11 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     @Autowired
     private CountryService countryService;
     
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    private TaskExecutor taskExecutor;
+    
     @PostConstruct
     public void init()
     {
@@ -47,15 +60,17 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         countryService.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
-        //Some kind of issue (does not persit to the database
+        TaskExecutor tasks = new SimpleAsyncTaskExecutor ();
+        tasks.execute(new FetcherThread(tasks,retData,countryService,100));
+        //Some kind of issue (does not persist to the database)
         //startDataFetcherThread(retData);
     }
     
     private void startDataFetcherThread(RetrieveData retData)
     {
         int truePageLimit = 100;
-        Thread t = new Thread(new FetcherThread(retData,countryService,truePageLimit));
-        t.start();
+        //Thread t = new Thread(new FetcherThread(retData,countryService,truePageLimit));
+        //t.start();
     }
     
     @Transactional
@@ -81,7 +96,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t[i].start();
             }
             //add this back in for safety, can leave out for faster testing
-            //waitForFinish(t);
+            waitForFinish(t);
             long endTime = System.nanoTime();
             log.info("That took about: " + (endTime - beginTime));
             data.setLimit(1200);
@@ -103,7 +118,5 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         }
         log.info("All threads have now joined!");
         
-    }
-
-    
+    }   
 }

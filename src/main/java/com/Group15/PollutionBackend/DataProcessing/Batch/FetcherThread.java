@@ -12,29 +12,39 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author Andrew Wright
  */
 @Transactional
+@Component
 public class FetcherThread implements Runnable
 {
     RetrieveData data;
     CountryService countryService;
-    private final int truePageLimit;
-     private final Log log = LogFactory.getLog(FetcherThread.class);
+    private final Integer truePageLimit;
+    private final Log log = LogFactory.getLog(FetcherThread.class);
+    private final TaskExecutor taskExecutor;
 
-    public FetcherThread(RetrieveData data, CountryService countryService, int truePageLimit) 
+    public FetcherThread(TaskExecutor taskExecutor,RetrieveData data, CountryService countryService, Integer truePageLimit) 
     {
         this.data = data;
         this.countryService = countryService;
         this.truePageLimit = truePageLimit;
+        this.taskExecutor =taskExecutor;
     }
     
 
     @Override
     public void run() 
     {
+        log.info("This thing actually gets called");
         int increment =6;
         int skipFactor =3;
         data.setLimit(10000);
@@ -46,10 +56,12 @@ public class FetcherThread implements Runnable
                 try
                 {
                     Country currentCountry = countryService.findByCountryCode(countryCode);
+                    log.info("Adding stuff to: " + currentCountry.getCountryCode());
                     currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
                     
-                    //log.info("Added stuff to: " + currentCountry.getCountryCode());
+                    
+                    
                     System.gc();
                 }
                 
@@ -64,5 +76,7 @@ public class FetcherThread implements Runnable
         }
 
     }
+    
+    
     
 }

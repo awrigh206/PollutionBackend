@@ -16,6 +16,7 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 /**
  *
@@ -24,10 +25,10 @@ import org.apache.commons.logging.LogFactory;
 public class RetrieveData 
 {
     private final ObjectMapper mapper;
-    private int limit;
+    private Integer limit;
     private final Log log = LogFactory.getLog(StartupRunner.class);
 
-    public RetrieveData(int limit) 
+    public RetrieveData(Integer limit) 
     {
         mapper = new ObjectMapper();
         this.limit = limit;
@@ -111,11 +112,11 @@ public class RetrieveData
         return meta.getFound()/limit+1;
     }
 
-    public int getLimit() {
+    public Integer getLimit() {
         return limit;
     }
 
-    public void setLimit(int limit) {
+    public void setLimit(Integer limit) {
         this.limit = limit;
     }
 
