@@ -32,7 +32,7 @@ public class Country implements Serializable, IRepo
 {
     @GeneratedValue
     @Id
-    private Integer id;
+    private Long countryId;
     private Integer locations;
     @JsonProperty("cities")
     private Integer numberOfCities;
@@ -40,8 +40,8 @@ public class Country implements Serializable, IRepo
     @JsonProperty("code")
     private String countryCode;
     private Integer count;
-    @OneToMany (fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
-    @JoinColumn(name="id") 
+    @OneToMany (fetch = FetchType.EAGER, cascade={CascadeType.ALL} , orphanRemoval = true)
+    //@JoinColumn(name="id") 
     private List<City> citiesWithinCountry;
     private Integer pageReached =1;
 
@@ -96,12 +96,12 @@ public class Country implements Serializable, IRepo
     }
     */
 
-    public Integer getId() {
-        return id;
+    public Long getId() {
+        return countryId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId(Long id) {
+        this.countryId= id;
     }
 
     public Integer getLocations() {
@@ -188,7 +188,7 @@ public class Country implements Serializable, IRepo
 
     @Override
     public String toString() {
-        return "Country{" + "id=" + id + ", locations=" + locations + ", numberOfCities=" + numberOfCities + ", name=" + name + ", countryCode=" + countryCode + ", count=" + count + ", citiesWithinCountry=" + citiesWithinCountry + '}';
+        return "Country{" + "id=" + countryId + ", locations=" + locations + ", numberOfCities=" + numberOfCities + ", name=" + name + ", countryCode=" + countryCode + ", count=" + count + ", citiesWithinCountry=" + citiesWithinCountry + '}';
     }
     
     public City findCity(Location location)

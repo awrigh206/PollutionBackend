@@ -10,8 +10,11 @@ import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 /**
  *
  * @author Andrew Wright
@@ -23,7 +26,7 @@ public class AirQuality implements Serializable
     @JsonProperty("parameter")
     private String parameterUsed;
     @JsonProperty("value")
-    private Double valueOf;
+    private Double paramValue;
     private String lastUpdated;
     @JsonProperty("unit")
     private String units;
@@ -32,11 +35,15 @@ public class AirQuality implements Serializable
     private AveragingPeriod averagingPeriod;
     @GeneratedValue
     @Id
-    private Long id;
+    private Long qualityId;
+    
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private City city;
 
     public AirQuality(String parameterUsed, Double valueOf, String lastUpdated, String units, String sourceName, AveragingPeriod averagingPeriod) {
         this.parameterUsed = parameterUsed;
-        this.valueOf = valueOf;
+        this.paramValue = valueOf;
         this.lastUpdated = lastUpdated;
         this.units = units;
         this.sourceName = sourceName;
@@ -59,11 +66,11 @@ public class AirQuality implements Serializable
     }
 
     public Double getValueOf() {
-        return valueOf;
+        return paramValue;
     }
 
     public void setValueOf(Double valueOf) {
-        this.valueOf = valueOf;
+        this.paramValue = valueOf;
     }
 
     public String getUnits() {
@@ -101,15 +108,25 @@ public class AirQuality implements Serializable
     
     @Override
     public String toString() {
-        return "AirQuality{" + "parameter=" + parameterUsed + ", value=" + valueOf + ", lastUpdated=" + lastUpdated + ", unit=" + units + ", sourceName=" + sourceName + ", averagingPeriod=" + averagingPeriod + '}';
+        return "AirQuality{" + "parameter=" + parameterUsed + ", value=" + paramValue + ", lastUpdated=" + lastUpdated + ", unit=" + units + ", sourceName=" + sourceName + ", averagingPeriod=" + averagingPeriod + '}';
     }
 
     public Long getId() {
-        return id;
+        return qualityId;
     }
 
     public void setId(Long id) {
-        this.id = id;
+        this.qualityId = id;
     }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+    
+    
     
 }

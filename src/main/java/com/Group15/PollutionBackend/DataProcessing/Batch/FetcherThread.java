@@ -33,6 +33,7 @@ public class FetcherThread implements Runnable
     private final Integer truePageLimit;
     private final Log log = LogFactory.getLog(FetcherThread.class);
     private final TaskExecutor taskExecutor;
+    private int counter =0;
 
     public FetcherThread(TaskExecutor taskExecutor,CountryService countryService,RetrieveData retdata, Integer truePageLimit) 
     {
@@ -61,6 +62,8 @@ public class FetcherThread implements Runnable
                     countryService.fillInCityData(currentCountry, skipFactor, increment);
                     //currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
+                    counter ++;
+                    log.info("we are on country number: " + counter);
                     
                     System.gc();
                 }

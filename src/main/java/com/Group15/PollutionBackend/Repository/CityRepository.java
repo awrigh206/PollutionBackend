@@ -14,7 +14,7 @@ import org.springframework.data.repository.query.Param;
  *
  * @author Andrew Wright
  */
-public interface CityRepository extends PagingAndSortingRepository<City,Integer> 
+public interface CityRepository extends PagingAndSortingRepository<City,Long> 
 {
 
     @Override
@@ -26,8 +26,6 @@ public interface CityRepository extends PagingAndSortingRepository<City,Integer>
     @Override
     public void delete(City u);
 
-    @Override
-    public void deleteById(Integer id);
 
     @Override
     public <S extends City> Iterable<S> saveAll(Iterable<S> itrbl);
@@ -37,10 +35,10 @@ public interface CityRepository extends PagingAndSortingRepository<City,Integer>
     
     City findByName(@Param("name") String name);
     ArrayList<City> findAllByName(@Param("name") String name);
-    ArrayList<City> findAllByCountry(@Param("country") String country);
-    ArrayList<City> findAllByNameAndCountry(@Param("name") String name, @Param("country") String country);
-    City findByNameAndCountry(@Param("name") String name, @Param ("country") String country);
-    City[] findByCountry(@Param("country") String country);
+    ArrayList<City> findAllByCountryCode(@Param("country") String country);
+    ArrayList<City> findAllByNameAndCountryCode(@Param("name") String name, @Param("country") String country);
+    City findByNameAndCountryCode(@Param("name") String name, @Param ("country") String country);
+    City[] findByCountryCode(@Param("country") String country);
     
     
     

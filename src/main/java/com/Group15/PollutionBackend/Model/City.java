@@ -19,8 +19,11 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 /**
  *
@@ -29,31 +32,53 @@ import javax.persistence.OneToOne;
 @Entity 
 public class City implements Serializable,IRepo
 {
-    @Id
     @GeneratedValue
-    private Integer cityId;
+    @JsonProperty("cityId")
+    @Id
+    private Long id;
     @JsonProperty("city")
     private String name;
-    private String country;
+    @JsonProperty("country")
+    private String countryCode;
     private String location;
     private Double distance;
     @JsonProperty("measurements")
     @ElementCollection
-    @OneToMany (fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
-    @JoinColumn(name="id") 
+    @OneToMany ( cascade={CascadeType.ALL} , orphanRemoval = true, mappedBy = "city")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    //@JoinColumn(name="id") 
     private List<AirQuality> airQuality;
-    @OneToOne (fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
+    @OneToOne ( cascade={CascadeType.ALL} , orphanRemoval = true, mappedBy = "city")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    //@JoinColumn(name="id") 
     private Coordinates coordinates;
     
+    
+    @ManyToOne
+    @JoinColumn(name = "countryId")
+    private Country countryObject;
+    
 
-    public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords) {
+    public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords, Country countryObject) {
         this.name = name;
-        this.country = country;
+        this.countryCode = country;
+        this.location = location;
+        this.distance = distance;
+        this.airQuality = airQuality;
+        this.coordinates = coords;
+        this.countryObject = countryObject;
+    }
+
+   public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords) {
+        this.name = name;
+        this.countryCode = country;
         this.location = location;
         this.distance = distance;
         this.airQuality = airQuality;
         this.coordinates = coords;
     }
+    
+    
     
     public City()
     {
@@ -70,12 +95,12 @@ public class City implements Serializable,IRepo
         this.name = name;
     }
 
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     public String getLocation() {
@@ -115,14 +140,6 @@ public class City implements Serializable,IRepo
     public void setCoords(Coordinates coords) {
         this.coordinates = coords;
     }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
     
     public void addQuality(AirQuality quality)
     {
@@ -135,15 +152,15 @@ public class City implements Serializable,IRepo
     
     @Override
     public String toString() {
-        return "City{" + "name=" + name + ", country=" + country + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality.toString() + ", coordinates="+coordinates.toString()+ '}';
+        return "City{" + "name=" + name + ", country=" + countryCode + ", location=" + location + ", distance=" + distance + ", airQuality=" + airQuality.toString() + ", coordinates="+coordinates.toString()+ '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.cityId);
+        hash = 67 * hash + Objects.hashCode(this.id);
         hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.country);
+        hash = 67 * hash + Objects.hashCode(this.countryCode);
         hash = 67 * hash + Objects.hashCode(this.location);
         hash = 67 * hash + Objects.hashCode(this.distance);
         hash = 67 * hash + Objects.hashCode(this.airQuality);
@@ -166,13 +183,13 @@ public class City implements Serializable,IRepo
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.country, other.country)) {
+        if (!Objects.equals(this.countryCode, other.countryCode)) {
             return false;
         }
         if (!Objects.equals(this.location, other.location)) {
             return false;
         }
-        if (!Objects.equals(this.cityId, other.cityId)) {
+        if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         if (!Objects.equals(this.distance, other.distance)) {
@@ -186,7 +203,23 @@ public class City implements Serializable,IRepo
         }
         return true;
     }
-    
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Country getCountryObject() {
+        return countryObject;
+    }
+
+    public void setCountryObject(Country countryObject) {
+        this.countryObject = countryObject;
+    }
+
     
     
 

@@ -76,7 +76,7 @@ public class AlertController
             String cityName = response.getCity().getName();
             String countryCode = response.getCountry().getIsoCode();
             
-            City city = cityRepo.findByNameAndCountry(cityName,countryCode);
+            City city = cityRepo.findByNameAndCountryCode(cityName,countryCode);
             List<Statistics> statsOnCity = CalculationsHelper.statsForSingleCity(city);
             if(city!=null)
                 return statsOnCity;

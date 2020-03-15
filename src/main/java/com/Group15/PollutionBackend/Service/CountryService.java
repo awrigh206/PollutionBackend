@@ -15,8 +15,12 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.CountryCodes;
+import com.Group15.PollutionBackend.Repository.AirQualityRepository;
+import com.Group15.PollutionBackend.Repository.CityRepository;
+import com.Group15.PollutionBackend.Repository.CoordinatesRepository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -37,8 +41,13 @@ public class CountryService implements IService
     
     @Autowired
     private RetrieveData retData;
+    @Autowired
+    private AirQualityRepository airRepo;
+    @Autowired 
+    private CoordinatesRepository coordRepo;
+    @Autowired
+    private CityRepository cityRepo;
       
-    
     
     @Autowired
     public CountryService(CountryRepository countryRepository) 
@@ -57,7 +66,18 @@ public class CountryService implements IService
     {
             
         System.gc();
-        return countryRepository.saveAndFlush((Country)toAdd);
+        Country country = (Country) toAdd;
+        /*
+        for(City currentCity : country.getCitiesWithinCountry())
+        {
+            coordRepo.save(currentCity.getCoordinates());
+            for (AirQuality currentAirQuality : currentCity.getAirQuality())
+            {
+                airRepo.save(currentAirQuality);
+            }
+            cityRepo.save(currentCity);
+        }*/
+        return countryRepository.saveAndFlush(country);
     }
 
     @Override

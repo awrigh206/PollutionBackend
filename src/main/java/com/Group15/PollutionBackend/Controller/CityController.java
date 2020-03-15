@@ -81,7 +81,7 @@ public class CityController
     @GetMapping (path ="/statsCity")
     public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
     {
-        List<Statistics> stats = CalculationsHelper.stats(cityRepo.findAllByNameAndCountry(city,country));
+        List<Statistics> stats = CalculationsHelper.stats(cityRepo.findAllByNameAndCountryCode(city,country));
         return stats;
     }
     
