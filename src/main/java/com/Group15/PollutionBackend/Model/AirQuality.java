@@ -9,11 +9,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 /**
  *
  * @author Andrew Wright
  */
-@Embeddable
+//@Embeddable
+@Entity 
 public class AirQuality implements Serializable
 {
     @JsonProperty("parameter")
@@ -26,6 +30,9 @@ public class AirQuality implements Serializable
     private String sourceName;
     @Embedded
     private AveragingPeriod averagingPeriod;
+    @GeneratedValue
+    @Id
+    private Long id;
 
     public AirQuality(String parameterUsed, Double valueOf, String lastUpdated, String units, String sourceName, AveragingPeriod averagingPeriod) {
         this.parameterUsed = parameterUsed;
@@ -95,6 +102,14 @@ public class AirQuality implements Serializable
     @Override
     public String toString() {
         return "AirQuality{" + "parameter=" + parameterUsed + ", value=" + valueOf + ", lastUpdated=" + lastUpdated + ", unit=" + units + ", sourceName=" + sourceName + ", averagingPeriod=" + averagingPeriod + '}';
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
     
 }

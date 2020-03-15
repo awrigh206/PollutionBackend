@@ -16,6 +16,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -34,9 +39,10 @@ public class City implements Serializable,IRepo
     private Double distance;
     @JsonProperty("measurements")
     @ElementCollection
-    @Embedded
+    @OneToMany (fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
+    @JoinColumn(name="id") 
     private List<AirQuality> airQuality;
-    @Embedded
+    @OneToOne (fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
     private Coordinates coordinates;
     
 

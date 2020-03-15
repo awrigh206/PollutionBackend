@@ -12,6 +12,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.LazyInitializationException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -27,24 +28,24 @@ import org.springframework.stereotype.Service;
 public class FetcherThread implements Runnable
 {
     RetrieveData data;
+    @Autowired
     CountryService countryService;
     private final Integer truePageLimit;
     private final Log log = LogFactory.getLog(FetcherThread.class);
     private final TaskExecutor taskExecutor;
 
-    public FetcherThread(TaskExecutor taskExecutor,RetrieveData data, CountryService countryService, Integer truePageLimit) 
+    public FetcherThread(TaskExecutor taskExecutor,CountryService countryService,RetrieveData retdata, Integer truePageLimit) 
     {
-        this.data = data;
-        this.countryService = countryService;
         this.truePageLimit = truePageLimit;
         this.taskExecutor =taskExecutor;
+        this.data = retdata;
+        this.countryService = countryService;
     }
     
 
     @Override
     public void run() 
     {
-        log.info("This thing actually gets called");
         int increment =6;
         int skipFactor =3;
         data.setLimit(10000);
@@ -57,10 +58,9 @@ public class FetcherThread implements Runnable
                 {
                     Country currentCountry = countryService.findByCountryCode(countryCode);
                     log.info("Adding stuff to: " + currentCountry.getCountryCode());
-                    currentCountry.fillInCityData(data,skipFactor, increment);
+                    countryService.fillInCityData(currentCountry, skipFactor, increment);
+                    //currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
-                    
-                    
                     
                     System.gc();
                 }
@@ -69,6 +69,11 @@ public class FetcherThread implements Runnable
                 {
                     log.info("We got a null one");
                    continue;
+                }
+                
+                catch (LazyInitializationException laz)
+                {
+                    log.info("Lazy problem");
                 }
                 
 

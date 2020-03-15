@@ -11,6 +11,7 @@ import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.Statistics;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
+import com.Group15.PollutionBackend.Service.CountryService;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,12 +33,14 @@ public class CityController
 {
     CountryRepository countryRepo;
     CityRepository cityRepo;
+    CountryService countryService;
     
     @Autowired
-    public CityController (CityRepository cityRepo, CountryRepository countryRepo)
+    public CityController (CityRepository cityRepo, CountryRepository countryRepo, CountryService countryService)
     {
         this.cityRepo = cityRepo;
         this.countryRepo = countryRepo;
+        this.countryService =  countryService;
     }
 
     protected CityController() {
@@ -85,7 +88,7 @@ public class CityController
     @GetMapping (path ="/statsCountry")
     public List<Statistics> getStats(@RequestParam(value="country") String country)
     {
-        Country countryModel = countryRepo.findByCountryCode(country);
+        Country countryModel = countryService.findByCountryCode(country);
         List<Statistics> stats = CalculationsHelper.stats(countryModel);
         return stats;
     }

@@ -20,12 +20,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.transaction.Transactional;
 
 /**
  *
  * @author Andrew Wright
  */
 @Entity
+@Transactional
 public class Country implements Serializable, IRepo
 {
     @GeneratedValue
@@ -38,7 +40,7 @@ public class Country implements Serializable, IRepo
     @JsonProperty("code")
     private String countryCode;
     private Integer count;
-    @OneToMany (cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
+    @OneToMany (fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.REMOVE} , orphanRemoval = true)
     @JoinColumn(name="id") 
     private List<City> citiesWithinCountry;
     private Integer pageReached =1;
@@ -54,7 +56,7 @@ public class Country implements Serializable, IRepo
      * @param data
      * @param skipFactor  The amount of pages to skip between each page of data that is processed 
      * @param pageJump   The amount of pages to add to the limit
-     */
+     
     public void fillInCityData(RetrieveData data,int skipFactor, int pageJump)
     {
         //reset these defaults when you want to release the system. Set smaller values to decrease testing time
@@ -92,6 +94,7 @@ public class Country implements Serializable, IRepo
             e.printStackTrace();
         }
     }
+    */
 
     public Integer getId() {
         return id;
@@ -199,6 +202,15 @@ public class Country implements Serializable, IRepo
         }
         return null;
     }
+
+    public Integer getPageReached() {
+        return pageReached;
+    }
+
+    public void setPageReached(Integer pageReached) {
+        this.pageReached = pageReached;
+    }
+    
     
     
     

@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
+import com.Group15.PollutionBackend.Service.CountryService;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CountryController 
 {
     private CountryRepository countryRepo;
+    @Autowired
+    private CountryService countryService;
     protected CountryController()
     {
         
@@ -38,7 +41,7 @@ public class CountryController
     @GetMapping (path ="/country")
     public Country getCountry(@RequestParam(value ="countryCode")String countryCode)
     {
-        return countryRepo.findByCountryCode(countryCode);
+        return countryService.findByCountryCode(countryCode);
     }
     
     @GetMapping (path ="/countries")
