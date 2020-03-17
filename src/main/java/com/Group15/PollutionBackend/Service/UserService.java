@@ -6,9 +6,14 @@
 package com.Group15.PollutionBackend.Service;
 
 import com.Group15.PollutionBackend.DTO.UserDto;
+import com.Group15.PollutionBackend.DataProcessing.Batch.FetcherThread;
 import com.Group15.PollutionBackend.Model.User;
 import com.Group15.PollutionBackend.Repository.UserRepository;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +24,7 @@ import org.springframework.stereotype.Service;
 public class UserService 
 {
     private UserRepository userRepository;
+    private final Log log = LogFactory.getLog(UserService.class);
     
     @Autowired
     public UserService(UserRepository userRepository) 
@@ -26,13 +32,14 @@ public class UserService
         this.userRepository = userRepository;
     }
     
-    public User createUser(String name, String password, String email, String number)
+    private User saveUser(String name, String password, String email, String number)
     {
         User user = userRepository.findByUserName(name);
-        //TourPackage tourPackage = tourPackageOpt.get();
         if(user == null)
         {
-            return userRepository.save(new User(name,password,email,number));
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(password);
+            return userRepository.save(new User(name,hashedPassword,email,number));
         }
         else
         {
@@ -43,16 +50,7 @@ public class UserService
     
     public User createUser(UserDto dto)
     {
-        User user = userRepository.findByUserName(dto.getUserName());
-        //TourPackage tourPackage = tourPackageOpt.get();
-        if(user == null)
-        {
-            return userRepository.save(new User(dto.getUserName(),dto.getPassword(),dto.getEmail(),dto.getNumber()));
-        }
-        else
-        {
-            return null;
-        }
+        return saveUser(dto.getUserName(),dto.getPassword(),dto.getEmail(),dto.getNumber());
         
     }
     

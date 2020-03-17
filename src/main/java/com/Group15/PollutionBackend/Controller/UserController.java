@@ -12,6 +12,8 @@ import com.Group15.PollutionBackend.Service.UserService;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,8 +54,9 @@ public class UserController
     @RequestMapping(method = RequestMethod.GET, path = "/auth")
     public Boolean authenticateUser(@RequestParam(value ="userName")String userName, @RequestParam(value="password") String password)
     {
-        User user = userRepo.findByUserNameAndPassword(userName, password);
-        if(user != null)
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        User user = userRepo.findByUserName(userName);
+        if(user != null && passwordEncoder.matches(password, user.getPassword()))
             return true;
         else
             return false;
