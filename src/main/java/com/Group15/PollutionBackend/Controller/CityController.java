@@ -15,9 +15,11 @@ import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Repository.CoordinatesRepository;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
+import com.neovisionaries.i18n.CountryCode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -108,7 +110,8 @@ public class CityController
     @GetMapping (path ="/statsCountry")
     public List<Statistics> getStats(@RequestParam(value="country") String country)
     {
-        Country countryModel = countryService.findByCountryCode(country);
+        CountryCode code = CountryCode.getByCode(country);
+        Country countryModel = countryService.findByCountryCode(code.getAlpha2());
         List<Statistics> stats = CalculationsHelper.stats(countryModel);
         return stats;
     }

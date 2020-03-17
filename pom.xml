@@ -41,6 +41,12 @@
                     <version>1.5</version>
                 </dependency>
                 
+                <dependency>
+                    <groupId>com.neovisionaries</groupId>
+                    <artifactId>nv-i18n</artifactId>
+                    <version>1.27</version>
+                </dependency>
+                
                 <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
                 <dependency>
                     <groupId>org.springframework.security</groupId>
