@@ -67,7 +67,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         getData(retData);
         //startBatchOperation(retData);
         //TaskExecutor tasks = new SimpleAsyncTaskExecutor ();
-        taskExecutor.execute(new FetcherThread(countryService,retData,100));
         //Some kind of issue (does not persist to the database)
         //startDataFetcherThread(retData);
     }
@@ -117,13 +116,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         });
     }
     
-    private void startDataFetcherThread(RetrieveData retData)
-    {
-        int truePageLimit = 100;
-        //Thread t = new Thread(new FetcherThread(retData,countryService,truePageLimit));
-        //t.start();
-    }
-    
     @Transactional
     private void getData(RetrieveData data)
     {
@@ -138,12 +130,14 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         try
         {
             long beginTime = System.nanoTime();
+            /*
             Thread[] t = new Thread[threadCount];
             for(int i =0; i<threadCount;i++)
             {
                 t[i] = new Thread(new DataThread(i+1,i+2,countriesPerThread,data,countryService,baseUrl,CountryResult.class), "data"+i);
                 t[i].start();
-            }
+            }*/
+            taskExecutor.execute(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor));
             //add this back in for safety, can leave out for faster testing
             //waitForFinish(t);
             long endTime = System.nanoTime();

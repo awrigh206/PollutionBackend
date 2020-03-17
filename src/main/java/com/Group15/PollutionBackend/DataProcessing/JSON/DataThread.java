@@ -5,11 +5,14 @@
  */
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
+import com.Group15.PollutionBackend.DataProcessing.Batch.FetcherThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
+import com.Group15.PollutionBackend.Service.CountryService;
 import com.Group15.PollutionBackend.Service.IService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
 
 /**
  *
@@ -26,19 +29,21 @@ public class DataThread implements Runnable
     private final Class resultType;
     private final int numberOfCountries;
     private final Log log = LogFactory.getLog(DataThread.class);
+    private final TaskExecutor taskExecutor;
     private String countryCode;
     
 
     //Using Iservice as interface facade
     //Faster to use direct implementation rather than casting, change this if the performance is needed
-    public DataThread(int start, int end,int countriesPerThread, RetrieveData data, IService service, String baseUrl, Class resultType) {
-        this.start = start;
-        this.end = end;
+    public DataThread(int countriesPerThread, RetrieveData data, IService service, String baseUrl, Class resultType, TaskExecutor taskExec) {
+        this.start=1;
+        this.end=2;
         this.data = data;
         this.service = service;
         this.baseUrl = baseUrl;
         this.resultType = resultType;
         this.numberOfCountries = countriesPerThread;
+        this.taskExecutor = taskExec;
     } 
 
     @Override
@@ -53,6 +58,7 @@ public class DataThread implements Runnable
                 addResult(result);
                 System.gc();
             }
+            taskExecutor.execute(new FetcherThread((CountryService)service,data,100));
         }
         
         catch(Exception e)
