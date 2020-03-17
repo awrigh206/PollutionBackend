@@ -10,6 +10,7 @@ import com.Group15.PollutionBackend.Model.AveragingPeriod;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  *
@@ -34,7 +35,7 @@ public class Location implements IRepo
     public City toNewCity()
     {
         AirQuality quality = getAirQuality();
-        City toReturn = new City(city,country,location,0.0,new ArrayList<>(),coordinates);
+        City toReturn = new City(city,country,location,0.0,new HashSet<>(),coordinates);
         toReturn.addQuality(quality);
         return toReturn;
     }

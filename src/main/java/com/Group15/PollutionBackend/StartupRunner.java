@@ -9,6 +9,8 @@ import com.Group15.PollutionBackend.DataProcessing.Batch.FetcherThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.Country;
+import com.Group15.PollutionBackend.Model.CountryCodes;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
 import java.util.concurrent.ExecutorService;
@@ -17,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.LazyInitializationException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -45,6 +48,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private ApplicationContext applicationContext;
     @Autowired
     private TaskExecutor taskExecutor;
+    @Autowired
+    private FetcherThread testFetcher;
     
     @PostConstruct
     public void init()
@@ -60,10 +65,56 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         countryService.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
+        //startBatchOperation(retData);
         //TaskExecutor tasks = new SimpleAsyncTaskExecutor ();
-        taskExecutor.execute(new FetcherThread(taskExecutor,countryService,retData,100));
+        taskExecutor.execute(new FetcherThread(countryService,retData,100));
         //Some kind of issue (does not persist to the database)
         //startDataFetcherThread(retData);
+    }
+    
+    public void startBatchOperation(RetrieveData retData)
+    {
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        executorService.execute(new Runnable() 
+        {
+            public void run() 
+            {
+                int increment =6;
+                int skipFactor =3;
+                int truePageLimit = 100;
+                retData.setLimit(10000);
+
+                for(int i =1; i < truePageLimit;i=i+skipFactor+increment)
+                {
+                    for(String countryCode: CountryCodes.getIsoCodes())
+                    {
+                        try
+                        {
+                            Country currentCountry = countryService.findByCountryCode(countryCode);
+                            log.info("Adding stuff to: " + currentCountry.getCountryCode());
+                            countryService.fillInCityData(currentCountry, skipFactor, increment);
+                            //currentCountry.fillInCityData(data,skipFactor, increment);
+                            countryService.save(currentCountry);
+
+                            System.gc();        
+                        }
+
+                        catch(NullPointerException e)
+                        {
+                            log.info("We got a null one");
+                           continue;
+                        }
+
+                        catch (LazyInitializationException laz)
+                        {
+                            log.info("Lazy problem");
+                        }
+
+
+                    }
+                }
+            }
+        });
     }
     
     private void startDataFetcherThread(RetrieveData retData)

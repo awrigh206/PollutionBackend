@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
  *
  * @author Andrew Wright
  */
-@Transactional
 @Component
 public class FetcherThread implements Runnable
 {
@@ -32,13 +31,10 @@ public class FetcherThread implements Runnable
     CountryService countryService;
     private final Integer truePageLimit;
     private final Log log = LogFactory.getLog(FetcherThread.class);
-    private final TaskExecutor taskExecutor;
-    private int counter =0;
 
-    public FetcherThread(TaskExecutor taskExecutor,CountryService countryService,RetrieveData retdata, Integer truePageLimit) 
+    public FetcherThread(CountryService countryService,RetrieveData retdata, Integer truePageLimit) 
     {
         this.truePageLimit = truePageLimit;
-        this.taskExecutor =taskExecutor;
         this.data = retdata;
         this.countryService = countryService;
     }
@@ -62,8 +58,6 @@ public class FetcherThread implements Runnable
                     countryService.fillInCityData(currentCountry, skipFactor, increment);
                     //currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
-                    counter ++;
-                    log.info("we are on country number: " + counter);
                     
                     System.gc();
                 }

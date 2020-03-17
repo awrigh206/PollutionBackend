@@ -38,7 +38,6 @@ public class AirQuality implements Serializable
     private Long qualityId;
     
     @ManyToOne
-    @JoinColumn(name = "id")
     private City city;
 
     public AirQuality(String parameterUsed, Double valueOf, String lastUpdated, String units, String sourceName, AveragingPeriod averagingPeriod) {

@@ -6,10 +6,13 @@
 package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
+import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.Statistics;
+import com.Group15.PollutionBackend.Repository.AirQualityRepository;
 import com.Group15.PollutionBackend.Repository.CityRepository;
+import com.Group15.PollutionBackend.Repository.CoordinatesRepository;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
 import java.util.ArrayList;
@@ -36,6 +39,11 @@ public class CityController
     CountryService countryService;
     
     @Autowired
+    private AirQualityRepository airRepo;
+    @Autowired 
+    private CoordinatesRepository coordRepo;
+    
+    @Autowired
     public CityController (CityRepository cityRepo, CountryRepository countryRepo, CountryService countryService)
     {
         this.cityRepo = cityRepo;
@@ -56,6 +64,18 @@ public class CityController
     {
         ArrayList<City> cities = cityRepo.findAllByName(cityName);
         return cities;
+    }
+    @GetMapping (path ="/airs")
+    public ArrayList<AirQuality> getAirs()
+    {
+        ArrayList<AirQuality> air = new ArrayList<>();
+        Iterator it = airRepo.findAll().iterator();
+        while (it.hasNext())
+        {
+            air.add((AirQuality)it.next());
+        }
+        
+        return air;
     }
     
     @GetMapping (path ="/cities")

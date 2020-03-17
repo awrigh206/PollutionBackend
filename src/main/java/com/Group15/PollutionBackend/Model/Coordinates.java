@@ -28,7 +28,6 @@ public class Coordinates implements Serializable
     private Long coordId;
     
     @OneToOne
-    @JoinColumn(name = "id")
     private City city;
 
     public Coordinates( Double latitude, Double longitude) {

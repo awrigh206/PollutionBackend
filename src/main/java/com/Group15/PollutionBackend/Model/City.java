@@ -15,7 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -44,22 +46,21 @@ public class City implements Serializable,IRepo
     private Double distance;
     @JsonProperty("measurements")
     @ElementCollection
-    @OneToMany ( cascade={CascadeType.ALL} , orphanRemoval = true, mappedBy = "city")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany ( fetch = FetchType.EAGER,cascade={CascadeType.ALL} , orphanRemoval = true)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     //@JoinColumn(name="id") 
-    private List<AirQuality> airQuality;
-    @OneToOne ( cascade={CascadeType.ALL} , orphanRemoval = true, mappedBy = "city")
-    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<AirQuality> airQuality;
+    @OneToOne (fetch = FetchType.EAGER, cascade={CascadeType.ALL} , orphanRemoval = true)
+    //@LazyCollection(LazyCollectionOption.FALSE)
     //@JoinColumn(name="id") 
     private Coordinates coordinates;
     
     
-    @ManyToOne
-    @JoinColumn(name = "countryId")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country countryObject;
     
 
-    public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords, Country countryObject) {
+    public City(String name, String country, String location, Double distance, Set<AirQuality> airQuality, Coordinates coords, Country countryObject) {
         this.name = name;
         this.countryCode = country;
         this.location = location;
@@ -69,7 +70,7 @@ public class City implements Serializable,IRepo
         this.countryObject = countryObject;
     }
 
-   public City(String name, String country, String location, Double distance, List<AirQuality> airQuality, Coordinates coords) {
+   public City(String name, String country, String location, Double distance, Set<AirQuality> airQuality, Coordinates coords) {
         this.name = name;
         this.countryCode = country;
         this.location = location;
@@ -82,7 +83,7 @@ public class City implements Serializable,IRepo
     
     public City()
     {
-        this.airQuality = new ArrayList<>();
+        this.airQuality = new HashSet<>();
     }
 
     
@@ -125,11 +126,11 @@ public class City implements Serializable,IRepo
         this.distance = distance;
     }
 
-    public List<AirQuality> getAirQuality() {
+    public Set<AirQuality> getAirQuality() {
         return airQuality;
     }
 
-    public void setAirQuality(List<AirQuality> airQuality) {
+    public void setAirQuality(Set<AirQuality> airQuality) {
         this.airQuality = airQuality;
     }
 

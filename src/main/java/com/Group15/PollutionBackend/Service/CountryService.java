@@ -47,7 +47,6 @@ public class CountryService implements IService
     private CoordinatesRepository coordRepo;
     @Autowired
     private CityRepository cityRepo;
-      
     
     @Autowired
     public CountryService(CountryRepository countryRepository) 
@@ -129,10 +128,7 @@ public class CountryService implements IService
     {
         Country country =countryRepository.findByCountryCode(code);
         List<City> citiesInCountry = country.getCitiesWithinCountry();
-        for(City current : citiesInCountry)
-        {
-            City cycle = current;
-        }
+
         return country;
         
     }
