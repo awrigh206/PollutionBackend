@@ -66,6 +66,7 @@ public class CountryService implements IService
             
         System.gc();
         Country country = (Country) toAdd;
+        log.info("trying to save: " + country.getName());
         /*
         for(City currentCity : country.getCitiesWithinCountry())
         {
@@ -76,7 +77,7 @@ public class CountryService implements IService
             }
             cityRepo.save(currentCity);
         }*/
-        return countryRepository.saveAndFlush(country);
+        return countryRepository.save(country);
     }
 
     @Override

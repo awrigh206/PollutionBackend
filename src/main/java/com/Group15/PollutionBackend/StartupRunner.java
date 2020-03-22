@@ -116,7 +116,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         });
     }
     
-    @Transactional
     private void getData(RetrieveData data)
     {
         String baseUrl = "https://api.openaq.org/v1/countries";
