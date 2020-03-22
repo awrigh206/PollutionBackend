@@ -129,16 +129,16 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         try
         {
             long beginTime = System.nanoTime();
-            /*
+           
             Thread[] t = new Thread[threadCount];
             for(int i =0; i<threadCount;i++)
             {
-                t[i] = new Thread(new DataThread(i+1,i+2,countriesPerThread,data,countryService,baseUrl,CountryResult.class), "data"+i);
+                t[i] = new Thread(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor), "data"+i);
                 t[i].start();
-            }*/
-            taskExecutor.execute(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor));
+            }
+            //taskExecutor.execute(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor));
             //add this back in for safety, can leave out for faster testing
-            //waitForFinish(t);
+            waitForFinish(t);
             long endTime = System.nanoTime();
             log.info("That took about: " + (endTime - beginTime));
         }
