@@ -49,6 +49,7 @@ public class DataThread implements Runnable
     @Override
     public void run() 
     {
+        log.info("data thread is begun");
         data.setLimit(numberOfCountries);
         try
         {
@@ -58,6 +59,7 @@ public class DataThread implements Runnable
                 addResult(result);
                 System.gc();
             }
+            log.info("finished getting data");
             taskExecutor.execute(new FetcherThread((CountryService)service,data,100));
         }
         
