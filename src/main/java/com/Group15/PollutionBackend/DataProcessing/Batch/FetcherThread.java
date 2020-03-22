@@ -43,6 +43,7 @@ public class FetcherThread implements Runnable
     @Override
     public void run() 
     {
+        log.info("the fetcher thread runs");
         int increment =6;
         int skipFactor =3;
         data.setLimit(10000);
