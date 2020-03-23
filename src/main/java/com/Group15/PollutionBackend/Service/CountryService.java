@@ -66,17 +66,6 @@ public class CountryService implements IService
             
         System.gc();
         Country country = (Country) toAdd;
-        log.info("trying to save: " + country.getName());
-        /*
-        for(City currentCity : country.getCitiesWithinCountry())
-        {
-            coordRepo.save(currentCity.getCoordinates());
-            for (AirQuality currentAirQuality : currentCity.getAirQuality())
-            {
-                airRepo.save(currentAirQuality);
-            }
-            cityRepo.save(currentCity);
-        }*/
         return countryRepository.save(country);
     }
 
