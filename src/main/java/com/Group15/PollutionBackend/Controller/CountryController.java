@@ -43,7 +43,21 @@ public class CountryController
     @GetMapping (path ="/country")
     public Country getCountry(@RequestParam(value ="countryCode")String countryCode)
     {
-        return countryService.findByCountryCode(countryCode);
+        Country country = null;
+        try
+        {
+            country = countryService.findByCountryCode(countryCode);
+        }
+        
+        catch(Exception e)
+        {
+        }
+        
+        finally 
+        {
+            return country;
+        }
+        
     }
     
     @GetMapping (path ="/countries")
