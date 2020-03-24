@@ -19,7 +19,6 @@ import com.neovisionaries.i18n.CountryCode;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -103,7 +102,7 @@ public class CityController
     }
     
     @GetMapping (path ="/statsCity")
-    public Object getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
+    public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
     {
         try
         {
@@ -120,7 +119,7 @@ public class CityController
     }
     
     @GetMapping (path ="/statsCountry")
-    public Object getStats(@RequestParam(value="country") String country)
+    public List<Statistics> getStats(@RequestParam(value="country") String country)
     {
         try
         {
