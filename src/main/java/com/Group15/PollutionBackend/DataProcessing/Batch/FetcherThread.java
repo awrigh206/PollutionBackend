@@ -75,7 +75,7 @@ public class FetcherThread implements Runnable
                 {
                     Country currentCountry = countryService.findByCountryCode(CountryCodes.getIsoCodes().get(y));
                     countryService.delete(currentCountry);
-                    log.info("Adding stuff to: " + currentCountry.getCountryCode());
+                    //log.info("Adding stuff to: " + currentCountry.getCountryCode());
                     countryService.fillInCityData(currentCountry, skipFactor, increment);
                     countryService.save(currentCountry);
                     

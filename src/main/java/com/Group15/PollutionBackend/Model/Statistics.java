@@ -31,6 +31,7 @@ public class Statistics implements Serializable
     private Double trend;
     private long nTerms;
     private String cityName;
+    private String countryCode;
 
     public Integer getId() {
         return id;
@@ -126,6 +127,14 @@ public class Statistics implements Serializable
 
     public void setCityName(String cityName) {
         this.cityName = cityName;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
     @Override

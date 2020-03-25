@@ -65,6 +65,7 @@ public class CalculationsHelper
             }
             
             statsModelObject.setCityName(cityForStats.get(0).getName());
+            statsModelObject.setCountryCode(cityForStats.get(0).getCountryCode());
             statsModelObject.setMax(stats.getMax());
             statsModelObject.setMin(stats.getMin());
             statsModelObject.setStandardDeviation(stats.getStandardDeviation());

@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.FetcherThread;
+import com.Group15.PollutionBackend.DataProcessing.Batch.StatisticsThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
@@ -13,6 +14,7 @@ import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.CountryCodes;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
+import com.Group15.PollutionBackend.Service.StatisticsService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
@@ -48,8 +50,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private ApplicationContext applicationContext;
     @Autowired
     private TaskExecutor taskExecutor;
-    @Autowired
-    private FetcherThread testFetcher;
+    @Autowired 
+    private StatisticsService statsService;
     
     @PostConstruct
     public void init()
@@ -65,10 +67,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         cityRepository.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
-        //startBatchOperation(retData);
-        //TaskExecutor tasks = new SimpleAsyncTaskExecutor ();
-        //Some kind of issue (does not persist to the database)
-        //startDataFetcherThread(retData);
+        taskExecutor.execute(new StatisticsThread(countryService, statsService));
     }
     
     public void startBatchOperation(RetrieveData retData)

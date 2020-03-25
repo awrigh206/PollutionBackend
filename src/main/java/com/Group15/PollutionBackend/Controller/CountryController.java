@@ -65,6 +65,11 @@ public class CountryController
     {
         return countryRepo.findAll();
     }
+    @GetMapping (path ="/numCountries")
+    public Long numberOfCountries()
+    {
+        return countryRepo.count();
+    }
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)

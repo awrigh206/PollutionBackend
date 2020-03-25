@@ -99,43 +99,5 @@ public class CityController
     public String return400(NoSuchElementException ex)
     {
         return ex.getMessage();
-    }
-    
-    @GetMapping (path ="/statsCity")
-    public List<Statistics> getStats(@RequestParam(value="city")String city, @RequestParam(value="country") String country)
-    {
-        try
-        {
-            CountryCode code = CountryCode.getByCode(country);
-            List<Statistics> stats = CalculationsHelper.stats(cityRepo.findAllByNameAndCountryCode(city,code.getAlpha2()));
-            return stats;
-        }
-        
-        catch(Exception e)
-        {
-            return null;
-        }
-        
-    }
-    
-    @GetMapping (path ="/statsCountry")
-    public List<Statistics> getStats(@RequestParam(value="country") String country)
-    {
-        try
-        {
-            CountryCode code = CountryCode.getByCode(country);
-            Country countryModel = countryService.findByCountryCode(code.getAlpha2());
-            List<Statistics> stats = CalculationsHelper.stats(countryModel);
-            return stats;
-        }
-        
-        catch(Exception e)
-        {
-            return null;
-        }
-        
-    }
-    
-
-    
+    } 
 }
