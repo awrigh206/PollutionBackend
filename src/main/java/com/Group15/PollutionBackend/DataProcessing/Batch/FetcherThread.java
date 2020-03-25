@@ -31,12 +31,14 @@ public class FetcherThread implements Runnable
     CountryService countryService;
     private final Integer truePageLimit;
     private final Log log = LogFactory.getLog(FetcherThread.class);
+    private final Range range;
 
-    public FetcherThread(CountryService countryService,RetrieveData retdata, Integer truePageLimit) 
+    public FetcherThread(CountryService countryService,RetrieveData retdata, Integer truePageLimit, Range range) 
     {
         this.truePageLimit = truePageLimit;
         this.data = retdata;
         this.countryService = countryService;
+        this.range = range;
     }
     
 
@@ -67,11 +69,11 @@ public class FetcherThread implements Runnable
         
         for(int i =1; i < truePageLimit;i=i+skipFactor+increment)
         {
-            for(String countryCode: CountryCodes.getIsoCodes())
+            for (int y =range.getStart(); y< CountryCodes.getIsoCodes().size() && y< range.getEnd(); y++)
             {
                 try
                 {
-                    Country currentCountry = countryService.findByCountryCode(countryCode);
+                    Country currentCountry = countryService.findByCountryCode(CountryCodes.getIsoCodes().get(y));
                     countryService.delete(currentCountry);
                     log.info("Adding stuff to: " + currentCountry.getCountryCode());
                     countryService.fillInCityData(currentCountry, skipFactor, increment);

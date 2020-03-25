@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 import com.Group15.PollutionBackend.DataProcessing.Batch.FetcherThread;
+import com.Group15.PollutionBackend.DataProcessing.Batch.Range;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
 import com.Group15.PollutionBackend.Service.CountryService;
 import com.Group15.PollutionBackend.Service.IService;
@@ -49,7 +50,7 @@ public class DataThread implements Runnable
     @Override
     public void run() 
     {
-        log.info("data thread is begun");
+        log.info("data thread has begun");
         data.setLimit(numberOfCountries);
         try
         {
@@ -60,13 +61,35 @@ public class DataThread implements Runnable
                 System.gc();
             }
             log.info("finished getting data");
-            taskExecutor.execute(new FetcherThread((CountryService)service,data,100));
+            spawnBatchThreads();
         }
         
         catch(Exception e)
         {
             e.printStackTrace();
         }
+    }
+    
+    private void spawnBatchThreads()
+    {
+        int numberOfThreads = 5;
+        Range range = new Range(0,0);
+        range = calculateRange(range);
+        
+        for (int count =0; count<numberOfThreads;count++)
+        {
+            taskExecutor.execute(new FetcherThread((CountryService)service,data,100,range));
+            range = calculateRange(range);
+        }
+        
+    }
+    
+    private Range calculateRange(Range lastRange)
+    {
+        int countriesPerThread = 20;
+        Range newRange = new Range(lastRange.getEnd()+1,lastRange.getEnd()+countriesPerThread);
+        return newRange;
+        
     }
     
     private void addResult(ResultAbs result)
