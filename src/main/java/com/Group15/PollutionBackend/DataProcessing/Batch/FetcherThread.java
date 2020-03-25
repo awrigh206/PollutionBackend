@@ -43,9 +43,26 @@ public class FetcherThread implements Runnable
     @Override
     public void run() 
     {
-        log.info("the fetcher thread has now begun");
-        int increment =6;
-        int skipFactor =3;
+        while(true)
+        {
+            try
+            {
+                updateInformation();
+                Thread.sleep(3600000);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            
+        }
+
+    }
+    
+    private void updateInformation()
+    {
+        int increment =1;
+        int skipFactor =2;
         data.setLimit(10000);
         
         for(int i =1; i < truePageLimit;i=i+skipFactor+increment)
@@ -55,9 +72,9 @@ public class FetcherThread implements Runnable
                 try
                 {
                     Country currentCountry = countryService.findByCountryCode(countryCode);
+                    countryService.delete(currentCountry);
                     log.info("Adding stuff to: " + currentCountry.getCountryCode());
                     countryService.fillInCityData(currentCountry, skipFactor, increment);
-                    //currentCountry.fillInCityData(data,skipFactor, increment);
                     countryService.save(currentCountry);
                     
                     System.gc();
@@ -77,7 +94,6 @@ public class FetcherThread implements Runnable
 
             }
         }
-
     }
     
     
