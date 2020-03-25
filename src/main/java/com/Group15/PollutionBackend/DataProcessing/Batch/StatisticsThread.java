@@ -36,10 +36,11 @@ public class StatisticsThread implements Runnable
     @Override
     public void run() 
     {
+        log.info("Stats thread is now running");
+        statsService.deleteALl();
         try
         {
-            Thread.sleep(40000);
-            while (true == true)
+            while (true)
             {
                 for(String currentCode: CountryCodes.getIsoCodes())
                 {
@@ -55,7 +56,7 @@ public class StatisticsThread implements Runnable
                     
                     
                 }
-                Thread.sleep(1000);
+                Thread.sleep(60000);
             }
         }
         
@@ -79,6 +80,7 @@ public class StatisticsThread implements Runnable
     {
         for (Statistics current : stats)
         {
+            statsService.deleteStat(current);
             statsService.saveStat(current);
         }
     }

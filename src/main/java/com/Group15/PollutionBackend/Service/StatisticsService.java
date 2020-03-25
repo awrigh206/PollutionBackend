@@ -31,6 +31,11 @@ public class StatisticsService
         statsRepo.delete(toDelete);
     }
     
+    public void deleteALl()
+    {
+        statsRepo.deleteAll();
+    }
+    
     public List<Statistics> findCountry(String code)
     {
         return statsRepo.findAllByCountryCode(code);

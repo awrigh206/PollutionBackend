@@ -73,7 +73,7 @@ public class StatisticsController
         
     }
     
-    @GetMapping (path ="/StatsCountry")
+    @GetMapping (path ="/statsCountry")
     public List<Statistics> getSavedStats(@RequestParam(value="country") String country)
     {
         try

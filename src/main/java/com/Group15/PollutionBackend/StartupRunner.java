@@ -67,7 +67,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         cityRepository.deleteAll();
         RetrieveData retData = new RetrieveData(1200);
         getData(retData);
-        taskExecutor.execute(new StatisticsThread(countryService, statsService));
     }
     
     public void startBatchOperation(RetrieveData retData)
@@ -135,7 +134,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t[i] = new Thread(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor), "data"+i);
                 t[i].start();
             }*/
-            taskExecutor.execute(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor));
+            taskExecutor.execute(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor,statsService));
             //add this back in for safety, can leave out for faster testing
             //waitForFinish(t);
             long endTime = System.nanoTime();
