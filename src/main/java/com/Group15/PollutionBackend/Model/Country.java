@@ -5,9 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Results.LocationResult;
-import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.DataProcessing.JSON.Location
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +16,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.transaction.Transactional;
 

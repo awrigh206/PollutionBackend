@@ -5,20 +5,15 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
-import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
 import com.Group15.PollutionBackend.Model.AirQuality;
-import com.Group15.PollutionBackend.Model.City;
-import com.Group15.PollutionBackend.Model.Country;
-import com.Group15.PollutionBackend.Model.Statistics;
+import com.Group15.PollutionBackend.Model.City;;
 import com.Group15.PollutionBackend.Repository.AirQualityRepository;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Repository.CoordinatesRepository;
 import com.Group15.PollutionBackend.Repository.CountryRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
-import com.neovisionaries.i18n.CountryCode;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

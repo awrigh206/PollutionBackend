@@ -9,7 +9,6 @@ import com.Group15.PollutionBackend.Model.AirQuality;
 import com.Group15.PollutionBackend.Model.AveragingPeriod;
 import com.Group15.PollutionBackend.Model.City;
 import com.Group15.PollutionBackend.Model.Coordinates;
-import java.util.ArrayList;
 import java.util.HashSet;
 
 /**

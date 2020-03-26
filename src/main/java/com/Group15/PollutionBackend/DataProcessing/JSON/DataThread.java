@@ -14,7 +14,6 @@ import com.Group15.PollutionBackend.Service.IService;
 import com.Group15.PollutionBackend.Service.StatisticsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 
 /**
