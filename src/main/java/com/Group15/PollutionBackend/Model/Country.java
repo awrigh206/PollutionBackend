@@ -5,7 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model;
 import com.Group15.PollutionBackend.DataProcessing.JSON.IRepo;
-import com.Group15.PollutionBackend.DataProcessing.JSON.Location
+import com.Group15.PollutionBackend.DataProcessing.JSON.Location;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import java.util.ArrayList;
