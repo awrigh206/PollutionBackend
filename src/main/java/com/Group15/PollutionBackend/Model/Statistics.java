@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.Model;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -141,6 +142,36 @@ public class Statistics implements Serializable
     public String toString() {
         return "Statistics{" + "id=" + id + ", mean=" + mean + ", standardDeviation=" + standardDeviation + ", min=" + min + ", max=" + max + ", variance=" + variance + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.cityName);
+        hash = 17 * hash + Objects.hashCode(this.countryCode);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Statistics other = (Statistics) obj;
+        if (!Objects.equals(this.cityName, other.cityName)) {
+            return false;
+        }
+        if (!Objects.equals(this.countryCode, other.countryCode)) {
+            return false;
+        }
+        return true;
+    }
+    
     
     
     

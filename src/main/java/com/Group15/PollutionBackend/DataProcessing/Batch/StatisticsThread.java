@@ -75,12 +75,12 @@ public class StatisticsThread implements Runnable
         List<Statistics> stats = CalculationsHelper.stats(countryModel);
         saveSats(stats, countryModel);
     }
-    
+    @Transactional
     private void saveSats(List<Statistics> stats, Country country)
     {
         for (Statistics current : stats)
         {
-            statsService.deleteCountryStats(country.getCountryCode());
+            //statsService.deleteCountryStats(country.getCountryCode());
             statsService.deleteStat(current);
             statsService.saveStat(current);
         }

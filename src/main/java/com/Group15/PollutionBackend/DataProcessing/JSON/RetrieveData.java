@@ -78,17 +78,38 @@ public class RetrieveData
         return sendRequest(url,resultType);
     }
     
-    public ResultAbs processRealTime(URL url) 
+    public String processRealTime(URL url) 
     {
         try
         {
-            sendRequest(url, RealTimeData.class);
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+
+
+            if(responseCode!=200)
+            {
+                //responce code 200 means everything has gone well, if it is not this then something must have gone wrong 
+                throw new RuntimeException ("HTTPResponseCode: " + responseCode);
+            }
+
+            else
+            {
+                InputStream in = new BufferedInputStream(conn.getInputStream());
+                String json = IOUtils.toString(in, "UTF-8");
+                in.close();
+                conn.disconnect();
+
+                return json;
+            }
         }
-        catch (Exception e)
+        
+        catch(Exception e)
         {
             log.info(e.getMessage());
+            return null;
         }
-        return null;
     }
     
     private ResultAbs sendRequest(URL url, Class resultType)

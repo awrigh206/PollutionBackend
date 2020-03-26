@@ -6,7 +6,6 @@
 package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
-import com.Group15.PollutionBackend.Model.Coordinates;
 import java.net.URL;
 import java.util.NoSuchElementException;
 import org.apache.commons.logging.Log;
@@ -40,13 +39,13 @@ public class RealTimeController
     }
     
     @GetMapping (path ="/realTime")
-    public Object getCountries(@RequestParam(value ="coordinates")Coordinates coords)
+    public String getCountries(@RequestParam(value ="latitude")String latitude, @RequestParam(value="longitude") String longitude)
     {
         String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
         try
         {
-            String url = "https://api.waqi.info/feed/geo:"+coords.getLatitude()+";"+coords.getLongitude()+"/?token="+token;
-            retData.processRealTime(new URL(url));
+            String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
+            return retData.processRealTime(new URL(url));
         }
         
         catch (Exception e)
