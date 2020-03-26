@@ -46,52 +46,6 @@ public class Country implements Serializable, IRepo
     {
         citiesWithinCountry = new ArrayList<>();
     }
-    
-    /**
-     * Fills in a chunk of city and measurement data
-     * Set the data limit to something sensible on the RetrieveData object before invoking (between 1000  and 10 000)
-     * @param data
-     * @param skipFactor  The amount of pages to skip between each page of data that is processed 
-     * @param pageJump   The amount of pages to add to the limit
-     
-    public void fillInCityData(RetrieveData data,int skipFactor, int pageJump)
-    {
-        //reset these defaults when you want to release the system. Set smaller values to decrease testing time
-        //data.setLimit(1000);
-        //int pageLimit = 2;
-        //data.setLimit(5000); set the data limit before invoking
-        int pageLimit = pageReached +pageJump;
-        pageReached = pageLimit;
-        //RetrieveData data = new RetrieveData(1200);
-        String url = "https://api.openaq.org/v1/measurements";
-        int totalPages = data.getTotalPages(url,LocationResult.class);
-        
-        try
-        {
-            
-            for(int i =pageReached; i<totalPages+1;i=i+skipFactor)
-            {
-                if(i>pageLimit)
-                    break;
-                LocationResult result = (LocationResult)data.processPageSingle(url, i, LocationResult.class, countryCode);
-                for(Location current : result.getLocations())
-                {
-                    City relevantCity = findCity (current);
-                    if(relevantCity != null)
-                        relevantCity.addQuality(current.getAirQuality());
-                    else
-                        citiesWithinCountry.add(current.toNewCity());
-                }
-            }
-            
-        }
-        
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    */
 
     public Long getId() {
         return countryId;
