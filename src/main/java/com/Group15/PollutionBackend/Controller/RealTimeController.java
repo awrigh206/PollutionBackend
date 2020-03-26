@@ -5,8 +5,13 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
+import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Model.Coordinates;
+import java.net.URL;
 import java.util.NoSuchElementException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,7 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class RealTimeController 
 {
-    
+    @Autowired 
+    private RetrieveData retData;
+    private final Log log = LogFactory.getLog(RealTimeController.class);
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)
@@ -35,6 +42,18 @@ public class RealTimeController
     @GetMapping (path ="/realTime")
     public Object getCountries(@RequestParam(value ="coordinates")Coordinates coords)
     {
+        String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+        try
+        {
+            String url = "https://api.waqi.info/feed/geo:"+coords.getLatitude()+";"+coords.getLongitude()+"/?token="+token;
+            retData.processRealTime(new URL(url));
+        }
+        
+        catch (Exception e)
+        {
+            log.info(e.getMessage());
+        }
+        
         return null;
     }
 }

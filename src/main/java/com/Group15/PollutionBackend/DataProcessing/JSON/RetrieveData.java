@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
+import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
 import com.Group15.PollutionBackend.StartupRunner;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedInputStream;
@@ -16,11 +17,13 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Andrew Wright
  */
+@Component
 public class RetrieveData 
 {
     private final ObjectMapper mapper;
@@ -67,6 +70,19 @@ public class RetrieveData
             url = new URL(baseUrl+"?limit="+limit+"&page="+page);
         }
         return sendRequest(url,resultType);
+    }
+    
+    public ResultAbs processRealTime(URL url) 
+    {
+        try
+        {
+            sendRequest(url, RealTimeData.class);
+        }
+        catch (Exception e)
+        {
+            log.info(e.getMessage());
+        }
+        return null;
     }
     
     private ResultAbs sendRequest(URL url, Class resultType)

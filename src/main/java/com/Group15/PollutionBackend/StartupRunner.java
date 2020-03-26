@@ -45,6 +45,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private TaskExecutor taskExecutor;
     @Autowired 
     private StatisticsService statsService;
+    @Autowired
+    private RetrieveData retData;
     
     @PostConstruct
     public void init()
@@ -58,7 +60,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         log.info("Retrieving data");
         countryService.deleteAll();
         cityRepository.deleteAll();
-        RetrieveData retData = new RetrieveData(1200);
+        retData.setLimit(1200);
         getData(retData);
     }
     
@@ -83,7 +85,6 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                             Country currentCountry = countryService.findByCountryCode(countryCode);
                             log.info("Adding stuff to: " + currentCountry.getCountryCode());
                             countryService.fillInCityData(currentCountry, skipFactor, increment);
-                            //currentCountry.fillInCityData(data,skipFactor, increment);
                             countryService.save(currentCountry);
 
                             System.gc();        

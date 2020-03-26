@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.Group15.PollutionBackend.Model;
+package com.Group15.PollutionBackend.Model.RealTime;
+
+import java.util.List;
 
 /**
  *
@@ -11,5 +13,14 @@ package com.Group15.PollutionBackend.Model;
  */
 public class RealTimeData 
 {
+    private List<Data> iaqi;
     
+    public void addToList(Data toAdd)
+    {
+        iaqi.add(toAdd);
+    }
+
+    public List<Data> getIaqi() {
+        return iaqi;
+    }
 }

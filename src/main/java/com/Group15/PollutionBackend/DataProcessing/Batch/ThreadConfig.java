@@ -27,11 +27,6 @@ public class ThreadConfig
         executor.initialize();
         return executor;
     }
-    
-    @Bean
-     public RetrieveData retdata() {
-        return new RetrieveData(10000);
-    } 
      
      @Bean
      public Integer number() {
