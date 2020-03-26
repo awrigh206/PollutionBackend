@@ -73,13 +73,14 @@ public class StatisticsThread implements Runnable
         CountryCode code = CountryCode.getByCode(countryCode);
         Country countryModel = countryService.findByCountryCode(code.getAlpha2());
         List<Statistics> stats = CalculationsHelper.stats(countryModel);
-        saveSats(stats);
+        saveSats(stats, countryModel);
     }
     
-    private void saveSats(List<Statistics> stats)
+    private void saveSats(List<Statistics> stats, Country country)
     {
         for (Statistics current : stats)
         {
+            statsService.deleteCountryStats(country.getCountryCode());
             statsService.deleteStat(current);
             statsService.saveStat(current);
         }

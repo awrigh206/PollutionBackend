@@ -17,4 +17,5 @@ import org.springframework.data.repository.query.Param;
 public interface StatisticsRepository extends JpaRepository<Statistics,Integer> 
 {
     List<Statistics> findAllByCountryCode(@Param("code") String countryCode);
+    List<Statistics> deleteAllByCountryCode(@Param("code")String countryCode);
 }
