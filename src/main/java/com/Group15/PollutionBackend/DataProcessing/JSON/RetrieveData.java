@@ -14,6 +14,7 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,10 +27,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class RetrieveData 
 {
-    private final ObjectMapper mapper;
+    private ObjectMapper mapper;
     private Integer limit;
     private final Log log = LogFactory.getLog(StartupRunner.class);
 
+    @PostConstruct
+    public void init()
+    {
+        mapper = new ObjectMapper();
+    }
     public RetrieveData(Integer limit) 
     {
         mapper = new ObjectMapper();
