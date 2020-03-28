@@ -7,6 +7,7 @@ package com.Group15.PollutionBackend.Service;
 
 import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
 import com.Group15.PollutionBackend.Repository.RealTimeRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,11 @@ public class RealTimeService
     public RealTimeData findByCoords(Double latitude, Double longitude)
     {
         return realTimeRepo.findByLatitudeAndLongitude(latitude, longitude);
+    }
+    
+    public List<RealTimeData> findAll()
+    {
+        return realTimeRepo.findAll();
     }
     
 }

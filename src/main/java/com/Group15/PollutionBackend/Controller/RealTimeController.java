@@ -6,8 +6,10 @@
 package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
 import com.Group15.PollutionBackend.Service.RealTimeService;
 import java.net.URL;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,8 +49,26 @@ public class RealTimeController
         String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
         try
         {
-            String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
+            //String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
             return realService.findByCoords(latitude, longitude).getJson();
+        }
+        
+        catch (Exception e)
+        {
+            log.info(e.getMessage());
+        }
+        
+        return null;
+    }
+    
+    @GetMapping (path ="/allRealTime")
+    public List<RealTimeData> getAllTime()
+    {
+        String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+        try
+        {
+            //String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
+            return realService.findAll();
         }
         
         catch (Exception e)

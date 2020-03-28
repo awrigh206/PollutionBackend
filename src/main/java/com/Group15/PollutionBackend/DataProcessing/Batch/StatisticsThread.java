@@ -46,7 +46,6 @@ public class StatisticsThread implements Runnable
                 {
                     try
                     {
-                        log.info("Doing the stats for: " + currentCode);
                         calculateCountry(currentCode);
                     }
                     catch(NullPointerException e)
