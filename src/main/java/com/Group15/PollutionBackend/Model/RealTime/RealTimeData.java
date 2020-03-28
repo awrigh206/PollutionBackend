@@ -5,7 +5,8 @@
  */
 package com.Group15.PollutionBackend.Model.RealTime;
 
-import java.util.List;
+import java.util.Objects;
+
 
 /**
  *
@@ -13,14 +14,58 @@ import java.util.List;
  */
 public class RealTimeData 
 {
-    private List<Data> iaqi;
-    
-    public void addToList(Data toAdd)
-    {
-        iaqi.add(toAdd);
+    private String json;
+    private String countryCode;
+
+    public RealTimeData(String json, String countryCode) {
+        this.json = json;
+        this.countryCode = countryCode;
     }
 
-    public List<Data> getIaqi() {
-        return iaqi;
+    public String getJson() {
+        return json;
     }
+
+    public void setJson(String json) {
+        this.json = json;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 47 * hash + Objects.hashCode(this.json);
+        hash = 47 * hash + Objects.hashCode(this.countryCode);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RealTimeData other = (RealTimeData) obj;
+        if (!Objects.equals(this.json, other.json)) {
+            return false;
+        }
+        if (!Objects.equals(this.countryCode, other.countryCode)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }

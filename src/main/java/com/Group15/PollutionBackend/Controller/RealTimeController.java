@@ -45,7 +45,7 @@ public class RealTimeController
         try
         {
             String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
-            return retData.processRealTime(new URL(url));
+            return retData.processRealTime(new URL(url)).getJson();
         }
         
         catch (Exception e)

@@ -78,7 +78,7 @@ public class RetrieveData
         return sendRequest(url,resultType);
     }
     
-    public String processRealTime(URL url) 
+    public RealTimeData processRealTime(URL url) 
     {
         try
         {
@@ -101,7 +101,7 @@ public class RetrieveData
                 in.close();
                 conn.disconnect();
 
-                return json;
+                return new RealTimeData(json, json);
             }
         }
         
