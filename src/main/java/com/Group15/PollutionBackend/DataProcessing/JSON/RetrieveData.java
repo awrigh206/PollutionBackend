@@ -101,7 +101,7 @@ public class RetrieveData
                 in.close();
                 conn.disconnect();
 
-                return new RealTimeData(json, json);
+                return new RealTimeData(json);
             }
         }
         

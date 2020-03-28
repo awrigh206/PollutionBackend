@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.Controller;
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Service.RealTimeService;
 import java.net.URL;
 import java.util.NoSuchElementException;
 import org.apache.commons.logging.Log;
@@ -30,6 +31,8 @@ public class RealTimeController
     @Autowired 
     private RetrieveData retData;
     private final Log log = LogFactory.getLog(RealTimeController.class);
+    @Autowired
+    private RealTimeService realService;
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)
@@ -39,13 +42,13 @@ public class RealTimeController
     }
     
     @GetMapping (path ="/realTime")
-    public String getCountries(@RequestParam(value ="latitude")String latitude, @RequestParam(value="longitude") String longitude)
+    public String getCountries(@RequestParam(value ="latitude")Double latitude, @RequestParam(value="longitude") Double longitude)
     {
         String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
         try
         {
             String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
-            return retData.processRealTime(new URL(url)).getJson();
+            return realService.findByCoords(latitude, longitude).getJson();
         }
         
         catch (Exception e)

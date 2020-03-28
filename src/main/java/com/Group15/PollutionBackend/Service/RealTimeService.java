@@ -25,4 +25,19 @@ public class RealTimeService
         return realTimeRepo.save(data);
     }
     
+    public void clear()
+    {
+        realTimeRepo.deleteAll();
+    }
+    
+    public void deleteOne(RealTimeData data)
+    {
+        realTimeRepo.delete(data);
+    }
+    
+    public RealTimeData findByCoords(Double latitude, Double longitude)
+    {
+        return realTimeRepo.findByLatitudeAndLongitude(latitude, longitude);
+    }
+    
 }

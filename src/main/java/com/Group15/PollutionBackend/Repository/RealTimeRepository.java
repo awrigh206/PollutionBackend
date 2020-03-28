@@ -16,5 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RealTimeRepository extends JpaRepository<RealTimeData,Integer> 
 {
-    
+    public void deleteAllByJson(String json);
+    public RealTimeData findByLatitudeAndLongitude(Double latitude, Double longitude);
 }

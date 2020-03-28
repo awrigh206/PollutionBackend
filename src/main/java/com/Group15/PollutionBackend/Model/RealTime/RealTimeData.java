@@ -5,21 +5,35 @@
  */
 package com.Group15.PollutionBackend.Model.RealTime;
 
+import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 
 /**
  *
  * @author Andrew Wright
  */
-public class RealTimeData 
+@Entity
+public class RealTimeData implements Serializable 
 {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @Column(length=8000, columnDefinition="TEXT")
     private String json;
-    private String countryCode;
+    
+    private Double latitude;
+    private Double longitude;
 
-    public RealTimeData(String json, String countryCode) {
+    public RealTimeData() {
+    }
+
+    public RealTimeData(String json) {
         this.json = json;
-        this.countryCode = countryCode;
     }
 
     public String getJson() {
@@ -30,19 +44,11 @@ public class RealTimeData
         this.json = json;
     }
 
-    public String getCountryCode() {
-        return countryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
-    }
 
     @Override
     public int hashCode() {
         int hash = 5;
         hash = 47 * hash + Objects.hashCode(this.json);
-        hash = 47 * hash + Objects.hashCode(this.countryCode);
         return hash;
     }
 
@@ -58,14 +64,40 @@ public class RealTimeData
             return false;
         }
         final RealTimeData other = (RealTimeData) obj;
-        if (!Objects.equals(this.json, other.json)) {
+        if (!Objects.equals(this.latitude, other.latitude)) {
             return false;
         }
-        if (!Objects.equals(this.countryCode, other.countryCode)) {
+        if (!Objects.equals(this.longitude, other.longitude)) {
             return false;
         }
         return true;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+    
+    
     
     
 }

@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend;
 
+import com.Group15.PollutionBackend.DataProcessing.Batch.RealTimeDataFetcherThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
@@ -12,6 +13,7 @@ import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.CountryCodes;
 import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
+import com.Group15.PollutionBackend.Service.RealTimeService;
 import com.Group15.PollutionBackend.Service.StatisticsService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -47,6 +49,9 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private StatisticsService statsService;
     @Autowired
     private RetrieveData retData;
+    
+    @Autowired 
+    private RealTimeService realService;
     
     @PostConstruct
     public void init()
@@ -129,6 +134,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
                 t[i].start();
             }*/
             taskExecutor.execute(new DataThread(countriesPerThread,data,countryService,baseUrl,CountryResult.class,taskExecutor,statsService));
+            taskExecutor.execute(new RealTimeDataFetcherThread(realService,retData));
             //add this back in for safety, can leave out for faster testing
             //waitForFinish(t);
             long endTime = System.nanoTime();
