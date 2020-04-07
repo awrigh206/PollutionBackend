@@ -54,12 +54,12 @@ public class UserController
     }
     
     @RequestMapping(method = RequestMethod.GET, path = "/auth")
-    public Boolean authenticateUser(@RequestParam(value ="userName")String userName, @RequestParam(value="password") String password)
+    public Object authenticateUser(@RequestParam(value ="userName")String userName, @RequestParam(value="password") String password)
     {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         User user = userRepo.findByUserName(userName);
         if(user != null && passwordEncoder.matches(password, user.getPassword()))
-            return true;
+            return user;
         else
             return false;
     }
