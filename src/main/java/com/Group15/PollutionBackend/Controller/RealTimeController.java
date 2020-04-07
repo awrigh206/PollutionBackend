@@ -45,7 +45,7 @@ public class RealTimeController
     
     @GetMapping (path ="/realTime")
     public String getCountries(@RequestParam(value ="latitude")Double latitude, @RequestParam(value="longitude") Double longitude)
-    {
+    {/*
         String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
         try
         {
@@ -59,6 +59,21 @@ public class RealTimeController
         }
         
         return null;
+*/
+        
+        String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+        try
+        {
+            String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
+            retData.processRealTime(new URL(url));
+            return retData.processRealTime(new URL(url)).getJson();
+        }
+
+        catch (Exception e)
+        {
+            log.info(e.getMessage());
+            return null;
+        }
     }
     
     @GetMapping (path ="/allRealTime")
