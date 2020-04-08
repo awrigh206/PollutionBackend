@@ -9,6 +9,8 @@ import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.Model.User;
 import com.Group15.PollutionBackend.Repository.UserRepository;
 import com.Group15.PollutionBackend.Service.UserService;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,10 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,7 +44,10 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 public class UserController 
 {
-    
+    @Autowired 
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    JdbcUserDetailsManager jdbcUserDetailsManager;
     UserRepository userRepo;
     UserService userService;
     @Autowired
@@ -70,11 +78,18 @@ public class UserController
             return false;
     }
     
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody @Validated UserDto userDto) 
     {
-        userService.createUser(userDto);
+        //userService.createUser(userDto);
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        User user = new User(userDto.getUserName(), passwordEncoder.encode(userDto.getPassword()),userDto.getEmail(),userDto.getNumber(),authorities);
+        userService.createUser(user);
+        jdbcUserDetailsManager.createUser(user);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
     
     

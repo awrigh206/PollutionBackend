@@ -6,11 +6,18 @@
 package com.Group15.PollutionBackend.Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 /**
  *
@@ -18,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table (name = "userInformation")
-public class User implements Serializable 
+public class User implements Serializable, UserDetails
 {
     @Id
     @GeneratedValue
@@ -27,12 +34,15 @@ public class User implements Serializable
     private String password;
     private String email;
     private String phoneNumber;
+    @ElementCollection
+    private List<GrantedAuthority> authorities = new ArrayList<>();
 
-    public User(String userName, String password, String email, String phoneNumber) {
+    public User(String userName, String password, String email, String phoneNumber, List<GrantedAuthority> authorities) {
         this.userName = userName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.authorities = authorities;
     }
 
     protected User() {
@@ -109,7 +119,35 @@ public class User implements Serializable
         }
         return true;
     }
-    
-    
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    } 
     
 }
