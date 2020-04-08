@@ -13,8 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PollutionBackendApplication implements CommandLineRunner
 {
     private final Log log = LogFactory.getLog(PollutionBackendApplication.class);
-    @Autowired
-    private CityRepository cityRepository;
     
 
     public static void main(String[] args) 
@@ -25,11 +23,6 @@ public class PollutionBackendApplication implements CommandLineRunner
     @Override
     public void run(String... args) throws Exception 
     {
-
-        //long startTime = System.nanoTime();
-        //long endTime = System.nanoTime();
-        //long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-        //log.info("That took about: " +duration);
         
     }
     
