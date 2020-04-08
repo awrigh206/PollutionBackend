@@ -8,6 +8,7 @@ package com.Group15.PollutionBackend.Configuration;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  * @author Andrew Wright
  */
 @Configuration
+@Primary
 public class ThreadConfig 
 {
     @Bean
