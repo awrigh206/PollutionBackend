@@ -5,9 +5,9 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
-import Alerts.EmailAlert;
-import Alerts.IAlert;
-import Alerts.TextAlert;
+import com.Group15.PollutionBackend.Alerts.EmailAlert;
+import com.Group15.PollutionBackend.Alerts.IAlert;
+import com.Group15.PollutionBackend.Alerts.TextAlert;
 import com.Group15.PollutionBackend.DTO.AlertDto;
 import com.Group15.PollutionBackend.DataProcessing.Batch.CalculationsHelper;
 import com.Group15.PollutionBackend.Model.City;

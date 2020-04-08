@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Alerts;
+package com.Group15.PollutionBackend.Alerts;
 
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
