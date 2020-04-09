@@ -36,8 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {  
         //http.authorizeRequests().antMatchers("/user").permitAll();
         //http.authorizeRequests().antMatchers("/user/**").permitAll();
-        http.cors().disable();
-        http.csrf().disable().cors().configurationSource(corsConfigurationSource()).and()
+        http.csrf().disable()/*cors().configurationSource(corsConfigurationSource())*/
             .httpBasic().and()
             .authorizeRequests().antMatchers("/**").permitAll().and()
             .authorizeRequests().anyRequest().authenticated();
@@ -55,21 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
         
 
     }  
-    
-     @Bean
-    CorsConfigurationSource corsConfigurationSource() 
-    {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        configuration.setAllowCredentials(true);
-        configuration.addAllowedOrigin("*");
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
     
     @Bean
     public PasswordEncoder passwordEncoder() {
