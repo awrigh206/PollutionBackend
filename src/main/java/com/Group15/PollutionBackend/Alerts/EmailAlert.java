@@ -17,7 +17,7 @@ import org.apache.commons.mail.SimpleEmail;
  */
 public class EmailAlert implements IAlert
 {
-    private final String programAddress = "PollutionBackend@outlook.com";
+    private final String programAddress = "pollutionbackend@gmail.com";
     public void sendAlert(AlertDto emailDto)
     {
         sendAlert(emailDto.getMessage(), emailDto.getAddress());
@@ -28,14 +28,16 @@ public class EmailAlert implements IAlert
     {
         // Create the email message
         HtmlEmail email = new HtmlEmail();
-        email.setHostName("smtp.office365.com");
+        email.setHostName("smtp.googlemail.com");
+        email.setSSLOnConnect(true);
         email.setStartTLSEnabled(true);
+        email.setSmtpPort(465);
 
 
         try
         {
-            email.setAuthenticator(new DefaultAuthenticator(programAddress,"projectAlert"));
-            email.setAuthentication(programAddress,"projectAlert");
+            email.setAuthenticator(new DefaultAuthenticator(programAddress,"Pollution"));
+            //email.setAuthentication(programAddress,"Pollution");
             email.addTo(address, "Someone");
             email.setFrom(programAddress);
             email.setSubject("Pollution Alert");
