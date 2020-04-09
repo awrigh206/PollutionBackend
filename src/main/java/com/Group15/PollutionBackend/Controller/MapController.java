@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Andrew Wright
  */
 @RestController
-@CrossOrigin
+@CrossOrigin (origins = "*", allowedHeaders = "*")
 public class MapController 
 {
     @Autowired

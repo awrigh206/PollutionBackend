@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(path = "/user")
-@CrossOrigin
+@CrossOrigin (origins = "*", allowedHeaders = "*")
 public class UserController 
 {
     @Autowired 

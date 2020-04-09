@@ -10,13 +10,11 @@ import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.HtmlEmail;
 import org.apache.commons.mail.SimpleEmail;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 /**
  *
  * @author Andrew Wright
  */
-@CrossOrigin
 public class EmailAlert implements IAlert
 {
     private final String programAddress = "pollutionbackend@gmail.com";

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Andrew Wright
  */
 @RestController
-@CrossOrigin
+@CrossOrigin (origins = "*", allowedHeaders = "*")
 @RequestMapping(path = "/session")
 public class SessionController 
 {
@@ -31,6 +31,13 @@ public class SessionController
     public String getSessionId(HttpServletRequest request)
     {
         return request.changeSessionId();
+    }
+    
+    @GetMapping("/exit")
+    public String getSessionId()
+    {
+        System.exit(0);
+        return  "Exiting";
     }
     
 }
