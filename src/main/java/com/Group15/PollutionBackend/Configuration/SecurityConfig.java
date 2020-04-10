@@ -36,10 +36,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     public void configure(HttpSecurity http) throws Exception {  
         //http.authorizeRequests().antMatchers("/user").permitAll();
         //http.authorizeRequests().antMatchers("/user/**").permitAll();
-        http.csrf().disable()/*cors().configurationSource(corsConfigurationSource())*/
+        /*http.csrf().disable()cors().configurationSource(corsConfigurationSource())
             .httpBasic().and()
+            .cors().and()
             .authorizeRequests().antMatchers("/**").permitAll().and()
-            .authorizeRequests().anyRequest().authenticated();
+            .authorizeRequests().anyRequest().authenticated();*/
+        
+        http
+            .authorizeRequests().antMatchers("/**").permitAll()
+                .and()
+            .httpBasic()
+                .and()
+                .csrf().disable()
+                .cors().disable();
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
     }  
     @Override  
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {  
@@ -65,6 +75,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
             JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
             jdbcUserDetailsManager.setDataSource(dataSource);
             return jdbcUserDetailsManager;
+    }
+    
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://example.com"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
 }
