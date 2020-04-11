@@ -28,7 +28,7 @@ public class SessionController
             return "redirect:/";
     }
     
-    @PostMapping("/user")
+    @GetMapping("/user")
     public Object sessionUser(HttpServletRequest request) {
        return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
