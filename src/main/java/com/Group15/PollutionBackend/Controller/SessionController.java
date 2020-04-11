@@ -6,6 +6,7 @@
 package com.Group15.PollutionBackend.Controller;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,11 @@ public class SessionController
     public String destroySession(HttpServletRequest request) {
             request.getSession().invalidate();
             return "redirect:/";
+    }
+    
+    @PostMapping("/user")
+    public Object sessionUser(HttpServletRequest request) {
+       return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
     
     @GetMapping("/id")
