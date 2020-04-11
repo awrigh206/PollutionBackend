@@ -84,7 +84,7 @@ public class UserController
     
     @RequestMapping(method = RequestMethod.POST, path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createUser(@RequestBody @Validated UserDto userDto) 
+    public User createUser(@RequestBody @Validated UserDto userDto) 
     {
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
@@ -93,6 +93,7 @@ public class UserController
         //jdbcUserDetailsManager.createUser(user);
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        return user;
     }
     
     
