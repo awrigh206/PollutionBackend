@@ -63,6 +63,11 @@ public class UserService
         
     }
     
+    public void deleteAll()
+    {
+        userRepository.deleteAll();
+    }
+    
     
     public long total()
     {

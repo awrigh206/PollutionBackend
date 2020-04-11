@@ -15,6 +15,7 @@ import com.Group15.PollutionBackend.Repository.CityRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
 import com.Group15.PollutionBackend.Service.RealTimeService;
 import com.Group15.PollutionBackend.Service.StatisticsService;
+import com.Group15.PollutionBackend.Service.UserService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.annotation.PostConstruct;
@@ -53,6 +54,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     @Autowired 
     private RealTimeService realService;
     
+    @Autowired 
+    private UserService userService;
     @PostConstruct
     public void init()
     {
@@ -65,6 +68,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         log.info("Retrieving data");
         countryService.deleteAll();
         cityRepository.deleteAll();
+        userService.deleteAll();
         retData.setLimit(1200);
         getData(retData);
     }

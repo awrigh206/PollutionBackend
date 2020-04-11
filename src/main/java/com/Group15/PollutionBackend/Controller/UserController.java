@@ -73,7 +73,11 @@ public class UserController
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         User user = userRepo.findByUserName(userName);
         if(user != null && passwordEncoder.matches(password, user.getPassword()))
+        {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             return user;
+        }
         else
             return false;
     }
@@ -82,12 +86,11 @@ public class UserController
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody @Validated UserDto userDto) 
     {
-        //userService.createUser(userDto);
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         User user = new User(userDto.getUserName(), passwordEncoder.encode(userDto.getPassword()),userDto.getEmail(),userDto.getNumber(),authorities);
         userService.createUser(user);
-        jdbcUserDetailsManager.createUser(user);
+        //jdbcUserDetailsManager.createUser(user);
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }

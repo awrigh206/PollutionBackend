@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/session")
 public class SessionController 
 {
-    @PostMapping("/destroy")
+    @GetMapping("/destroy")
     public String destroySession(HttpServletRequest request) {
             request.getSession().invalidate();
             return "redirect:/";
@@ -40,7 +40,7 @@ public class SessionController
     }
     
     @GetMapping("/exit")
-    public String getSessionId()
+    public String getExit()
     {
         System.exit(0);
         return  "Exiting";
