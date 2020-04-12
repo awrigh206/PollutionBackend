@@ -34,13 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     private DataSource dataSource;
     @Override  
     public void configure(HttpSecurity http) throws Exception {  
-        //http.authorizeRequests().antMatchers("/user").permitAll();
-        //http.authorizeRequests().antMatchers("/user/**").permitAll();
-        /*http.csrf().disable()cors().configurationSource(corsConfigurationSource())
-            .httpBasic().and()
-            .cors().and()
-            .authorizeRequests().antMatchers("/**").permitAll().and()
-            .authorizeRequests().anyRequest().authenticated();*/
         
         http
             .authorizeRequests().antMatchers("/**").permitAll()
