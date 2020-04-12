@@ -45,14 +45,14 @@ public class MapController
     (path ="/map")
     public String getMap()
     {
-        return getFileData("worldMapCountries.json");
+        return getFileData("countries"+File.separator+"worldMapCountries.json");
     }
     
     private String getFileData(String path)
     {
         String result ="";
 	
-	Resource resource = resourceLoader.getResource("classpath:"+path);
+	Resource resource = resourceLoader.getResource("classpath:"+File.separator+"countries"+path);
         
         try
         {

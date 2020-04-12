@@ -46,8 +46,6 @@ public class UserController
 {
     @Autowired 
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    JdbcUserDetailsManager jdbcUserDetailsManager;
     UserRepository userRepo;
     UserService userService;
     @Autowired
