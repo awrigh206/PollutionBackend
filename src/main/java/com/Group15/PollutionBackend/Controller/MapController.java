@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MapController 
 {
     @Autowired
-    ResourceLoader resourceLoader;
+    private ResourceLoader resourceLoader;
                 
     @GetMapping
     (path ="/countryMap")
