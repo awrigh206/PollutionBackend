@@ -7,13 +7,19 @@ package com.Group15.PollutionBackend.DataProcessing.JSON;
 
 
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.ResultAbs;
+import com.Group15.PollutionBackend.Model.RealTime.Element;
+import com.Group15.PollutionBackend.Model.RealTime.ParsedData;
 import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
 import com.Group15.PollutionBackend.StartupRunner;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
@@ -29,7 +35,7 @@ public class RetrieveData
 {
     private ObjectMapper mapper;
     private Integer limit;
-    private final Log log = LogFactory.getLog(StartupRunner.class);
+    private final Log log = LogFactory.getLog(RetrieveData.class);
 
     @PostConstruct
     public void init()
@@ -110,6 +116,69 @@ public class RetrieveData
             log.info(e.getMessage());
             return null;
         }
+    }
+    
+    public ParsedData parseRealTime(URL url)
+    {
+        ParsedData data = new ParsedData();
+        String json = processRealTime(url).getJson();
+        ArrayList<String> fieldNames = new ArrayList<>();
+        
+        try
+        {
+            JsonNode rootNode = mapper.readTree(json);
+            JsonNode dataNode = rootNode.path("data");
+            JsonNode aqiNode = dataNode.path("aqi");
+            data.setAqi(aqiNode.asInt());
+            JsonNode dominentpolNode = dataNode.path("dominentpol");
+            data.setDominentpol(dominentpolNode.asText());
+            
+            JsonNode iaqiNode = dataNode.path("iaqi");
+            Iterator<JsonNode> elements = iaqiNode.elements();
+            
+            /*
+            while(elements.hasNext())
+            {
+                Element element = new Element();
+                JsonNode titleNode = elements.next();
+                
+                //element.setNameOfElement(titleNode.fieldNames().next());
+                String fieldName = titleNode.fieldNames().next();
+                
+                JsonNode valueNode = titleNode.path(fieldName);
+                element.setValue(valueNode.asText());
+                data.addElement(element);
+            }*/
+            
+            Iterator names = iaqiNode.fieldNames();
+            while (names.hasNext())
+            {
+                String key = (String)names.next();
+                fieldNames.add(key);
+            }
+            
+            for(String name : fieldNames)
+            {
+                Element element = new Element();
+                JsonNode titleNode = iaqiNode.get(name);
+                
+                //element.setNameOfElement(titleNode.fieldNames().next());
+                String fieldName = titleNode.fieldNames().next();
+                element.setNameOfElement(name);
+                JsonNode valueNode = titleNode.path(fieldName);
+                element.setValue(valueNode.asText());
+                data.addElement(element);
+            }
+            
+            return data;
+            
+        }
+        catch (Exception e)
+        {
+            log.info(e.getMessage());
+            return null;
+        }
+
     }
     
     private ResultAbs sendRequest(URL url, Class resultType)
