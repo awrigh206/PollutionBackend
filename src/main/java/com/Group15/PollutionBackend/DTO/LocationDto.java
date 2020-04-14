@@ -13,10 +13,12 @@ public class LocationDto
 {
     private Double latitude;
     private Double longitude;
+    private Integer id;
 
-    public LocationDto(Double latitude, Double longitude) {
+    public LocationDto(Integer id, Double latitude, Double longitude) {
         this.latitude = latitude;
         this.longitude = longitude;
+        this.id = id;
     }
 
     public Double getLatitude() {
