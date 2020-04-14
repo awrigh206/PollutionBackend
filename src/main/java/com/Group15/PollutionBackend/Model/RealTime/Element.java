@@ -16,12 +16,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 public class Element 
 {
     private String nameOfElement;
-    private String v;
+    private Integer v;
 
     public Element() {
     }
 
-    public Element(String nameOfElement, String value) {
+    public Element(String nameOfElement, Integer value) {
         this.nameOfElement = nameOfElement;
         this.v = value;
     }
@@ -34,11 +34,11 @@ public class Element
         this.nameOfElement = nameOfElement;
     }
 
-    public String getValue() {
+    public Integer getValue() {
         return v;
     }
 
-    public void setValue(String value) {
+    public void setValue(Integer value) {
         this.v = value;
     }
     

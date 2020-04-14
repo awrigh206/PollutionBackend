@@ -166,7 +166,7 @@ public class RetrieveData
                 String fieldName = titleNode.fieldNames().next();
                 element.setNameOfElement(name);
                 JsonNode valueNode = titleNode.path(fieldName);
-                element.setValue(valueNode.asText());
+                element.setValue(valueNode.asInt());
                 data.addElement(element);
             }
             

@@ -65,7 +65,7 @@ public class ParsedData
         JsonNode rootNode = mapper.createObjectNode();
         ((ObjectNode) rootNode).put("id", id);
         ((ObjectNode) rootNode).put("aqi", aqi);
-        ((ObjectNode) rootNode).put("dominentpol", dominentpol);
+        ((ObjectNode) rootNode).put("dominent", dominentpol);
         
         
         JsonNode iaqiNode = mapper.createObjectNode();
