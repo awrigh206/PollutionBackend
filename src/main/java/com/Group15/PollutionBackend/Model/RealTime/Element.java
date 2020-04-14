@@ -42,7 +42,7 @@ public class Element
         this.v = value;
     }
     
-    public String toJson()
+    public JsonNode toJson()
     {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.createObjectNode();
@@ -50,16 +50,7 @@ public class Element
         ((ObjectNode) childNode).put("v", v);
         ((ObjectNode) rootNode).set(nameOfElement, childNode);
         
-        try
-        {
-            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
-            return json;
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        return null;
+        return rootNode;
         
     }
     

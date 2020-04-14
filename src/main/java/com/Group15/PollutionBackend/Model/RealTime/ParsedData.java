@@ -5,6 +5,10 @@
  */
 package com.Group15.PollutionBackend.Model.RealTime;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 
 /**
@@ -54,6 +58,37 @@ public class ParsedData
     @Override
     public String toString() {
         return "ParsedData{" + "elements=" + elements + ", aqi=" + aqi + ", dominentpol=" + dominentpol + '}';
+    }
+    
+    public String toJson()
+    {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.createObjectNode();
+        ((ObjectNode) rootNode).put("aqi", aqi);
+        ((ObjectNode) rootNode).put("dominentpol", dominentpol);
+        
+        
+        JsonNode iaqiNode = mapper.createObjectNode();
+        
+
+        for (Element element : elements)
+        {
+            JsonNode childNode = mapper.createObjectNode();
+            ((ObjectNode) childNode).put("v", element.getValue());
+            ((ObjectNode) iaqiNode).set(element.getNameOfElement(), childNode);
+        }
+        ((ObjectNode) rootNode).set("iaqi", iaqiNode);
+        
+        try
+        {
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+
     }
     
     

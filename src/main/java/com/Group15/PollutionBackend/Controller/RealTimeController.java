@@ -77,7 +77,7 @@ public class RealTimeController
         {
             String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
             //return retData.parseRealTime(new URL(url));
-            return retData.parseRealTime(new URL(url)).getElements().get(0).toJson();
+            return retData.parseRealTime(new URL(url)).toJson();
         }
 
         catch (Exception e)
