@@ -5,16 +5,35 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
+import com.Group15.PollutionBackend.DTO.CoordinateDto;
+import com.Group15.PollutionBackend.DTO.LocationDto;
 import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
+import com.Group15.PollutionBackend.Model.RealTime.AsyncHttp;
 import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
 import com.Group15.PollutionBackend.Service.RealTimeService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.asynchttpclient.AsyncCompletionHandler;
+import org.asynchttpclient.AsyncHttpClient;
+import org.asynchttpclient.BoundRequestBuilder;
+import org.asynchttpclient.Dsl;
+import org.asynchttpclient.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,6 +59,9 @@ public class RealTimeController
     @Autowired
     private RealTimeService realService;
     private String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+    private ObjectMapper mapper = new ObjectMapper();
+    
+    private ExecutorService exec = Executors.newFixedThreadPool(200);
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)
@@ -48,6 +70,7 @@ public class RealTimeController
         return ex.getMessage();
     }
     
+    /*
     @GetMapping (path ="/realTime")
     public String getCountries(@RequestParam(value ="latitude")Double latitude, @RequestParam(value="longitude") Double longitude)
     {    
@@ -62,7 +85,7 @@ public class RealTimeController
             log.info(e.getMessage());
             return null;
         }
-    }
+    }*/
     
     @PostMapping (path="/updateToken")
     public void updateToken(@RequestBody String token)
@@ -70,14 +93,36 @@ public class RealTimeController
         this.token = token;
     }
     
-    @GetMapping (path ="/realTimeTest")
-    public Object getCountriesTest(@RequestParam(value ="latitude")Double latitude, @RequestParam(value="longitude") Double longitude)
+    @PostMapping (path ="/realTime")
+    public Object getCountries(@RequestBody LocationDto locationDto)
     {   
         try
         {
-            String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
-            //return retData.parseRealTime(new URL(url));
-            return retData.parseRealTime(new URL(url)).toJson();
+            ArrayNode arrayNode = mapper.createArrayNode();;
+            List<Future<?>> futures = new ArrayList<Future<?>>();
+            
+            for(CoordinateDto coords : locationDto.getCoords())
+            {
+                Callable worker = new AsyncHttp(coords,token,retData,mapper);
+                Future<?> f = exec.submit(worker);
+                futures.add(f);
+            }
+            
+
+            for(Future<?> future : futures)
+            {
+                while (!future.isDone())
+                {
+                    Thread.sleep(10);
+                }
+                if(future.isDone())
+                {
+                    arrayNode.add((JsonNode)future.get());
+                }
+            }
+            
+
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(arrayNode);
         }
 
         catch (Exception e)
@@ -86,6 +131,7 @@ public class RealTimeController
             return null;
         }
     }
+    
     
     @GetMapping (path ="/allRealTime")
     public List<RealTimeData> getAllTime()

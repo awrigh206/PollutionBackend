@@ -5,45 +5,33 @@
  */
 package com.Group15.PollutionBackend.DTO;
 
+import java.util.List;
+
 /**
  *
  * @author Andrew Wright
  */
 public class LocationDto 
 {
-    private Double latitude;
-    private Double longitude;
-    private Integer id;
+    private List<CoordinateDto> coords;
 
-    public LocationDto(Integer id, Double latitude, Double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.id = id;
+    public List<CoordinateDto> getCoords() {
+        return coords;
     }
 
-    public Double getLatitude() {
-        return latitude;
+    public void setCoords(List<CoordinateDto> coords) {
+        this.coords = coords;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
+    public LocationDto() {
     }
 
-    public Double getLongitude() {
-        return longitude;
+    @Override
+    public String toString() {
+        return "LocationDto{" + "coords=" + coords + '}';
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    
     
     
     

@@ -70,7 +70,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         cityRepository.deleteAll();
         userService.deleteAll();
         retData.setLimit(1200);
-        getData(retData);
+        //getData(retData);
     }
     
     public void startBatchOperation(RetrieveData retData)

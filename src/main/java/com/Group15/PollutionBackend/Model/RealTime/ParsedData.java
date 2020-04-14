@@ -60,10 +60,10 @@ public class ParsedData
         return "ParsedData{" + "elements=" + elements + ", aqi=" + aqi + ", dominentpol=" + dominentpol + '}';
     }
     
-    public String toJson()
+    public JsonNode toJson(Integer id, ObjectMapper mapper)
     {
-        ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.createObjectNode();
+        ((ObjectNode) rootNode).put("id", id);
         ((ObjectNode) rootNode).put("aqi", aqi);
         ((ObjectNode) rootNode).put("dominentpol", dominentpol);
         
@@ -81,7 +81,7 @@ public class ParsedData
         
         try
         {
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(rootNode);
+            return rootNode;
         }
         catch(Exception e)
         {
