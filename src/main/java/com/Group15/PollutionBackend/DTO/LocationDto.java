@@ -36,6 +36,15 @@ public class LocationDto
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
     
     
 }
