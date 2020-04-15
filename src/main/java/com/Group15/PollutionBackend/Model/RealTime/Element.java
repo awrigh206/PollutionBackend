@@ -8,11 +8,13 @@ package com.Group15.PollutionBackend.Model.RealTime;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author Andrew Wright 
  */
+@Embeddable
 public class Element 
 {
     private String nameOfElement;

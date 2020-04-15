@@ -10,6 +10,7 @@ import com.Group15.PollutionBackend.DTO.LocationDto;
 import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Model.RealTime.AsyncHttp;
+import com.Group15.PollutionBackend.Model.RealTime.PreFetch;
 import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
 import com.Group15.PollutionBackend.Service.RealTimeService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -33,6 +34,7 @@ import org.asynchttpclient.BoundRequestBuilder;
 import org.asynchttpclient.Dsl;
 import org.asynchttpclient.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -60,6 +62,8 @@ public class RealTimeController
     private RealTimeService realService;
     private String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
     private ObjectMapper mapper = new ObjectMapper();
+    @Autowired
+    private ResourceLoader resourceLoader;
     
     private ExecutorService exec = Executors.newFixedThreadPool(200);
     
@@ -113,6 +117,12 @@ public class RealTimeController
             log.info(e.getMessage());
             return null;
         }
+    }
+    
+    @GetMapping(path ="/test")
+    public Object test()
+    {
+        return exec.submit(new PreFetch(resourceLoader));
     }
     
     

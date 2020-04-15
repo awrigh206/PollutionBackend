@@ -121,7 +121,7 @@ public class RetrieveData
     public ParsedData parseRealTime(URL url)
     {
         ParsedData data = new ParsedData();
-       String json = processRealTime(url).getJson();
+        String json = processRealTime(url).getJson();
         ArrayList<String> fieldNames = new ArrayList<>();
         
         try

@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class ParsedData
     @GeneratedValue
     private Integer id;
     @ElementCollection
-    private ArrayList<Element> elements;
+    private List<Element> elements;
     private Integer aqi;
     private String dominentpol;
 
@@ -40,11 +41,11 @@ public class ParsedData
         elements.add(toAdd);
     }
 
-    public ArrayList<Element> getElements() {
+    public List<Element> getElements() {
         return elements;
     }
 
-    public void setElements(ArrayList<Element> elements) {
+    public void setElements(List<Element> elements) {
         this.elements = elements;
     }
 
