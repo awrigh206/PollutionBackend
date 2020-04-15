@@ -24,7 +24,7 @@ public class AsyncHttp implements Callable
     private final Log log = LogFactory.getLog(AsyncHttp.class);
     private final CoordinateDto coords;
     private final String token;
-    private RetrieveData retData;
+    private final RetrieveData retData;
     private final ObjectMapper mapper;
     
     private JsonNode finishedNode;

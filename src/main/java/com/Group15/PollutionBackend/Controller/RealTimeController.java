@@ -70,23 +70,6 @@ public class RealTimeController
         return ex.getMessage();
     }
     
-    /*
-    @GetMapping (path ="/realTime")
-    public String getCountries(@RequestParam(value ="latitude")Double latitude, @RequestParam(value="longitude") Double longitude)
-    {    
-        try
-        {
-            String url = "https://api.waqi.info/feed/geo:"+latitude+";"+longitude+"/?token="+token;
-            return retData.processRealTime(new URL(url)).getJson();
-        }
-
-        catch (Exception e)
-        {
-            log.info(e.getMessage());
-            return null;
-        }
-    }*/
-    
     @PostMapping (path="/updateToken")
     public void updateToken(@RequestBody String token)
     {
