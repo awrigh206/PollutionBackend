@@ -134,21 +134,6 @@ public class RetrieveData
             data.setDominentpol(dominentpolNode.asText());
             
             JsonNode iaqiNode = dataNode.path("iaqi");
-            Iterator<JsonNode> elements = iaqiNode.elements();
-            
-            /*
-            while(elements.hasNext())
-            {
-                Element element = new Element();
-                JsonNode titleNode = elements.next();
-                
-                //element.setNameOfElement(titleNode.fieldNames().next());
-                String fieldName = titleNode.fieldNames().next();
-                
-                JsonNode valueNode = titleNode.path(fieldName);
-                element.setValue(valueNode.asText());
-                data.addElement(element);
-            }*/
             
             Iterator names = iaqiNode.fieldNames();
             while (names.hasNext())
@@ -161,8 +146,7 @@ public class RetrieveData
             {
                 Element element = new Element();
                 JsonNode titleNode = iaqiNode.get(name);
-                
-                //element.setNameOfElement(titleNode.fieldNames().next());
+
                 String fieldName = titleNode.fieldNames().next();
                 element.setNameOfElement(name);
                 JsonNode valueNode = titleNode.path(fieldName);
