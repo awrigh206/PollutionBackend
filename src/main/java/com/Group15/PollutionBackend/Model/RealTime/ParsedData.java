@@ -10,13 +10,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 /**
  *
  * @author Andrew Wright
  */
+@Entity
 public class ParsedData 
 {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @ElementCollection
     private ArrayList<Element> elements;
     private Integer aqi;
     private String dominentpol;
@@ -53,6 +62,14 @@ public class ParsedData
 
     public void setDominentpol(String dominentpol) {
         this.dominentpol = dominentpol;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     @Override
