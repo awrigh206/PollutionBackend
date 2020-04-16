@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Controller;
 
+import com.Group15.PollutionBackend.Configuration.TokenConfig;
 import com.Group15.PollutionBackend.DTO.CoordinateDto;
 import com.Group15.PollutionBackend.DTO.LocationDto;
 import com.Group15.PollutionBackend.DTO.UserDto;
@@ -20,6 +21,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
@@ -29,6 +33,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asynchttpclient.AsyncCompletionHandler;
@@ -37,6 +42,7 @@ import org.asynchttpclient.BoundRequestBuilder;
 import org.asynchttpclient.Dsl;
 import org.asynchttpclient.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
@@ -63,12 +69,21 @@ public class RealTimeController
     private final Log log = LogFactory.getLog(RealTimeController.class);
     @Autowired
     private RealTimeService realService;
-    private String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+    private String token;
     private ObjectMapper mapper = new ObjectMapper();
     private ExecutorService exec = Executors.newFixedThreadPool(200);
     @Autowired 
     private ParsedDataService parsedService;
+    @Autowired
+    private ResourceLoader resourceLoader;
+    @Autowired 
+    private TokenConfig tokenConfig;
     
+    @PostConstruct
+    public void init()
+    {
+        this.token = tokenConfig.getToken();
+    }
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)

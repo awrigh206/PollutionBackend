@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend;
 
+import com.Group15.PollutionBackend.Configuration.TokenConfig;
 import com.Group15.PollutionBackend.DataProcessing.Batch.RealTimeDataFetcherThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.DataThread;
 import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
@@ -67,13 +68,16 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     
     @Autowired 
     private UserService userService;
-    private String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+    private String token;
     @Autowired
     private ResourceLoader resourceLoader;
+    @Autowired
+    private TokenConfig tokenConfig;
+    
     @PostConstruct
     public void init()
     {
-        
+        this.token = tokenConfig.getToken();
     }
 
     @Override
@@ -84,7 +88,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         cityRepository.deleteAll();
         userService.deleteAll();
         retData.setLimit(1200);
-        fetchRealTimeData();
+        //fetchRealTimeData();
         //getData(retData);
     }
     
