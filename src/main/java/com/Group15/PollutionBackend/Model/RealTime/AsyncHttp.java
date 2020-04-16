@@ -46,7 +46,11 @@ public class AsyncHttp implements Callable
         try
         {
             String url = "https://api.waqi.info/feed/geo:"+coords.getLat()+";"+coords.getLon()+"/?token="+token;
-            return retData.parseRealTime(new URL(url));
+            ParsedData newData = retData.parseRealTime(new URL(url));
+            newData.setLon(coords.getLon());
+            newData.setLat(coords.getLat());
+            newData.setRequestId(coords.getCoordId());
+            return newData;
             //return finishedNode = data.toJson(coords.getId(), mapper);
         }
         

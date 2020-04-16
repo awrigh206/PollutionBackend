@@ -83,11 +83,13 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         cityRepository.deleteAll();
         userService.deleteAll();
         retData.setLimit(1200);
+        fetchRealTimeData();
         //getData(retData);
     }
     
     public void fetchRealTimeData()
     {
+        parsedRepo.deleteAll();
         Future future = exec.submit(new PreFetch(resourceLoader,token,retData));
         List<ParsedData> data = new ArrayList<>();
         try
@@ -103,7 +105,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
             
             for(ParsedData singleItem : data)
             {
-                parsedRepo.save(singleItem);
+                parsedRepo.saveAndFlush(singleItem);
             }
         }
         catch (Exception e)

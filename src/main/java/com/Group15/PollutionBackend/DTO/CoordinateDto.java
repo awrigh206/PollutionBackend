@@ -11,7 +11,7 @@ package com.Group15.PollutionBackend.DTO;
  */
 public class CoordinateDto 
 {
-    private Integer id;
+    private Integer coordId;
     private Double lon;
     private Double lat;
 
@@ -25,13 +25,15 @@ public class CoordinateDto
     public CoordinateDto() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getCoordId() {
+        return coordId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCoordId(Integer coordId) {
+        this.coordId = coordId;
     }
+
+   
 
     public Double getLon() {
         return lon;
@@ -53,7 +55,7 @@ public class CoordinateDto
 
     @Override
     public String toString() {
-        return "CoordinateDto{" + "id=" + id + ", longitude=" + lon + ", latitude=" + lat + '}';
+        return "CoordinateDto{" + "id=" + coordId + ", longitude=" + lon + ", latitude=" + lat + '}';
     }
     
     

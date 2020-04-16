@@ -55,7 +55,6 @@ public class PreFetch implements Callable
         List<ParsedData> data = new ArrayList<>();
         for(CoordinateDto coord : coords)
         {
-            log.info(coord.toString());
             Callable worker = new AsyncHttp(coord,token,retData,mapper);
             Future<?> f = exec.submit(worker);
             futures.add(f);
@@ -69,7 +68,8 @@ public class PreFetch implements Callable
             }
             if(future.isDone())
             {
-                data.add((ParsedData)future.get());
+                ParsedData newItem = (ParsedData)future.get();
+                data.add(newItem);
             }
         }
         return data;

@@ -32,8 +32,9 @@ public class ParsedData
     private List<Element> elements;
     private Integer aqi;
     private String dominentpol;
-    @Embedded
-    private CoordinateDto coordinates;
+    private Double lat;
+    private Double lon;
+    private Integer requestId;
 
     public ParsedData() 
     {
@@ -77,18 +78,37 @@ public class ParsedData
         this.id = id;
     }
 
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLon() {
+        return lon;
+    }
+
+    public void setLon(Double lon) {
+        this.lon = lon;
+    }
+
+    public Integer getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(Integer requestId) {
+        this.requestId = requestId;
+    }
+    
+    
+
     @Override
     public String toString() {
         return "ParsedData{" + "elements=" + elements + ", aqi=" + aqi + ", dominentpol=" + dominentpol + '}';
     }
 
-    public CoordinateDto getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(CoordinateDto coordinates) {
-        this.coordinates = coordinates;
-    }
     
     public JsonNode toJson(Integer id, ObjectMapper mapper)
     {
