@@ -126,7 +126,7 @@ public class PreFetch implements Callable
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         
         

@@ -31,4 +31,9 @@ public class ParsedDataService
     {
         return parsedRepo.findAll();
     }
+    
+    public void save(ParsedData data)
+    {
+        parsedRepo.saveAndFlush(data);
+    }
 }

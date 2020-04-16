@@ -119,6 +119,7 @@ public class RealTimeController
                 if(future.isDone())
                 {
                     ParsedData item = (ParsedData)future.get();
+                    parsedService.save(item);
                     arrayNode.add((JsonNode)item.toJson(item.getRequestId(), mapper));
                 }
             }
@@ -144,8 +145,6 @@ public class RealTimeController
                 ParsedData item = parsedService.find(coords);
                 data.add(item);
             }
-            
-
             for(ParsedData item : data)
             {
                 arrayNode.add((JsonNode)item.toJson(item.getRequestId(), mapper));
