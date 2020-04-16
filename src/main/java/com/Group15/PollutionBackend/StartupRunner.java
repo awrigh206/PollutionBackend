@@ -34,6 +34,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
@@ -87,6 +88,8 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         //getData(retData);
     }
     
+    //Schedule the method to run once every hour to keep the data fresh
+    @Scheduled(fixedDelay = 3600000)
     public void fetchRealTimeData()
     {
         parsedRepo.deleteAll();
