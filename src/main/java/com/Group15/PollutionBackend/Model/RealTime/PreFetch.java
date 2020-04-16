@@ -7,15 +7,12 @@ package com.Group15.PollutionBackend.Model.RealTime;
 
 import com.Group15.PollutionBackend.DTO.CoordinateDto;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
-import com.Group15.PollutionBackend.Model.Coordinates;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
