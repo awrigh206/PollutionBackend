@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Repository;
 
+import com.Group15.PollutionBackend.DTO.CoordinateDto;
 import com.Group15.PollutionBackend.Model.RealTime.ParsedData;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,5 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ParsedDataRepository extends JpaRepository<ParsedData,Integer> 
 {
-    
+    public ParsedData findByCoordinates(CoordinateDto coords);
 }

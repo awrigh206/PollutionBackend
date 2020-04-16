@@ -15,6 +15,13 @@ public class CoordinateDto
     private Double lon;
     private Double lat;
 
+    public CoordinateDto(Double lon, Double lat) {
+        this.lon = lon;
+        this.lat = lat;
+    }
+    
+    
+
     public CoordinateDto() {
     }
 

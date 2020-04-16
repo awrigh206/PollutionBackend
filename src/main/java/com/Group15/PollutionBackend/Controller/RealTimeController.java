@@ -10,8 +10,10 @@ import com.Group15.PollutionBackend.DTO.LocationDto;
 import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Model.RealTime.AsyncHttp;
+import com.Group15.PollutionBackend.Model.RealTime.ParsedData;
 import com.Group15.PollutionBackend.Model.RealTime.PreFetch;
 import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
+import com.Group15.PollutionBackend.Repository.ParsedDataRepository;
 import com.Group15.PollutionBackend.Service.RealTimeService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,10 +64,9 @@ public class RealTimeController
     private RealTimeService realService;
     private String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
     private ObjectMapper mapper = new ObjectMapper();
-    @Autowired
-    private ResourceLoader resourceLoader;
+    @Autowired 
+    private ParsedDataRepository parsedRepo;
     
-    private ExecutorService exec = Executors.newFixedThreadPool(200);
     
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler (NoSuchElementException.class)
@@ -86,13 +87,13 @@ public class RealTimeController
         try
         {
             ArrayNode arrayNode = mapper.createArrayNode();;
-            List<Future<?>> futures = new ArrayList<Future<?>>();
+            List<ParsedData> data = new ArrayList<>();
             
             for(CoordinateDto coords : locationDto.getCoords())
             {
                 Callable worker = new AsyncHttp(coords,token,retData,mapper);
-                Future<?> f = exec.submit(worker);
-                futures.add(f);
+                ParsedData item = parsedRepo.findByCoordinates(coords);
+                data.add(item);
             }
             
 
@@ -119,11 +120,6 @@ public class RealTimeController
         }
     }
     
-    @GetMapping(path ="/test")
-    public Object test()
-    {
-        return exec.submit(new PreFetch(resourceLoader));
-    }
     
     
     @GetMapping (path ="/allRealTime")

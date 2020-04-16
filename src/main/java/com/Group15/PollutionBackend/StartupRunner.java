@@ -11,13 +11,19 @@ import com.Group15.PollutionBackend.DataProcessing.JSON.Results.CountryResult;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Model.Country;
 import com.Group15.PollutionBackend.Model.CountryCodes;
+import com.Group15.PollutionBackend.Model.RealTime.ParsedData;
+import com.Group15.PollutionBackend.Model.RealTime.PreFetch;
 import com.Group15.PollutionBackend.Repository.CityRepository;
+import com.Group15.PollutionBackend.Repository.ParsedDataRepository;
 import com.Group15.PollutionBackend.Service.CountryService;
 import com.Group15.PollutionBackend.Service.RealTimeService;
 import com.Group15.PollutionBackend.Service.StatisticsService;
 import com.Group15.PollutionBackend.Service.UserService;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -26,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -50,12 +57,18 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     private StatisticsService statsService;
     @Autowired
     private RetrieveData retData;
+    @Autowired 
+    private ParsedDataRepository parsedRepo;
+    private ExecutorService exec = Executors.newFixedThreadPool(2);
     
     @Autowired 
     private RealTimeService realService;
     
     @Autowired 
     private UserService userService;
+    private String token = "a3c205e5e20ddf248ae5a20e92b6a2b327132f95";
+    @Autowired
+    private ResourceLoader resourceLoader;
     @PostConstruct
     public void init()
     {
@@ -71,6 +84,33 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
         userService.deleteAll();
         retData.setLimit(1200);
         //getData(retData);
+    }
+    
+    public void fetchRealTimeData()
+    {
+        Future future = exec.submit(new PreFetch(resourceLoader,token,retData));
+        List<ParsedData> data = new ArrayList<>();
+        try
+        {
+            while (!future.isDone())
+            {
+                Thread.sleep(10);
+            }
+            if(future.isDone())
+            {
+                data =  (List<ParsedData>)future.get();
+            }
+            
+            for(ParsedData singleItem : data)
+            {
+                parsedRepo.save(singleItem);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+       
     }
     
     public void startBatchOperation(RetrieveData retData)

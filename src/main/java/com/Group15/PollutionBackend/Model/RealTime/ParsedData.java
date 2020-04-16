@@ -5,6 +5,7 @@
  */
 package com.Group15.PollutionBackend.Model.RealTime;
 
+import com.Group15.PollutionBackend.DTO.CoordinateDto;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -30,6 +32,8 @@ public class ParsedData
     private List<Element> elements;
     private Integer aqi;
     private String dominentpol;
+    @Embedded
+    private CoordinateDto coordinates;
 
     public ParsedData() 
     {
@@ -76,6 +80,14 @@ public class ParsedData
     @Override
     public String toString() {
         return "ParsedData{" + "elements=" + elements + ", aqi=" + aqi + ", dominentpol=" + dominentpol + '}';
+    }
+
+    public CoordinateDto getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(CoordinateDto coordinates) {
+        this.coordinates = coordinates;
     }
     
     public JsonNode toJson(Integer id, ObjectMapper mapper)
