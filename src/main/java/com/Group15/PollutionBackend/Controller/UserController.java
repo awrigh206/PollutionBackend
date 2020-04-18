@@ -27,7 +27,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -65,7 +68,7 @@ public class UserController
         return user;
     }
     
-    @RequestMapping(method = RequestMethod.GET, path = "/auth")
+    @GetMapping (path = "/auth")
     public Object authenticateUser(@RequestParam(value ="userName")String userName, @RequestParam(value="password") String password)
     {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -80,7 +83,7 @@ public class UserController
             return false;
     }
     
-    @RequestMapping(method = RequestMethod.POST, path = "/register")
+    @PostMapping(path = "/register")
     @ResponseStatus(HttpStatus.CREATED)
     public User createUser(@RequestBody @Validated UserDto userDto) 
     {
@@ -92,6 +95,13 @@ public class UserController
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return user;
+    }
+    
+    @DeleteMapping(path ="/remove")
+    public void removeUser(@RequestParam(value ="userName")String userName, @RequestParam(value="password") String password)
+    {
+        User user = (User)authenticateUser(userName, password);
+        userService.deleteUser(user);
     }
     
     

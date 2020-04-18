@@ -50,6 +50,11 @@ public class UserService
         
     }
     
+    public void deleteUser(User user)
+    {
+        userRepository.delete(user);
+    }
+    
     public User createUser(UserDto dto)
     {
         //return saveUser(dto.getUserName(),dto.getPassword(),dto.getEmail(),dto.getNumber());
