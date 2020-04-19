@@ -8,24 +8,15 @@ package com.Group15.PollutionBackend.Controller;
 import com.Group15.PollutionBackend.Configuration.TokenConfig;
 import com.Group15.PollutionBackend.DTO.CoordinateDto;
 import com.Group15.PollutionBackend.DTO.LocationDto;
-import com.Group15.PollutionBackend.DTO.UserDto;
 import com.Group15.PollutionBackend.DataProcessing.JSON.RetrieveData;
 import com.Group15.PollutionBackend.Model.RealTime.AsyncHttp;
 import com.Group15.PollutionBackend.Model.RealTime.ParsedData;
-import com.Group15.PollutionBackend.Model.RealTime.PreFetch;
 import com.Group15.PollutionBackend.Model.RealTime.RealTimeData;
-import com.Group15.PollutionBackend.Repository.ParsedDataRepository;
 import com.Group15.PollutionBackend.Service.ParsedDataService;
 import com.Group15.PollutionBackend.Service.RealTimeService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,23 +27,14 @@ import java.util.concurrent.Future;
 import javax.annotation.PostConstruct;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.asynchttpclient.AsyncCompletionHandler;
-import org.asynchttpclient.AsyncHttpClient;
-import org.asynchttpclient.BoundRequestBuilder;
-import org.asynchttpclient.Dsl;
-import org.asynchttpclient.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -120,7 +102,7 @@ public class RealTimeController
         {
             for(CoordinateDto coord : coords)
             {
-                Callable worker = new AsyncHttp(coord,token,retData,mapper);
+                Callable worker = new AsyncHttp(coord,token,retData);
                 Future<?> f = exec.submit(worker);
                 futures.add(f);
             }

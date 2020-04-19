@@ -32,16 +32,17 @@ public class PreFetch implements Callable
     private final ResourceLoader resourceLoader;
     private final ObjectMapper mapper;
     private final Log log = LogFactory.getLog(PreFetch.class);
-    private ExecutorService exec = Executors.newFixedThreadPool(200);
+    private ExecutorService exec;
     private final String token;
     private final RetrieveData retData;
 
-    public PreFetch(ResourceLoader resourceLoader, String token, RetrieveData retData) 
+    public PreFetch(ResourceLoader resourceLoader, String token, RetrieveData retData, ExecutorService exec) 
     {
         this.resourceLoader = resourceLoader;
         this.mapper = new ObjectMapper();
         this.token = token;
         this.retData = retData;
+        this.exec = exec;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class PreFetch implements Callable
         List<ParsedData> data = new ArrayList<>();
         for(CoordinateDto coord : coords)
         {
-            Callable worker = new AsyncHttp(coord,token,retData,mapper);
+            Callable worker = new AsyncHttp(coord,token,retData);
             Future<?> f = exec.submit(worker);
             futures.add(f);
         }

@@ -25,15 +25,13 @@ public class AsyncHttp implements Callable
     private final CoordinateDto coords;
     private final String token;
     private final RetrieveData retData;
-    private final ObjectMapper mapper;
     
     private JsonNode finishedNode;
 
-    public AsyncHttp(CoordinateDto coords, String token, RetrieveData retData, ObjectMapper mapper) {
+    public AsyncHttp(CoordinateDto coords, String token, RetrieveData retData) {
         this.coords = coords;
         this.token = token;
         this.retData = retData;
-        this.mapper = mapper;
     }
 
     public JsonNode getFinishedNode() {
@@ -51,7 +49,6 @@ public class AsyncHttp implements Callable
             newData.setLat(coords.getLat());
             newData.setRequestId(coords.getCoordId());
             return newData;
-            //return finishedNode = data.toJson(coords.getId(), mapper);
         }
         
         catch (Exception e)

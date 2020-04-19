@@ -97,7 +97,7 @@ public class StartupRunner implements ApplicationListener<ContextRefreshedEvent>
     public void fetchRealTimeData()
     {
         parsedRepo.deleteAll();
-        Future future = exec.submit(new PreFetch(resourceLoader,token,retData));
+        Future future = exec.submit(new PreFetch(resourceLoader,token,retData,exec));
         List<ParsedData> data = new ArrayList<>();
         try
         {
